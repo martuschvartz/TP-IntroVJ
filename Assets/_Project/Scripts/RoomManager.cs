@@ -37,10 +37,6 @@ public class RoomManager : MonoBehaviour
 
     private void HandleObjectFound(ZoneId zone)
     {
-        // Si ya se revelo la ultima zona, no hay "zona activa": ignoramos
-        // cualquier evento que llegue despues (evita leer fuera del array).
-        if (_currentIndex >= _rooms.Length) return;
-
         // Solo nos importa el objeto de la zona activa. Si llegara el de
         // otra zona (no deberia pasar en este recorrido lineal) lo ignoramos.
         if (zone != _rooms[_currentIndex].ZoneId) return;
@@ -67,10 +63,6 @@ public class RoomManager : MonoBehaviour
     // zona actual, sin necesitar el jugador ni el KeyObject en la escena.
     private void Update()
     {
-        // Si ya no hay zona activa (se revelo todo), no hacemos nada:
-        // sin este chequeo, _rooms[_currentIndex] rompe con index out of range.
-        if (_currentIndex >= _rooms.Length) return;
-
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GameEvents.RaiseObjectFound(_rooms[_currentIndex].ZoneId);
