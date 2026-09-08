@@ -1,0 +1,33 @@
+.gitignore
+  h_41a4b569d6b3c0 111
+Assets/_Project/Scripts/TimedVisibility.cs
+  h_41a4b569d6b3c0 5,8,14-18
+  h_41a4b569d6b3c0 1-4,6-7,9-13,19-20
+Assets/_Project/Materials.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Materials/MaterialA.mat
+  h_41a4b569d6b3c0 1-137
+Assets/_Project/Materials/MaterialA.mat.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Materials/MaterialB.mat
+  h_41a4b569d6b3c0 1-137
+Assets/_Project/Materials/MaterialB.mat.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Materials/MaterialC.mat
+  h_41a4b569d6b3c0 1-137
+Assets/_Project/Materials/MaterialC.mat.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Scripts/TimedVisibility.cs.meta
+  h_41a4b569d6b3c0 1-2
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "895fdcf0dcb06c435ab673e187cccdf7e228bd77",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
