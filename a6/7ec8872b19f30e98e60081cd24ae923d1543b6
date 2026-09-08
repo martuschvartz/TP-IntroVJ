@@ -1,0 +1,47 @@
+context.md
+  s_d1445ad15d99bf::t_6c0935814d7a2d 514-539
+  s_d1445ad15d99bf::t_83283718a363a9 443-451
+  s_d1445ad15d99bf::t_d2ca7e68b38189 411-413,415,429
+  s_b791f9c4e33c8d::t_c6545b9f6a3122 433
+  s_d1445ad15d99bf::t_9ba72744f9d499 398-407,414,416-428,437-439
+  s_d1445ad15d99bf::t_2deda51d2dc55c 463,467,471,540-558
+  s_d1445ad15d99bf::t_b3fb29efba0725 489-513
+  s_b791f9c4e33c8d::t_7c8896b224b4c6 475-488
+  s_d1445ad15d99bf::t_774435f50da467 395-397
+  s_d1445ad15d99bf::t_dee8c473b95ced 408-410
+  s_d1445ad15d99bf::t_aec2d49d818694 440-442
+  s_d1445ad15d99bf::t_503b21f699bf07 452-454,460-462
+  s_d1445ad15d99bf::t_d573793205043e 464-466
+  s_d1445ad15d99bf::t_72a13b4ebbc986 468-470
+  s_d1445ad15d99bf::t_3f626e802b6c04 559-561
+  s_d1445ad15d99bf::t_48b67e557118c6 1-394,430-432,434-436,455-459,472-474,562-570
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "a67ec8872b19f30e98e60081cd24ae923d1543b6",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_b791f9c4e33c8d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "563762ee-e099-475d-b379-cb5107b146bf",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "martuschvartz <schvartzmartina@gmail.com>"
+    },
+    "s_d1445ad15d99bf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fad95a5a-a975-4a25-a1cb-8231c650ff7e",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
