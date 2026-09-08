@@ -1,0 +1,52 @@
+Assets/_Project/Scripts/GameEvents.cs
+  s_d1445ad15d99bf::t_59b593e4e0c008 2
+  h_41a4b569d6b3c0 10
+  s_d1445ad15d99bf::t_16bcb2357ebb91 27-32
+Assets/_Project/Scripts/FirstPersonPlayer.cs
+  s_d1445ad15d99bf::t_f42d7482a5a077 1-49
+Assets/_Project/Scripts/KeyObject.cs
+  s_d1445ad15d99bf::t_a9acc32c58d326 18,32-37
+  s_d1445ad15d99bf::t_aa40f730eb7a4c 38-42
+Assets/_Project/Scripts/RoomManager.cs
+  h_41a4b569d6b3c0 70-73
+  s_d1445ad15d99bf::t_5ea7bb006cd66e 40-43
+Assets/_Project/Scripts/FirstPersonPlayer.cs.meta
+  s_d1445ad15d99bf::t_702ea84a9907ea 1-2
+Assets/_Project/Materials/Floor.mat
+  h_41a4b569d6b3c0 1-137
+Assets/_Project/Materials/Floor.mat.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Materials/Key.mat
+  h_41a4b569d6b3c0 23
+Assets/_Project/Materials/Table.mat
+  h_41a4b569d6b3c0 10
+Assets/_Project/Materials/Walls.mat
+  h_41a4b569d6b3c0 23
+Packages/manifest.json
+  h_41a4b569d6b3c0 9
+Packages/packages-lock.json
+  h_41a4b569d6b3c0 96-107,144-150
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+  h_41a4b569d6b3c0 1-146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "209d4ee059522b2d5f518126a7786e525dbafc2f",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_d1445ad15d99bf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fad95a5a-a975-4a25-a1cb-8231c650ff7e",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
