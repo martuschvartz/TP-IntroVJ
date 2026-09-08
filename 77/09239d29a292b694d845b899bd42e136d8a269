@@ -1,0 +1,20 @@
+Assets/Scenes/SampleScene.unity
+  h_41a4b569d6b3c0 122,130-131,133,139-155,161,163-198,201-239,241,243,249,264,270,289,313,319,321-341,347,353-446,533-534,711,719,721,727,733,735,739-744,746,754,756,762,768,775-777,780,788-791,793,799,805,808-809,812,814,820,835,841,860,884,890,892-893,898-926,934-937,939,945,951,954-955,958,960,966,981,987,1006,1030,1036,1038-1039,1044-3346,3354-3355
+Assets/_Project/Materials/Glass.mat
+  h_41a4b569d6b3c0 1-141
+Assets/_Project/Materials/Glass.mat.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Materials/MaterialA.mat
+  h_41a4b569d6b3c0 119-120
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "7709239d29a292b694d845b899bd42e136d8a269",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
