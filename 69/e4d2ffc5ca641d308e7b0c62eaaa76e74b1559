@@ -1,0 +1,54 @@
+Assets/_Project/Scripts/GameEvents.cs
+  s_d1445ad15d99bf::t_037c9b5e9ea18b 28-29
+  s_d1445ad15d99bf::t_ca41ee30d3a73b 1-27,30-33
+Assets/_Project/Scripts/RoomManager.cs
+  s_d1445ad15d99bf::t_ced5784ed870f3 1-14,18-39,44-54,57-65,68-69,75-80
+  h_41a4b569d6b3c0 15-17
+  s_d1445ad15d99bf::t_764aa68895d7be 66-67,70-73
+  s_d1445ad15d99bf::t_5ff749b2bd18d8 74
+  s_d1445ad15d99bf::t_d9915c7612080b 40-43,55-56
+Assets/_Project/Scripts/RoomController.cs
+  s_d1445ad15d99bf::t_2de710111bdfc6 3-7,9,11-13,15,17-18
+Assets/_Project/Scripts/KeyObject.cs
+  s_d1445ad15d99bf::t_2d9898724083fd 1-15,17-35
+  s_d1445ad15d99bf::t_998949d5b32589 16
+Assets/InputSystem_Actions.inputactions
+  h_41a4b569d6b3c0 2,16-17,26-27,36-37,46-47,56-57,66-67,76-77,86-87,96-97,499-500,509-510,519-520,529-530,539-540,549-550,559-560,569-570,579-580,589-590
+Assets/Scenes/SampleScene.unity
+  h_41a4b569d6b3c0 45-46,122-247,334-335,378-384,411,418,463,465-467,501-511,561-863,871
+Assets/_Project/Materials/MaterialC.mat
+  h_41a4b569d6b3c0 132-133
+Assets/_Project/Scripts/GameEvents.cs.meta
+  h_41a4b569d6b3c0 2
+Assets/_Project/Scripts/KeyObject.cs.meta
+  h_41a4b569d6b3c0 1-2
+Assets/_Project/Scripts/RoomController.cs.meta
+  h_41a4b569d6b3c0 1-2
+Assets/_Project/Scripts/RoomManager.cs.meta
+  h_41a4b569d6b3c0 1-2
+ProjectSettings/ProjectSettings.asset
+  h_41a4b569d6b3c0 929
+ProjectSettings/SceneTemplateSettings.json
+  h_41a4b569d6b3c0 1-121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "69e4d2ffc5ca641d308e7b0c62eaaa76e74b1559",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_d1445ad15d99bf": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fad95a5a-a975-4a25-a1cb-8231c650ff7e",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
