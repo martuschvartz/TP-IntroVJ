@@ -15,6 +15,7 @@ public class KeyObject : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log($"[KeyObject] E presionado mirando la llave de {_zoneId}, publico ObjectFound"); // debug: sacar despues
             GameEvents.RaiseObjectFound(_zoneId);
         }
     }
@@ -28,7 +29,17 @@ public class KeyObject : MonoBehaviour
         Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
         if (Physics.Raycast(ray, out RaycastHit hit, _interactDistance))
         {
-            return hit.transform == transform;
+            // debug: sacar este log despues. Si nunca aparece, el rayo no
+            // esta llegando a nada (distancia corta, sin collider en el medio).
+            // Si aparece pero con un nombre que no es este GameObject, el
+            // Collider esta en otro objeto (por ejemplo un hijo con el mesh)
+            // y por eso "hit.transform == transform" da siempre false.
+            Debug.Log($"[KeyObject] Rayo pego con: {hit.transform.name} (este objeto se llama: {name})");
+
+            // IsChildOf tambien devuelve true si "hit.transform" es este mismo
+            // transform, asi que cubre tanto "collider en este objeto" como
+            // "collider en un hijo" (ej. el mesh visual con su propio collider).
+            return hit.transform.IsChildOf(transform);
         }
         return false;
     }
