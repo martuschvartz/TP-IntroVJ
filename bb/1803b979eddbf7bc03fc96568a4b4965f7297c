@@ -1,0 +1,28 @@
+Assets/_Project/Materials/Floor.mat
+  s_a0e2de37ff78e3::t_7a2944500e5dbe 119-120
+Assets/_Project/Materials/Walls.mat
+  s_a0e2de37ff78e3::t_7a2944500e5dbe 132-133
+Assets/Scenes/SampleScene.unity
+  s_a0e2de37ff78e3::t_7a2944500e5dbe 238,270,278-280,282,288,294,297,299-371,376-391,403-415,421,440,464-465,470-495,500-12048,12135-12136,12140,12186-13049,13185-13299,13305-13306,13311-13312,13316-13317,13319-13361,13371,13387,13395,13397-13409,13490,13522-13699,13734-13911,13992,14216,14248-14319,14561,14673,14785,15072,15155,15187,15195-15200,15202,15208,15214,15217,15221,15223-15224,15229,15241-15253,15259,15302-15303,15308-15327,15332-15542,15690-15803,15884,15916-16093,16210,16434,16546,16658,16690-16829,16942-17119,17126-17129
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "bb1803b979eddbf7bc03fc96568a4b4965f7297c",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_a0e2de37ff78e3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fc380add-d5a7-4f80-bb80-bd63338a8cf7",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
