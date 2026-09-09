@@ -1,0 +1,18 @@
+Assets/_Project/Scripts/TimerController.cs
+  h_41a4b569d6b3c0 10,15
+Assets/_Project/Scripts/FirstPersonPlayer.cs
+  h_41a4b569d6b3c0 43-44,47
+Assets/Scenes/SampleScene.unity
+  h_41a4b569d6b3c0 12049-12123,13118-13121,13291-13369,15345-15377,15734-15924,16072-16154,16559-16633,17006-17099,17338,17465-17478,17591-17638,17827
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "6566ed50364d0e917fe8c395c272aa501c877b96",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
