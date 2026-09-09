@@ -7,12 +7,12 @@ using UnityEngine;
 // "Remaining" y el log de TimeUp.
 public class TimerController : MonoBehaviour
 {
-    [SerializeField] private float _duration = 60f;
+    [SerializeField] private float _duration = 10f;
     [SerializeField] private float _bonusOnObjectFound = 10f;
 
     private float _remaining;
     private bool _isRunning;
-    private bool _hasFired; // evita disparar TimeUp mas de una vez
+    private bool _hasFired;
 
     public float Remaining => _remaining;
 
@@ -68,12 +68,5 @@ public class TimerController : MonoBehaviour
     public void Pause()
     {
         _isRunning = false;
-    }
-
-    public void Resume()
-    {
-        // Si ya llego a cero, no lo reanudamos: ya cumplio su funcion.
-        if (_hasFired) return;
-        _isRunning = true;
     }
 }

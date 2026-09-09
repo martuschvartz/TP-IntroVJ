@@ -40,10 +40,10 @@ public class FirstPersonPlayer : MonoBehaviour
 
     private void HandleMove()
     {
-        float horizontal = Input.GetAxis("Horizontal"); // A/D
-        float vertical = Input.GetAxis("Vertical");      // W/S
+        float horizontal = Input.GetAxis("Horizontal"); // A/D va entre -1 y 1
+        float vertical = Input.GetAxis("Vertical");      // W/S va entre -1 y 1
 
         Vector3 move = (transform.right * horizontal + transform.forward * vertical).normalized;
-        _controller.Move(move * _moveSpeed * Time.deltaTime);
+        _controller.Move(move * (_moveSpeed * Time.deltaTime));
     }
 }

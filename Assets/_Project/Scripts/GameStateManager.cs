@@ -58,9 +58,5 @@ public class GameStateManager : MonoBehaviour
         {
             screen.SetActive(true);
         }
-        else
-        {
-            Debug.Log($"[GameStateManager] Estado: {_state} (todavia no asignaste la pantalla de UI correspondiente)");
-        }
     }
 }
