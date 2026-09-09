@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 // Identifica cada una de las 3 zonas del recorrido. Se pasa como dato en los
 // eventos para saber DE QUE zona se habla, sin que los sistemas necesiten
@@ -24,16 +23,28 @@ public static class GameEvents
 
     public static void RaiseObjectFound(ZoneId zone)
     {
-        // debug: sacar este log despues. Si "suscriptores" da 0, el evento
-        // se publico bien pero nadie lo esta escuchando (RoomManager
-        // deshabilitado, no esta en la escena, o su OnEnable no se disparo).
-        int suscriptores = ObjectFound?.GetInvocationList().Length ?? 0;
-        Debug.Log($"[GameEvents] RaiseObjectFound({zone}), suscriptores: {suscriptores}");
-
         // El "?." evita un error si todavia no hay nadie suscripto
         // (por ejemplo, si esto se llama antes de que RoomManager exista
         // en la escena, o en una escena de prueba sin RoomManager).
         ObjectFound?.Invoke(zone);
+    }
+    #endregion
+
+    #region Se acabo el tiempo
+    public static event Action TimeUp;
+
+    public static void RaiseTimeUp()
+    {
+        TimeUp?.Invoke();
+    }
+    #endregion
+
+    #region Se completo todo el recorrido de habitaciones
+    public static event Action GameWon;
+
+    public static void RaiseGameWon()
+    {
+        GameWon?.Invoke();
     }
     #endregion
 }

@@ -37,10 +37,6 @@ public class RoomManager : MonoBehaviour
 
     private void HandleObjectFound(ZoneId zone)
     {
-        // debug: sacar despues. Confirma que RoomManager recibio el evento
-        // y contra que zona lo esta comparando.
-        Debug.Log($"[RoomManager] HandleObjectFound recibio: {zone}, zona activa: {_rooms[_currentIndex].ZoneId}");
-
         // Solo nos importa el objeto de la zona activa. Si llegara el de
         // otra zona (no deberia pasar en este recorrido lineal) lo ignoramos.
         if (zone != _rooms[_currentIndex].ZoneId) return;
@@ -49,6 +45,11 @@ public class RoomManager : MonoBehaviour
         if (_currentIndex < _rooms.Length)
         {
             _rooms[_currentIndex].Reveal();
+        }
+        else
+        {
+            // No queda una zona siguiente: se completo todo el recorrido.
+            GameEvents.RaiseGameWon();
         }
     }
 
