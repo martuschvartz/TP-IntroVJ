@@ -1,0 +1,14 @@
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+  h_41a4b569d6b3c0 1-146
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "5fbf2a3a292991fb6620bafacefa8d01bb8a6748",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
