@@ -20,20 +20,26 @@ public enum ZoneId
 public static class GameEvents
 {
     #region Se encontro el objeto clave de una zona
-    public static event Action<ZoneId> ObjectFound;
+    #region Se encontro la llave de una zona
+    public static event Action<ZoneId> KeyFound;
 
-    public static void RaiseObjectFound(ZoneId zone)
+    public static void RaiseKeyFound(ZoneId zone)
     {
-        // debug: sacar este log despues. Si "suscriptores" da 0, el evento
-        // se publico bien pero nadie lo esta escuchando (RoomManager
-        // deshabilitado, no esta en la escena, o su OnEnable no se disparo).
-        int suscriptores = ObjectFound?.GetInvocationList().Length ?? 0;
-        Debug.Log($"[GameEvents] RaiseObjectFound({zone}), suscriptores: {suscriptores}");
-
-        // El "?." evita un error si todavia no hay nadie suscripto
-        // (por ejemplo, si esto se llama antes de que RoomManager exista
-        // en la escena, o en una escena de prueba sin RoomManager).
-        ObjectFound?.Invoke(zone);
+        int suscriptores = KeyFound?.GetInvocationList().Length ?? 0;
+        Debug.Log($"[GameEvents] RaiseKeyFound({zone}), suscriptores: {suscriptores}");
+        KeyFound?.Invoke(zone);
     }
+    #endregion
+
+    #region Se encontro la linterna de una zona
+    public static event Action<ZoneId> FlashlightFound;
+
+    public static void RaiseFlashlightFound(ZoneId zone)
+    {
+        int suscriptores = FlashlightFound?.GetInvocationList().Length ?? 0;
+        Debug.Log($"[GameEvents] RaiseFlashlightFound({zone}), suscriptores: {suscriptores}");
+        FlashlightFound?.Invoke(zone);
+    }
+    #endregion
     #endregion
 }
