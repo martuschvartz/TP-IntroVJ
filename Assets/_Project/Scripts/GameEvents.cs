@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 // Identifica cada una de las 3 zonas del recorrido. Se pasa como dato en los
 // eventos para saber DE QUE zona se habla, sin que los sistemas necesiten
@@ -6,6 +7,7 @@ using System;
 public enum ZoneId
 {
     Living,
+    Flashlight,
     Prize
 }
 
@@ -19,15 +21,38 @@ public enum ZoneId
 public static class GameEvents
 {
     #region Se encontro el objeto clave de una zona
-    public static event Action<ZoneId> ObjectFound;
+    #region Se encontro la llave de una zona
+    public static event Action<ZoneId> KeyFound;
 
-    public static void RaiseObjectFound(ZoneId zone)
+    public static void RaiseKeyFound(ZoneId zone)
     {
-        // El "?." evita un error si todavia no hay nadie suscripto
-        // (por ejemplo, si esto se llama antes de que RoomManager exista
-        // en la escena, o en una escena de prueba sin RoomManager).
-        ObjectFound?.Invoke(zone);
+        int suscriptores = KeyFound?.GetInvocationList().Length ?? 0;
+        Debug.Log($"[GameEvents] RaiseKeyFound({zone}), suscriptores: {suscriptores}");
+        KeyFound?.Invoke(zone);
     }
+    #endregion
+
+    #region Se encontro la linterna de una zona
+    public static event Action<ZoneId> FlashlightFound;
+
+    public static void RaiseFlashlightFound(ZoneId zone)
+    {
+        int suscriptores = FlashlightFound?.GetInvocationList().Length ?? 0;
+        Debug.Log($"[GameEvents] RaiseFlashlightFound({zone}), suscriptores: {suscriptores}");
+        FlashlightFound?.Invoke(zone);
+    }
+    #endregion
+
+    #region Se encontro el regalo de una zona
+    public static event Action<ZoneId> PrizeFound;
+
+    public static void RaisePrizeFound(ZoneId zone)
+    {
+        int suscriptores = PrizeFound?.GetInvocationList().Length ?? 0;
+        Debug.Log($"[GameEvents] RaisePrizeFound({zone}), suscriptores: {suscriptores}");
+        PrizeFound?.Invoke(zone);
+    }
+    #endregion
     #endregion
 
     #region Se acabo el tiempo

@@ -2,8 +2,9 @@ using UnityEngine;
 
 // Cuenta regresiva global. No sabe nada de habitaciones ni de UI: solo
 // avisa por evento cuando el tiempo se acaba, y por su cuenta le suma un
-// poco de tiempo extra cada vez que se encuentra un objeto clave (sea cual
-// sea la zona). Se puede probar solo, sin RoomManager, viendo bajar
+// poco de tiempo extra cuando se encuentra la llave o la linterna (sea cual
+// sea la zona). El regalo NO suma tiempo: encontrarlo es la condicion de
+// victoria, no un bonus. Se puede probar solo, sin RoomManager, viendo bajar
 // "Remaining" y el log de TimeUp.
 public class TimerController : MonoBehaviour
 {
@@ -19,12 +20,14 @@ public class TimerController : MonoBehaviour
     #region Suscripcion a eventos
     private void OnEnable()
     {
-        GameEvents.ObjectFound += HandleObjectFound;
+        GameEvents.KeyFound += HandleObjectFound;
+        GameEvents.FlashlightFound += HandleObjectFound;
     }
 
     private void OnDisable()
     {
-        GameEvents.ObjectFound -= HandleObjectFound;
+        GameEvents.KeyFound -= HandleObjectFound;
+        GameEvents.FlashlightFound -= HandleObjectFound;
     }
     #endregion
 

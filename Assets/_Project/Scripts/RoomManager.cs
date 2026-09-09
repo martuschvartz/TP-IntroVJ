@@ -12,17 +12,21 @@ public class RoomManager : MonoBehaviour
     private int _currentIndex;
 
     #region Suscripcion a eventos
-    
+
     // Se suscribe al evento ObjectFound. Cuando alguien llame a raiseObjectFound, se va a correr
     // HandleObjectFound con el zoneId (y todos los métodos que se agreguen con +=).
     private void OnEnable()
     {
-        GameEvents.ObjectFound += HandleObjectFound;
+        GameEvents.KeyFound += HandleObjectFound;
+        GameEvents.FlashlightFound += HandleObjectFound;
+        GameEvents.PrizeFound += HandleObjectFound;
     }
 
     private void OnDisable()
     {
-        GameEvents.ObjectFound -= HandleObjectFound;
+        GameEvents.KeyFound -= HandleObjectFound;
+        GameEvents.FlashlightFound -= HandleObjectFound;
+        GameEvents.PrizeFound -= HandleObjectFound;
     }
     #endregion
 
@@ -64,17 +68,27 @@ public class RoomManager : MonoBehaviour
     }
 
     #region Debug: probar el sistema de habitaciones solo (sin KeyObject)
-    // Barra espaciadora = simula que se encontro el objeto clave de la
-    // zona actual, sin necesitar el jugador ni el KeyObject en la escena.
+    // Tecla 1 = simula que se encontro la llave de la zona actual.
+    // Tecla 2 = simula que se encontro la linterna de la zona actual.
+    // Tecla 3 = simula que se encontro el regalo de la zona actual.
+    // Permite probar sin necesitar el jugador ni los KeyObject/FlashlightObject/PrizeObject en la escena.
     private void Update()
     {
         // Si ya no hay zona activa (se revelo todo), no hacemos nada:
         // sin este chequeo, _rooms[_currentIndex] rompe con index out of range.
         if (_currentIndex >= _rooms.Length) return;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            GameEvents.RaiseObjectFound(_rooms[_currentIndex].ZoneId);
+            GameEvents.RaiseKeyFound(_rooms[_currentIndex].ZoneId);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GameEvents.RaiseFlashlightFound(_rooms[_currentIndex].ZoneId);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GameEvents.RaisePrizeFound(_rooms[_currentIndex].ZoneId);
         }
     }
     #endregion

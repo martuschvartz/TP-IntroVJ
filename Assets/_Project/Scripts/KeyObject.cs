@@ -15,7 +15,8 @@ public class KeyObject : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GameEvents.RaiseObjectFound(_zoneId);
+            Debug.Log($"[KeyObject] E presionado mirando la llave de {_zoneId}, publico KeyFound"); // debug: sacar despues
+            GameEvents.RaiseKeyFound(_zoneId);
         }
     }
 
