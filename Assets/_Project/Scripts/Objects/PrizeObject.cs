@@ -14,7 +14,6 @@ public class PrizeObject : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            Debug.Log($"[PrizeObject] E presionado mirando el regalo de {_zoneId}, publico PrizeFound");
             GameEvents.RaisePrizeFound(_zoneId);
         }
     }

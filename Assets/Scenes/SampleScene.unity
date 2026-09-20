@@ -14248,7 +14248,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512737141}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -14258,7 +14258,7 @@ Transform:
   - {fileID: 1772063146}
   - {fileID: 553875764}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &512737143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31138,7 +31138,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -111, y: -0.5, z: -82}
-  m_LocalScale: {x: 430, y: 1, z: 400}
+  m_LocalScale: {x: 430, y: 1, z: 390}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1513308527}
@@ -31284,7 +31284,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b437456fdd44544e594e5ced6cae3a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerController
-  _duration: 10
+  _duration: 2
   _bonusOnObjectFound: 10
 --- !u!4 &1397822269
 Transform:
@@ -32298,7 +32298,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 29.5, z: 0}
-  m_LocalScale: {x: 15, y: 5, z: 15}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 512737142}
@@ -33357,7 +33357,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0.7071068, z: 0, w: 0}
   m_LocalPosition: {x: -112, y: 3, z: -86}
-  m_LocalScale: {x: 1, y: 430, z: 400}
+  m_LocalScale: {x: 1, y: 430, z: 390}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 736523104}
@@ -35029,10 +35029,10 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 410087041}
-  - {fileID: 832575519}
   - {fileID: 339209882}
   - {fileID: 512737142}
   - {fileID: 402205620}
   - {fileID: 153766804}
   - {fileID: 864771673}
   - {fileID: 1296525852}
+  - {fileID: 832575519}

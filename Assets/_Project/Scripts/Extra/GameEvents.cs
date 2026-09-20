@@ -48,8 +48,6 @@ public static class GameEvents
 
     public static void RaisePrizeFound(ZoneId zone)
     {
-        int suscriptores = PrizeFound?.GetInvocationList().Length ?? 0;
-        Debug.Log($"[GameEvents] RaisePrizeFound({zone}), suscriptores: {suscriptores}");
         PrizeFound?.Invoke(zone);
     }
     #endregion

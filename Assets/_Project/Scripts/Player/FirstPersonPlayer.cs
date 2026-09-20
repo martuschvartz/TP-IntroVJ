@@ -7,8 +7,8 @@ using UnityEngine;
 public class FirstPersonPlayer : MonoBehaviour
 {
     [SerializeField] private Camera _playerCamera;
-    [SerializeField] private float _moveSpeed = 4f;
-    [SerializeField] private float _mouseSensitivity = 200f;
+    [SerializeField] private float _moveSpeed = 100f;
+    [SerializeField] private float _mouseSensitivity = 800f;
 
     private CharacterController _controller;
     private float _cameraPitch; // rotacion acumulada de la camara en el eje X (arriba/abajo)
