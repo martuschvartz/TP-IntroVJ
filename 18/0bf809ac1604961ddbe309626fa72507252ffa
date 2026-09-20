@@ -1,0 +1,60 @@
+Assets/_Project/Scripts/Strategy/IInteractable.cs.meta
+  h_41a4b569d6b3c0 1-3
+Assets/_Project/Scripts/Objects/PrizeObject.cs
+  h_41a4b569d6b3c0 1-33
+Assets/_Project/Scripts/Player/FirstPersonPlayer.cs
+  h_41a4b569d6b3c0 1-49
+Assets/_Project/Scripts/Objects.meta
+  h_41a4b569d6b3c0 1-3
+Assets/_Project/Scripts/Strategy/Door.cs.meta
+  h_41a4b569d6b3c0 1-3
+Assets/_Project/Scripts/Player.meta
+  h_41a4b569d6b3c0 1-3
+Assets/_Project/Scripts/Extra.meta
+  h_41a4b569d6b3c0 1-3
+Assets/_Project/Scripts/Strategy/Door.cs
+  h_41a4b569d6b3c0 1-30
+Assets/_Project/Scripts/Player/PlayerInteractor.cs
+  h_41a4b569d6b3c0 1-20
+Assets/_Project/Scripts/Player/PlayerInteractor.cs.meta
+  h_41a4b569d6b3c0 1-3
+Assets/_Project/Scripts/Extra/GameEvents.cs
+  h_41a4b569d6b3c0 1-73
+Assets/_Project/Scripts/Strategy/IInteractable.cs
+  h_41a4b569d6b3c0 1-7
+Assets/Scenes/Despacho.unity
+  h_41a4b569d6b3c0 1-4507
+Assets/Scenes/Despacho.unity.meta
+  h_41a4b569d6b3c0 1-7
+Assets/Scenes/Memories.meta
+  h_41a4b569d6b3c0 1-8
+Assets/Scenes/SampleScene.unity
+  h_41a4b569d6b3c0 14251,14261,31141,31287,32301,33360,35038
+Assets/Settings/DefaultVolumeProfile.asset
+  h_41a4b569d6b3c0 345-347,382-384
+Assets/_Project/Materials/Door.mat
+  h_41a4b569d6b3c0 1-137
+Assets/_Project/Materials/Door.mat.meta
+  h_41a4b569d6b3c0 1-8
+Assets/_Project/Prefabs/DoorWithWall.prefab
+  h_41a4b569d6b3c0 1-732
+Assets/_Project/Prefabs/DoorWithWall.prefab.meta
+  h_41a4b569d6b3c0 1-7
+Assets/_Project/Scripts/Strategy.meta
+  h_41a4b569d6b3c0 1-3
+ProjectSettings/EditorBuildSettings.asset
+  h_41a4b569d6b3c0 11-13
+ProjectSettings/Packages/com.unity.probuilder/Settings.json
+  h_41a4b569d6b3c0 74-88,158-162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "180bf809ac1604961ddbe309626fa72507252ffa",
+  "prompts": {},
+  "humans": {
+    "h_41a4b569d6b3c0": {
+      "author": "martuschvartz <schvartzmartina@gmail.com>"
+    }
+  }
+}
