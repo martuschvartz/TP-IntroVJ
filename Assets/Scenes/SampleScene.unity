@@ -3450,11 +3450,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 800478408}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &832475411 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2943686918622324683, guid: c244a47f893934460ad2b637df9cbaa2, type: 3}
-  m_PrefabInstance: {fileID: 9180750121429122829}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,7 +3531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KeyHandView
   _zoneId: 0
-  _keyOnTable: {fileID: 832475411}
+  _keyOnTable: {fileID: 0}
   _keyInHand: {fileID: 1772063145}
 --- !u!4 &864771673
 Transform:
@@ -17937,7 +17932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b437456fdd44544e594e5ced6cae3a07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TimerController
-  _duration: 2
+  _duration: 50
   _bonusOnObjectFound: 10
 --- !u!4 &1397822269
 Transform:
