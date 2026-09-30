@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Despacho.unity
     guid: 2a74a17e599db4584ab594f738eef086
   - enabled: 1
+    path: Assets/Scenes/Memories/room.unity
+    guid: 3f002e34cac8d34429831d821625e342
+  - enabled: 1
     path: Assets/Scenes/Memories/room - flashback.unity
     guid: 7c463b07de1ff400ca95bccecfb9c3be
   - enabled: 1

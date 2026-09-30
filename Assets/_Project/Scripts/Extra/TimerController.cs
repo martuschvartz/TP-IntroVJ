@@ -1,75 +1,72 @@
+using TMPro;
 using UnityEngine;
-
-// Cuenta regresiva global. No sabe nada de habitaciones ni de UI: solo
-// avisa por evento cuando el tiempo se acaba, y por su cuenta le suma un
-// poco de tiempo extra cuando se encuentra la llave o la linterna (sea cual
-// sea la zona). El regalo NO suma tiempo: encontrarlo es la condicion de
-// victoria, no un bonus. Se puede probar solo, sin RoomManager, viendo bajar
-// "Remaining" y el log de TimeUp.
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+// Poné este script en un GameObject vacío dentro de la escena "room".
+// Cuenta hacia atrás, muestra el tiempo en un texto de UI (opcional)
+// y al llegar a cero funde la pantalla y vuelve a "Despacho".
 public class TimerController : MonoBehaviour
 {
-    [SerializeField] private float _duration = 10f;
-    [SerializeField] private float _bonusOnObjectFound = 10f;
+    [Header("Tiempo")]
+    [Tooltip("Duración del recuerdo en segundos")]
+    [SerializeField] private float duration = 60f;
 
-    private float _remaining;
-    private bool _isRunning;
-    private bool _hasFired;
+    [Header("UI (opcional)")]
+    [Tooltip("Texto TextMeshPro donde se muestra el tiempo. Puede quedar vacío.")]
+    [SerializeField] private TMP_Text timerText;
 
-    public float Remaining => _remaining;
+    [Header("Al terminar")]
+    [SerializeField] private string returnScene = "Despacho";
+    [SerializeField] private Color fadeColor = Color.white;
+    [SerializeField] private float fadeDuration = 1.2f;
 
-    #region Suscripcion a eventos
-    private void OnEnable()
-    {
-        GameEvents.KeyFound += HandleObjectFound;
-        GameEvents.FlashlightFound += HandleObjectFound;
-    }
+    [Tooltip("Cosas extra que quieras que pasen al terminar (sonidos, etc.)")]
+    public UnityEvent onTimerFinished;
 
-    private void OnDisable()
-    {
-        GameEvents.KeyFound -= HandleObjectFound;
-        GameEvents.FlashlightFound -= HandleObjectFound;
-    }
-    #endregion
+    private float remaining;
+    private bool finished;
+    private bool paused;
+
+    public float Remaining => remaining;
+    public bool IsPaused => paused;
+
+    // Usados por GameStateManager (por ejemplo, al abrir el menú de pausa)
+    public void Pause() => paused = true;
+    public void Resume() => paused = false;
 
     private void Start()
     {
-        _remaining = _duration;
-        _isRunning = true;
+        remaining = duration;
+        UpdateText();
     }
 
     private void Update()
     {
-        if (!_isRunning) return;
+        if (finished || paused) return;
 
-        _remaining -= Time.deltaTime;
-
-        if (_remaining <= 0f)
+        remaining -= Time.deltaTime;
+        if (remaining <= 0f)
         {
-            _remaining = 0f;
-            _isRunning = false;
-
-            if (!_hasFired)
-            {
-                _hasFired = true;
-                GameEvents.RaiseTimeUp();
-            }
+            remaining = 0f;
+            UpdateText();
+            Finish();
+            return;
         }
+
+        UpdateText();
     }
 
-    private void HandleObjectFound(ZoneId zone)
+    private void UpdateText()
     {
-        AddTime(_bonusOnObjectFound);
+        if (timerText == null) return;
+        int total = Mathf.CeilToInt(remaining);
+        timerText.text = $"{total / 60:00}:{total % 60:00}";
     }
 
-    public void AddTime(float seconds)
+    private void Finish()
     {
-        // Si ya se acabo el tiempo, no tiene sentido seguir sumando.
-        if (_hasFired) return;
-        _remaining += seconds;
-    }
-
-    public void Pause()
-    {
-        _isRunning = false;
+        finished = true;
+        onTimerFinished?.Invoke();
+        SceneManager.LoadScene(returnScene);
     }
 }
