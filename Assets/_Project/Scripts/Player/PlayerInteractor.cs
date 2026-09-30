@@ -1,23 +1,45 @@
 using _Project.Scripts.Strategy;
 using UnityEngine;
 
+// se asigna a la camara del jugador en este caso!
 public class PlayerInteractor : MonoBehaviour
 {
+    // El "?." de C# no detecta objetos destruidos por Unity (Destroy), esto sí.
+    private static bool IsAlive(object o) => o is Object obj && obj != null;
+    
     [SerializeField] private float range = 50f;
     [SerializeField] private KeyCode key = KeyCode.E;
 
+    // Solo se cachea el foco: para detectar "empecé/dejé de mirar" hay que recordar el frame anterior.
+    private IFocusable _currentFocus;
+
     private void Update()
     {
-        if (!Input.GetKeyDown(key)) return;
-        
-        Debug.Log("E apretada");
+        IInteractable interactable = null;
+        IFocusable focusable = null;
 
         // Lanzamos un rayo desde la cámara hacia donde estás mirando.
         if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range))
         {
-            Debug.Log("Le pegué a: " + hit.collider.name);
-            IInteractable interactable = hit.collider.GetComponentInParent<IInteractable>();
-            interactable?.Interact(); // si lo que tocamos es interactuable, lo activamos
+            interactable = hit.collider.GetComponentInParent<IInteractable>();
+            focusable = hit.collider.GetComponentInParent<IFocusable>();
         }
+
+        UpdateFocus(focusable);
+
+        if (Input.GetKeyDown(key))
+        {
+            Debug.Log("E apretada, apuntando a: " + (hit.collider ? hit.collider.name : "nada"));
+            interactable?.Interact();
+        }
+    }
+
+    private void UpdateFocus(IFocusable focusable)
+    {
+        if (focusable == _currentFocus) return;
+
+        if (IsAlive(_currentFocus)) _currentFocus.OnLoseFocus();
+        focusable?.OnFocus();
+        _currentFocus = focusable;
     }
 }
