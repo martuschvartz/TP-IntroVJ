@@ -6,10 +6,9 @@ using UnityEngine.SceneManagement;
 public class SceneChanger : MonoBehaviour, IInteractable
 {
     [SerializeField] private string sceneToLoad;
-    
+
     public void Interact()
     {
-        Debug.Log("Interact de la nota");
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadSceneAsync(sceneToLoad);
     }
 }

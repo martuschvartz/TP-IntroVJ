@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 // Controlador de jugador super minimo: caminar (WASD) y girar (mouse).
@@ -7,7 +8,7 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonPlayer : MonoBehaviour
 {
-    private bool CanMove { get; } = true;
+    private bool CanMove { get; set; } = true;
     
     [Header("Movement Parameters")]
     [SerializeField] private float moveSpeed = 100f;
@@ -17,21 +18,42 @@ public class FirstPersonPlayer : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 1200f;
     [SerializeField] private float upperLookLimit = 90f;
     [SerializeField] private float lowerLookLimit = 90f;
-    
-    private Camera _playerCamera;
+
+    [Tooltip("Lo que gira al mirar arriba/abajo. Con Cinemachine: la CinemachineCamera del jugador. Si queda vacío, usa la Camera hija.")]
+    [SerializeField] private Transform lookTarget;
+
     private CharacterController _controller;
-    
+    private InputAction _moveAction;
+    private InputAction _lookAction;
+
     private Vector3 _moveDirection;
     private Vector2 _moveInput;
-    
+
     private float _xRotation;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
-        _playerCamera = GetComponentInChildren<Camera>();
+        if (lookTarget == null) lookTarget = GetComponentInChildren<Camera>().transform;
+        _moveAction = InputSystem.actions.FindAction("Player/Move");
+        _lookAction = InputSystem.actions.FindAction("Player/Look");
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnEnable()
+    {
+        GameEvents.PlayerLockChanged += HandlePlayerLockChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.PlayerLockChanged -= HandlePlayerLockChanged;
+    }
+
+    private void HandlePlayerLockChanged(bool locked)
+    {
+        CanMove = !locked;
     }
 
     private void Update()
@@ -47,20 +69,23 @@ public class FirstPersonPlayer : MonoBehaviour
 
     private void HandleLook()
     {
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
-        
+        // El 0.1 iguala la escala del Input viejo (Input.GetAxis("Mouse X")), así la sensibilidad se siente igual.
+        Vector2 look = _lookAction.ReadValue<Vector2>() * 0.1f;
+        float mouseX = look.x * mouseSensitivity * Time.deltaTime;
+        float mouseY = look.y * mouseSensitivity * Time.deltaTime;
+
         _xRotation -= mouseY;
         _xRotation = Mathf.Clamp(_xRotation, -lowerLookLimit, upperLookLimit);
-        
-        _playerCamera.transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+
+        lookTarget.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
         transform.rotation *= Quaternion.Euler(0, mouseX, 0f);
     }
 
     private void HandleMove()
     {
-        float horizontal = Input.GetAxis("Horizontal") * moveSpeed;
-        float vertical = Input.GetAxis("Vertical") * moveSpeed;
+        Vector2 move = _moveAction.ReadValue<Vector2>();
+        float horizontal = move.x * moveSpeed;
+        float vertical = move.y * moveSpeed;
         
         float directionY = _moveDirection.y;
         _moveDirection = transform.TransformDirection(Vector3.forward) * vertical + transform.TransformDirection(Vector3.right) * horizontal;

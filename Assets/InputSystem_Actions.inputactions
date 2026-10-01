@@ -47,6 +47,16 @@
                     "priority": 0
                 },
                 {
+                    "name": "Clues",
+                    "type": "Button",
+                    "id": "b1106a1c-14fe-4747-b402-92c1bf3c2286",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
+                },
+                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "27c5f898-bc57-4ee1-8800-db469aca5fe3",
@@ -447,6 +457,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5471f31b-3405-46c8-9fc1-bf6e397898fd",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Clues",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

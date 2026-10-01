@@ -1,5 +1,6 @@
 using _Project.Scripts.Strategy;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // se asigna a la camara del jugador en este caso!
 public class PlayerInteractor : MonoBehaviour
@@ -8,10 +9,15 @@ public class PlayerInteractor : MonoBehaviour
     private static bool IsAlive(object o) => o is Object obj && obj != null;
     
     [SerializeField] private float range = 50f;
-    [SerializeField] private KeyCode key = KeyCode.E;
 
     // Solo se cachea el foco: para detectar "empecé/dejé de mirar" hay que recordar el frame anterior.
     private IFocusable _currentFocus;
+    private InputAction _interactAction;
+
+    private void Awake()
+    {
+        _interactAction = InputSystem.actions.FindAction("Player/Interact");
+    }
 
     private void Update()
     {
@@ -27,9 +33,8 @@ public class PlayerInteractor : MonoBehaviour
 
         UpdateFocus(focusable);
 
-        if (Input.GetKeyDown(key))
+        if (_interactAction.WasPressedThisFrame())
         {
-            Debug.Log("E apretada, apuntando a: " + (hit.collider ? hit.collider.name : "nada"));
             interactable?.Interact();
         }
     }
