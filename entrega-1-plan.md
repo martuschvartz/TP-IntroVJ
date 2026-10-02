@@ -187,12 +187,19 @@ Trigger collider en el despacho. En `OnTriggerEnter` con el jugador (y solo la p
 
 **Despacho:**
 1. Los 3 documentos: collider + `MemoryDocument` (id igual al del `MemoryManager` + nombre de la escena).
-2. 4º documento: collider + `FinalCaseDocument` + un panel de UI con 2 botones que llamen a `SceneAdministrator.LoadFinalConfesar` / `LoadFinalNoHacerNada`.
+2. **4º documento (tu caso).** No aparece hasta que visitaste los 3 recuerdos: cuando volvés del tercero ya está ahí. Al tocarlo con E se abre un panel para decidir. Para armarlo:
+   - Un objeto (el expediente) con collider + `FinalCaseDocument`.
+   - En el Canvas, un panel **apagado** con 2 botones: "Confesar", que llama a `SceneAdministrator.LoadFinalConfesar`, y "No hacer nada", que llama a `SceneAdministrator.LoadFinalNoHacerNada`. Para eso, en la escena tiene que haber un objeto con `SceneAdministrator`.
+   - Arrastrar el panel al campo **Decision Panel** del `FinalCaseDocument`.
+   - Al abrirse el panel, el jugador se frena y aparece el mouse para poder hacer click (eso lo hace el script).
 3. Conversación: un Box Collider con **Is Trigger** + `CinematicZone`, una segunda `CinemachineCamera` (con menos FOV, mirando hacia la charla), un AudioSource, un TextMeshPro para subtítulos, una `CommandQueue` y las líneas de diálogo.
 
 **Pesadilla:** Canvas negro con un TextMeshPro, un AudioSource, una `CommandQueue` y `NightmareSequence` (grito y disparo).
 
-**Fin del día:** Canvas con el texto, una `CommandQueue` y `EndOfDaySequence`.
+**Fin del día.** Es una pantalla de transición, no un documento. Aparece cada vez que salís de un recuerdo, se muestra unos segundos y vuelve sola al despacho (sin botón). Como no se puede volver a entrar a un recuerdo, cada recuerdo es "un día" de investigación. Para armarla:
+- Escena nueva llamada exactamente `FinDelDia`, agregada a Build Settings.
+- Un Canvas con fondo negro y un TextMeshPro (ej. "Fin del día").
+- Un objeto vacío con `CommandQueue` + `EndOfDaySequence`. Arrastrar la `CommandQueue` al campo **Queue** y, si quieren, cambiar **Seconds** (3 por defecto).
 
 **Finales:** Canvas con textos o imágenes y un botón que llame a `SceneAdministrator.LoadMenu`.
 
@@ -203,27 +210,33 @@ Trigger collider en el despacho. En `OnTriggerEnter` con el jugador (y solo la p
 **Antes que nada**
 - [ ] Preguntar a los profes por la versión de Unity (6 vs 2022.3.35 LTS)
 
-**Código**
-- [ ] Borrar la práctica vieja y `SampleScene`
-- [ ] Instalar Cinemachine y pasar la cámara del Player
-- [ ] Pasar `FirstPersonPlayer` y `PlayerInteractor` al Input System (+ acción Tab)
-- [ ] `SceneAdministrator` asincrónico + escenas nuevas
-- [ ] `GameEvents` (3 eventos) + `GameProgress`
-- [ ] `ICommand` + comandos + `CommandQueue`
-- [ ] `MemoryClue` + `MemoryManager` + `ClueListUI` (scroll)
-- [ ] Una escena de recuerdo de ejemplo configurada, para copiar
-- [ ] `MemoryDocument` + `FinalCaseDocument`
-- [ ] `CinematicZone`
-- [ ] Prefabs de todos los objetos nuevos
+**Código (hecho)**
+- [x] Borrar la práctica vieja y `SampleScene`
+- [x] Pasar `FirstPersonPlayer` y `PlayerInteractor` al Input System (+ acción Tab)
+- [x] `SceneAdministrator` asincrónico + escenas nuevas
+- [x] `GameEvents` (3 eventos) + `GameProgress`
+- [x] `ICommand` + comandos + `CommandQueue`
+- [x] `MemoryClue` + `MemoryManager` + `ClueListUI` (scroll)
+- [x] `MemoryDocument` + `FinalCaseDocument` + `CinematicZone`
+- [x] `NightmareSequence` + `EndOfDaySequence`
+
+**Setup general (editor)**
+- [ ] Instalar Cinemachine y pasar la cámara del Player (`CinemachineCamera` en el `Eye` + `CinemachineBrain` en la Main Camera)
+- [ ] Botón "Jugar" del menú → `StartNewGame` (cuando exista la Pesadilla)
+- [ ] Agregar cada escena nueva a Build Settings
+- [ ] Prefabs de todos los objetos nuevos (documentos, pistas, renglón de la lista)
 
 **Escenas**
 - [ ] Pesadilla
-- [ ] Despacho (documentos + conversación de fondo)
+- [ ] Despacho: los 3 documentos de los sospechosos (`MemoryDocument`)
+- [ ] Despacho: el 4º documento, tu caso (`FinalCaseDocument`) + panel de decisión con 2 botones
+- [ ] Despacho: conversación de fondo (`CinematicZone` + cámara de zoom + subtítulos)
 - [ ] Recuerdo Mateo
 - [ ] Recuerdo Camila
 - [ ] Recuerdo Romina
-- [ ] Fin del día
-- [ ] Final 1 y Final 2
+- [ ] Fin del día (pantalla de transición que vuelve sola al despacho)
+- [ ] Final Confesar
+- [ ] Final No hacer nada
 
 **Otros**
 - [ ] Pitch de venta
