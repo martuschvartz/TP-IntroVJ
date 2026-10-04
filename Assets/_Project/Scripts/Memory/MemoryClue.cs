@@ -59,6 +59,7 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
         if (Found || _locked) return;
 
         Found = true;
+        Debug.Log("Pista encontrada: " + name + " (" + type + ")");
         if (highlight != null) highlight.SetActive(false);
         UpdateGlow();
 

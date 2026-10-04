@@ -20,5 +20,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Info.unity
     guid: 804208fa46599447fb75d092c50ea93a
+  - enabled: 1
+    path: Assets/Scenes/FinDelDIa.unity
+    guid: 1f8a26aa894238645a9a4c3ab274971c
+  - enabled: 1
+    path: Assets/Scenes/Memories/Mati/Living.unity
+    guid: 6aa250ee8bbac014e9d3e51c303587de
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
