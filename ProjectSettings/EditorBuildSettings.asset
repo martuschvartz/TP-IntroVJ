@@ -26,5 +26,29 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Memories/Mati/Living.unity
     guid: 6aa250ee8bbac014e9d3e51c303587de
+  - enabled: 1
+    path: Assets/Scenes/Memories/romina/shed.unity
+    guid: b707e3b51da38ce458748b4357989761
+  - enabled: 1
+    path: Assets/Scenes/Memories/Ramiro/car.unity
+    guid: 7996598da0c8b6c4d8f6b70a0171ea50
+  - enabled: 1
+    path: Assets/Scenes/FinalConfesar.unity
+    guid: 6767343853b9d3f40bf5fdecdb50885d
+  - enabled: 0
+    path: Assets/Scenes/FinalNoConfesar.unity
+    guid: 8921efc665a62244eb16f8ae40bd3445
+  - enabled: 1
+    path: Assets/Scenes/Final.unity
+    guid: 9caa2d77b8e5a674e8b34c8ce34fc24c
+  - enabled: 1
+    path: Assets/Scenes/FinalNoHacerNada.unity
+    guid: 9fd436c614fea02489d95c8a6f8a08cd
+  - enabled: 0
+    path: Assets/Scenes/Memories/Mati/Living X.unity
+    guid: b6349a0980ba98345aabf94dec5878d2
+  - enabled: 1
+    path: Assets/Scenes/Memories/Mati/LivingParalelo.unity
+    guid: 9af586cd2ac83ff46a3d7e20d11eaa58
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

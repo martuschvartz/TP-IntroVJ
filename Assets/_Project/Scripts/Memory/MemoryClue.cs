@@ -35,6 +35,14 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
     [Tooltip("Sonido de la revelación (la llamada, el grito + disparo...). Puede quedar vacío.")]
     [SerializeField] private AudioClip revealSound;
 
+    [Header("Cuarto paralelo (solo Trigger, opcional)")]
+    [Tooltip("Nombre de la escena del cuarto paralelo (tiene que estar en Build Profiles). Si queda vacío, no hay cuarto paralelo.")]
+    [SerializeField] private string parallelSceneName;
+    [SerializeField] private Transform player;
+    [SerializeField] private float parallelRoomSeconds = 30f;
+    [Tooltip("Se apaga mientras estás en el cuarto paralelo (por ejemplo, el padre con todo el cuarto original). Puede quedar vacío.")]
+    [SerializeField] private GameObject hideWhileAway;
+
     private bool _locked;
 
     public ClueType Type => type;
@@ -87,8 +95,25 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
             Destroy(go);
         }
 
+        if (!string.IsNullOrEmpty(parallelSceneName))
+        {
+            RevealInParallelRoom();
+            return;
+        }
+
         if (revealPrefab != null) queue.Enqueue(new SpawnCommand(revealPrefab, revealPoint));
         if (revealSound != null) queue.Enqueue(new PlayAudioCommand(audioSource, revealSound));
+    }
+
+    // Te lleva al cuarto paralelo (otra escena), te deja ahi un rato y te devuelve.
+    // Lo que se ve alla se arma directo en esa escena, sin revealPrefab.
+    // Como todo pasa en la cola, si el trigger fue la ultima pista, MemoryManager
+    // espera a que vuelvas antes de salir del recuerdo.
+    private void RevealInParallelRoom()
+    {
+        // Sin esperar a que termine: el audio suena mientras estas en el cuarto paralelo.
+        if (revealSound != null) queue.Enqueue(new PlayAudioCommand(audioSource, revealSound, false));
+        queue.Enqueue(new VisitParallelSceneCommand(parallelSceneName, player, parallelRoomSeconds, hideWhileAway));
     }
 
     private void UpdateGlow()

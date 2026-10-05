@@ -42,9 +42,8 @@ public class ClueListUI : MonoBehaviour
         {
             TMP_Text row = Instantiate(rowPrefab, content);
             row.text = "[  ] " + clue.ListText;
-
-            // El trigger no aparece en la lista hasta encontrarlo, para no spoilear.
-            row.gameObject.SetActive(clue.Type != ClueType.Trigger);
+            // Por si el prefab del renglon quedo guardado apagado.
+            row.gameObject.SetActive(true);
             _rows.Add(clue, row);
         }
     }
@@ -58,7 +57,6 @@ public class ClueListUI : MonoBehaviour
     {
         TMP_Text row = _rows[clue];
         row.text = "[x] " + clue.ListText;
-        row.gameObject.SetActive(true);
     }
 
     private void HandleMemoryCompleted(string memoryId)
