@@ -9,6 +9,8 @@ public class PlayerInteractor : MonoBehaviour
     private static bool IsAlive(object o) => o is Object obj && obj != null;
     
     [SerializeField] private float range = 50f;
+    [Tooltip("Debug: al apretar E, escribe en la Console contra qué collider chocó el rayo.")]
+    [SerializeField] private bool logHits = true;
 
     // Solo se cachea el foco: para detectar "empecé/dejé de mirar" hay que recordar el frame anterior.
     private IFocusable _currentFocus;
@@ -35,8 +37,24 @@ public class PlayerInteractor : MonoBehaviour
 
         if (_interactAction.WasPressedThisFrame())
         {
+            if (logHits) LogHit(hit, interactable);
             interactable?.Interact();
         }
+    }
+
+    // Para entender por que un objeto "no toma" la E: muestra que tocó el rayo
+    // y si ese collider pertenece a algo interactuable. Hacé click en el log y
+    // Unity te marca el objeto en la Hierarchy.
+    private static void LogHit(RaycastHit hit, IInteractable interactable)
+    {
+        if (hit.collider == null)
+        {
+            Debug.Log("[Interactor] El rayo no tocó nada.");
+            return;
+        }
+
+        string target = interactable != null ? ((Component)interactable).name : "NADA interactuable";
+        Debug.Log($"[Interactor] Tocó el collider de '{hit.collider.name}' -> {target}", hit.collider);
     }
 
     private void UpdateFocus(IFocusable focusable)

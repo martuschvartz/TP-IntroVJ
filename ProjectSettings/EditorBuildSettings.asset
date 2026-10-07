@@ -50,5 +50,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Memories/Mati/LivingParalelo.unity
     guid: 9af586cd2ac83ff46a3d7e20d11eaa58
+  - enabled: 1
+    path: Assets/Scenes/Memories/Mati/LivingParalelo2.unity
+    guid: 714480b92afaad64c84d67aedb97eb59
+  - enabled: 1
+    path: Assets/Scenes/Memories/Ramiro/carParalel.unity
+    guid: 109b600d8964a3c4eb2a9ae3aaf3a73d
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
