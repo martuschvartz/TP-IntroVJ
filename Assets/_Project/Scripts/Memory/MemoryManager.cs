@@ -14,6 +14,8 @@ public class MemoryManager : MonoBehaviour
     [SerializeField] private CommandQueue queue;
     [Tooltip("Segundos que se queda en el recuerdo después de encontrar todo, antes de salir.")]
     [SerializeField] private float exitDelay = 2f;
+    [Tooltip("Escena de 'fin del día' a la que se va al terminar ESTE recuerdo (tiene que estar en Build Profiles).")]
+    [SerializeField] private string endOfDayScene = SceneAdministrator.FIN_DEL_DIA;
 
     public MemoryClue[] Clues => clues;
 
@@ -58,7 +60,7 @@ public class MemoryManager : MonoBehaviour
     {
         GameEvents.RaisePlayerLockChanged(true);
         GameProgress.MarkVisited(memoryId);
-        SceneManager.LoadSceneAsync(SceneAdministrator.FIN_DEL_DIA);
+        SceneManager.LoadSceneAsync(endOfDayScene);
     }
 
     private bool AllFound()

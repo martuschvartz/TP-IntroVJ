@@ -146,7 +146,7 @@ Transform:
   m_GameObject: {fileID: 69275413}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 143, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -225,7 +225,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123008572}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -234,7 +234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -594, y: -446}
+  m_AnchoredPosition: {x: 804, y: -446}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &123008574
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.06415099, g: 0.05168391, b: 0.05168391, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -365,8 +365,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0024719, y: 0.0024872}
-  m_SizeDelta: {x: 799.9, y: 630.51}
+  m_AnchoredPosition: {x: -445, y: 0.0024872}
+  m_SizeDelta: {x: 2000, y: 2000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &330543886
 MonoBehaviour:
@@ -440,7 +440,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -4, y: 0}
   m_SizeDelta: {x: 1672, y: 941}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &762033548
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 0.74509805}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.74509805}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -551,7 +551,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Back to Title
+  m_Text: Volver
 --- !u!222 &1101813702
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -594,8 +594,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0.000045776}
-  m_SizeDelta: {x: 775.3, y: 596.4}
+  m_AnchoredPosition: {x: -451, y: -41}
+  m_SizeDelta: {x: 1500, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1509391592
 MonoBehaviour:
@@ -630,14 +630,27 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "You are one of the few who can step inside another person's memories.\n\nFor
-    years, the same nightmare has woken you \u2014 a muffled scream, a summer night
-    you can't quite piece together. Now an old case, one everyone believed was closed,
-    has quietly landed back on your hands, one way or another.\n\nSlip into the memories
-    of the three who were questioned that night. Retrace their steps, one fogged-over
-    fragment at a time, and reconstruct what really happened.\n\nThe truth is in
-    there, waiting to be dug up. Just don't assume you'll like how close to home
-    it leads."
+  m_Text: "Te llam\xE1s Alex. Sos polic\xEDa, pero no de los que salen a la calle:
+    sos especialista en documentos de memoria. Naciste con el gen. Cuando cualquier
+    otra persona agarra la transcripci\xF3n de un recuerdo, lee palabras en una hoja.
+    Cuando la agarr\xE1s vos, entr\xE1s.\n\nHace siete a\xF1os que so\xF1\xE1s lo
+    mismo. Negro. Un grito. Un disparo. Te despert\xE1s empapado, con el coraz\xF3n
+    en la garganta, y nunca sab\xE9s de d\xF3nde viene. Probaste pastillas, probaste
+    dejar de pensar en eso. La pesadilla vuelve igual, como si algo adentro tuyo
+    se negara a soltarla.\n\nHoy ten\xEDa que ser un d\xEDa cualquiera: un caso vecinal,
+    un perro y un robot cortac\xE9sped. Hasta que alguien en la oficina dijo un nombre:
+    Luca.\n\nHace siete a\xF1os, en una caba\xF1a junto a la laguna, Luca apareci\xF3
+    muerto de un disparo. La polic\xEDa lo cerr\xF3 r\xE1pido: un robo que sali\xF3
+    mal. Esa noche vos estabas ah\xED, con Mati, Ramiro y Romina. Tu propio documento
+    de memoria dice que dormiste de corrido hasta la ma\xF1ana. Es la coartada m\xE1s
+    limpia de todas.\n\nPero la sequ\xEDa baj\xF3 la laguna y apareci\xF3 la escopeta.
+    Era de la caba\xF1a. Ning\xFAn ladr\xF3n usa el arma que cuelga de la pared.
+    El caso se reabre, un juez autoriz\xF3 revisar los recuerdos de los tres, y por
+    falta de especialistas el expediente termin\xF3 sobre tu escritorio.\n\nTres
+    documentos. Tres coartadas. Tres versiones de una noche que vos no record\xE1s.\n\nAcordate
+    de las reglas: lo que ves es lo que ellos creen, no lo que pas\xF3. Las mentiras
+    dejan marcas. Y cada inmersi\xF3n tiene el tiempo contado.\n\nAgarr\xE1 la primera
+    hoja. Y trat\xE1 de no pensar en el grito."
 --- !u!222 &1509391593
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -814,7 +827,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1650712074
 RectTransform:
   m_ObjectHideFlags: 0
@@ -831,7 +844,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -594, y: 324.3}
+  m_AnchoredPosition: {x: -594, y: -304}
   m_SizeDelta: {x: 427.7, y: 242.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650712075

@@ -54,8 +54,16 @@ public class VisitParallelSceneCommand : ICommand
             yield return new TeleportCommand(_player, point.transform.position, point.transform.rotation).Execute();
         }
 
-        // 3. Quedarse un rato.
-        yield return new WaitForSeconds(_seconds);
+        // 3. Quedarse un rato. Si la escena tiene guion (Resources/Guiones/<escena>.txt),
+        // se muestra como subtitulos y no se vuelve hasta que termine de pasar.
+        ParallelSubtitles subtitles = ParallelSubtitles.TryStart(_sceneName);
+        float elapsed = 0f;
+        while (elapsed < _seconds || (subtitles != null && subtitles.IsPlaying))
+        {
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        if (subtitles != null) Object.Destroy(subtitles.gameObject);
 
         // 4. Volver a donde estabas y descargar el cuarto paralelo.
         if (_hideWhileAway != null) _hideWhileAway.SetActive(true);

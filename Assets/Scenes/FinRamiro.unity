@@ -395,7 +395,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 96.32434, y: -51.14566}
-  m_SizeDelta: {x: 392.6487, y: 152.2913}
+  m_SizeDelta: {x: 1500, y: 152.2913}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1227378594
 MonoBehaviour:
@@ -417,7 +417,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "FIN DEL D\xCDA"
+  m_text: "Alex manejaba.\n\nLo repito y no me suena a nada. No recuerdo la ruta
+    ni el golpe. No recuerdo haber querido frenar.\n\nPero Ramiro lo dijo sin dudar,
+    como quien cuenta algo que lo atormenta.\n\nLuca quer\xEDa ir a la polic\xEDa.
+    Quer\xEDa que confes\xE1ramos.\n\nY Luca no lleg\xF3 a la ma\xF1ana siguiente."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

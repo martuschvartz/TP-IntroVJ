@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: eac2ef371405749e0bd050b4c3272f16, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 2
-  listText: "No vi nada extra\xF1o"
+  listText: En el camino no vi nada raro afuera
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 368163416}
@@ -3327,7 +3327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 0
-  listText: Fui a buscar para prender el fuego
+  listText: Fui a buscar madera para el fuego
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 368163416}
@@ -4444,7 +4444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 1
-  listText: El cobertizo estaba ordenado
+  listText: Estaba todo ordenado
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 368163416}
@@ -7699,6 +7699,7 @@ MonoBehaviour:
   - {fileID: 575053}
   queue: {fileID: 368163416}
   exitDelay: 2
+  endOfDayScene: FinRomina
 --- !u!4 &1760781649
 Transform:
   m_ObjectHideFlags: 0

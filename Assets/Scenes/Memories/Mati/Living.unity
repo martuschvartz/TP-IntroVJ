@@ -425,7 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 0
-  listText: "Fum\xF3 2 cigarrillos"
+  listText: "Fum\xE9 bastante, m\xE1s de lo que suelo"
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 0}
@@ -2045,6 +2045,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dfa0d45cd834394f8c62eec3b88c8c4, type: 3}
+--- !u!1001 &482575934
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1527335154527126, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_Name
+      value: wine thin glass (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -103.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 330.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1311.3998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4386004159453184, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 14973bbaa08d142449d2405142caff8d, type: 3}
 --- !u!1 &518471369 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3970197297895852635, guid: 65acb63846e2c9a429906aa8e2ecdd54, type: 3}
@@ -2063,7 +2120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 2
-  listText: "Se lav\xF3 los dientes"
+  listText: "Me cepill\xE9 los dientes"
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 368163416}
@@ -3146,7 +3203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 0
-  listText: "Ley\xF3 un libro en los pufs"
+  listText: "Me qued\xE9 leyendo un rato"
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 0}
@@ -5232,7 +5289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 1
-  listText: 'En la casa solo estaban Mati, Romi y Ramiro '
+  listText: "\xC9ramos solo cuatro en la casa "
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 0}
@@ -6112,12 +6169,13 @@ MonoBehaviour:
   memoryId: Matias
   clues:
   - {fileID: 106264820}
-  - {fileID: 951961792}
   - {fileID: 2115763658}
+  - {fileID: 951961792}
   - {fileID: 1504639296}
   - {fileID: 518471370}
   queue: {fileID: 368163416}
-  exitDelay: 2
+  exitDelay: 1
+  endOfDayScene: FinMatias
 --- !u!4 &1760781649
 Transform:
   m_ObjectHideFlags: 0
@@ -7164,7 +7222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 1
-  listText: "Jug\xF3 al ajedrez con Romi"
+  listText: "Jugu\xE9 al ajedrez con Romina, una partida larga"
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 0}
@@ -7297,6 +7355,7 @@ SceneRoots:
   - {fileID: 1806219099}
   - {fileID: 1412477118}
   - {fileID: 1464116667}
+  - {fileID: 482575934}
   - {fileID: 906357332}
   - {fileID: 339042889}
   - {fileID: 964120597}
