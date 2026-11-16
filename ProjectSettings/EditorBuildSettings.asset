@@ -6,34 +6,37 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu/Menu.unity
+    path: Assets/_Project/Scenes/Menu/Menu.unity
     guid: 5d220b20b338f4bb98d5a28d6059a8a5
   - enabled: 1
-    path: Assets/Scenes/CharacterScenes/Despacho.unity
+    path: Assets/_Project/Scenes/CharacterScenes/Despacho.unity
     guid: 2a74a17e599db4584ab594f738eef086
   - enabled: 1
-    path: Assets/Scenes/Menu/Info.unity
+    path: Assets/_Project/Scenes/Menu/Info.unity
     guid: 804208fa46599447fb75d092c50ea93a
   - enabled: 1
-    path: Assets/Scenes/Extra/FinDelDIa.unity
+    path: Assets/_Project/Scenes/Extra/FinDelDia.unity
     guid: 1f8a26aa894238645a9a4c3ab274971c
   - enabled: 1
-    path: Assets/Scenes/Memories/Mateo/Living.unity
+    path: Assets/_Project/Scenes/Memories/Mateo/Living.unity
     guid: 6aa250ee8bbac014e9d3e51c303587de
   - enabled: 1
-    path: Assets/Scenes/Memories/Romina/shed.unity
+    path: Assets/_Project/Scenes/Memories/Romina/Shed.unity
     guid: b707e3b51da38ce458748b4357989761
   - enabled: 1
-    path: Assets/Scenes/Memories/Camila/car.unity
+    path: Assets/_Project/Scenes/Memories/Camila/Car.unity
     guid: 7996598da0c8b6c4d8f6b70a0171ea50
   - enabled: 1
-    path: Assets/Scenes/Endings/FinalConfesar.unity
+    path: Assets/_Project/Scenes/Endings/FinalConfesar.unity
     guid: 6767343853b9d3f40bf5fdecdb50885d
   - enabled: 1
-    path: Assets/Scenes/Endings/FinalNoHacerNada.unity
+    path: Assets/_Project/Scenes/Endings/FinalNoHacerNada.unity
     guid: 9fd436c614fea02489d95c8a6f8a08cd
   - enabled: 1
-    path: Assets/Scenes/Memories/Mateo/LivingParalelo.unity
+    path: Assets/_Project/Scenes/Memories/Mateo/LivingParalelo.unity
     guid: 9af586cd2ac83ff46a3d7e20d11eaa58
+  - enabled: 1
+    path: Assets/_Project/Scenes/Extra/AsyncLoading.unity
+    guid: fd265f823419547ff87b266c418123c2
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

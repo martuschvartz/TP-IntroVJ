@@ -1,4 +1,4 @@
-using _Project.Scripts.Managers;
+using _Project.Scripts.Utility;
 using UnityEngine;
 
 // Pantalla de "Fin del dia": se muestra unos segundos y vuelve al despacho.
@@ -11,6 +11,6 @@ public class EndOfDaySequence : MonoBehaviour
     private void Start()
     {
         queue.Enqueue(new WaitCommand(seconds));
-        queue.Enqueue(new LoadSceneCommand(SceneAdministrator.DESPACHO));
+        queue.Enqueue(new LoadSceneCommand(SceneName.Despacho, withLoadingScreen: true));
     }
 }

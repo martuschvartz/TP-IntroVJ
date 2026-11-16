@@ -283,7 +283,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 460072620}
         m_TargetAssemblyTypeName: _Project.Scripts.Managers.SceneAdministrator, Assembly-CSharp
-        m_MethodName: LoadDespacho
+        m_MethodName: LoadNewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

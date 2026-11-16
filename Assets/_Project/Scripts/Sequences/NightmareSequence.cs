@@ -1,4 +1,4 @@
-using _Project.Scripts.Managers;
+using _Project.Scripts.Utility;
 using TMPro;
 using UnityEngine;
 
@@ -28,6 +28,6 @@ public class NightmareSequence : MonoBehaviour
         queue.Enqueue(new PlayAudioCommand(audioSource, gunshot));
         queue.Enqueue(new WaitCommand(1.5f));
         queue.Enqueue(new ShowTextCommand(label, afterText, 3f));
-        queue.Enqueue(new LoadSceneCommand(SceneAdministrator.DESPACHO));
+        queue.Enqueue(new LoadSceneCommand(SceneName.Despacho));
     }
 }

@@ -1,3 +1,4 @@
+using _Project.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -5,29 +6,28 @@ namespace _Project.Scripts.Managers
 {
     public class SceneAdministrator : MonoBehaviour
     {
-        // Pantallas
-        public const string MENU = "Menu";
-        public const string INFO = "Info";
-        public const string FIN_DEL_DIA = "FinDelDia";
-        public const string FINAL_CONFESAR = "FinalConfesar";
-        public const string FINAL_NO_HACER_NADA = "FinalNoHacerNada";
+        public static SceneName NextScene { get; private set; } = SceneName.Despacho;
 
-        // Niveles
-        public const string PESADILLA = "Pesadilla";
-        public const string DESPACHO = "Despacho";
+        private static void Load(string scene) => SceneManager.LoadSceneAsync(scene);
 
-        public void LoadMenu() => SceneManager.LoadSceneAsync(MENU);
-        public void LoadInfo() => SceneManager.LoadSceneAsync(INFO);
-        public void LoadDespacho() => SceneManager.LoadSceneAsync(DESPACHO);
-        public void LoadFinalConfesar() => SceneManager.LoadSceneAsync(FINAL_CONFESAR);
-        public void LoadFinalNoHacerNada() => SceneManager.LoadSceneAsync(FINAL_NO_HACER_NADA);
-        public void QuitGame() => Application.Quit();
+        // Carga directa, sin pantalla de carga. Para usar desde código.
+        public static void Load(SceneName scene) => Load(scene.ToString());
 
-        // Para el botón "Jugar" del menú: arranca una partida de cero.
-        public void StartNewGame()
+        public static void LoadWithLoadingScreen(SceneName scene)
         {
-            GameProgress.Reset();
-            SceneManager.LoadSceneAsync(PESADILLA);
+            NextScene = scene;
+            Load(SceneName.AsyncLoading.ToString());
         }
+        
+        public void LoadNewGame()
+        {
+            GameProgress.Reset();                          
+            LoadWithLoadingScreen(SceneName.Despacho);     
+        }
+        public void LoadMenu() => Load(SceneName.Menu.ToString());
+        public void LoadInfo() => Load(SceneName.Info.ToString());
+        public void LoadFinalConfesar() => Load(SceneName.FinalConfesar.ToString());
+        public void LoadFinalNoHacerNada() => Load(SceneName.FinalNoHacerNada.ToString());
+        public void QuitGame() => Application.Quit();
     }
 }

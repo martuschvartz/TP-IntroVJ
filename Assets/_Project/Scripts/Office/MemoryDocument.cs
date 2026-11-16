@@ -1,6 +1,7 @@
+using _Project.Scripts.Managers;
 using _Project.Scripts.Strategy;
+using _Project.Scripts.Utility;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // Documento de un sospechoso en el despacho. Tocarlo = entrar a su recuerdo.
 // Si ese recuerdo ya fue visitado, el documento no aparece (no se puede volver a entrar).
@@ -9,8 +10,8 @@ public class MemoryDocument : MonoBehaviour, IInteractable
 {
     [Tooltip("Id del recuerdo. Tiene que coincidir con el del MemoryManager de la escena. Ej: Mateo")]
     [SerializeField] private string memoryId;
-    [Tooltip("Nombre de la escena del recuerdo. Ej: RecuerdoMateo")]
-    [SerializeField] private string sceneToLoad;
+    [Tooltip("Escena del recuerdo. Se entra pasando por la pantalla de carga.")]
+    [SerializeField] private SceneName sceneToLoad;
 
     private void Start()
     {
@@ -19,6 +20,6 @@ public class MemoryDocument : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        SceneManager.LoadSceneAsync(sceneToLoad);
+        SceneAdministrator.LoadWithLoadingScreen(sceneToLoad);
     }
 }
