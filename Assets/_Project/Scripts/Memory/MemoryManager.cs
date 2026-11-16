@@ -1,7 +1,7 @@
 using System.Collections;
 using _Project.Scripts.Managers;
+using _Project.Scripts.Utility;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // Manager de un recuerdo (hay uno por escena de recuerdo).
 // Lleva la cuenta de las pistas encontradas, decide cuando se puede activar
@@ -58,7 +58,7 @@ public class MemoryManager : MonoBehaviour
     {
         GameEvents.RaisePlayerLockChanged(true);
         GameProgress.MarkVisited(memoryId);
-        SceneManager.LoadSceneAsync(SceneAdministrator.FIN_DEL_DIA);
+        SceneAdministrator.Load(SceneName.FinDelDia);
     }
 
     private bool AllFound()

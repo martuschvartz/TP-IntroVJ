@@ -1,18 +1,26 @@
 using System.Collections;
-using UnityEngine.SceneManagement;
+using _Project.Scripts.Managers;
+using _Project.Scripts.Utility;
 
-// Carga una escena de forma asincronica.
+// Cambia de escena como un paso más de una secuencia. No carga por su cuenta:
+// le pide a SceneAdministrator, que es el único que sabe cargar escenas.
 public class LoadSceneCommand : ICommand
 {
-    private readonly string _sceneName;
+    private readonly SceneName _scene;
+    private readonly bool _withLoadingScreen;
 
-    public LoadSceneCommand(string sceneName)
+    public LoadSceneCommand(SceneName scene, bool withLoadingScreen = false)
     {
-        _sceneName = sceneName;
+        _scene = scene;
+        _withLoadingScreen = withLoadingScreen;
     }
 
     public IEnumerator Execute()
     {
-        yield return SceneManager.LoadSceneAsync(_sceneName);
+        if (_withLoadingScreen) SceneAdministrator.LoadWithLoadingScreen(_scene);
+        else SceneAdministrator.Load(_scene);
+
+        // Es el último paso: al cambiar de escena, la cola se destruye con ella.
+        yield break;
     }
 }
