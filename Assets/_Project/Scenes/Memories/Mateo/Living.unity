@@ -1262,9 +1262,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3745702922324320767, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: far clip plane
+      value: 5000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3745702922324320767, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: near clip plane
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5597869998138851124, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.16799976
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.50300294
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.0399933
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 124.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 30.03003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7713293028875191677, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8784055583235536869, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: range
@@ -2450,6 +2498,10 @@ PrefabInstance:
     - target: {fileID: 115294, guid: d73dc4346f9e10d42a755e4faff4414e, type: 3}
       propertyPath: m_Name
       value: THE_WOOD_CABIN_02 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 115294, guid: d73dc4346f9e10d42a755e4faff4414e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 415294, guid: d73dc4346f9e10d42a755e4faff4414e, type: 3}
       propertyPath: m_LocalScale.x
