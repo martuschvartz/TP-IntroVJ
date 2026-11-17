@@ -5857,7 +5857,7 @@ MonoBehaviour:
   testimony: "El d\xEDa anterior hab\xEDamos ido al pueblo a comprar vino. Cuando
     volvimos dejamos el auto lejos de la casa, entre los \xE1rboles, porque el camino
     de entrada es angosto y no quer\xEDamos rayarlo. Ese d\xEDa no lo sacamos y ah\xED
-    qued\xF3"
+    qued\xF3."
   minReadSeconds: 2
 --- !u!65 &1767334233
 BoxCollider:
