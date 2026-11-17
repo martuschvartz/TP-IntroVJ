@@ -9,18 +9,56 @@ public static class GameProgress
 
     private static readonly HashSet<string> VisitedMemories = new HashSet<string>();
 
+    // Tablero: pistas encontradas y los hilos que tiro el jugador.
+    // Se guardan como assets (ClueData / StatementData) porque los MemoryClue
+    // se destruyen al salir del recuerdo.
+    private static readonly List<ClueData> FoundCluesList = new List<ClueData>();
+    private static readonly List<Connection> ConnectionsList = new List<Connection>();
+
     // Para que la conversacion del despacho pase una sola vez.
     public static bool OfficeCinematicSeen { get; set; }
 
+    // Se prende al salir de un recuerdo: el despacho abre el tablero en modo edicion
+    // (fin del dia). Lo apaga el tablero al "Finalizar investigacion por hoy".
+    public static bool EndOfDayPending { get; set; }
+
     public static bool AllVisited => VisitedMemories.Count >= TotalMemories;
+
+    public static IReadOnlyList<ClueData> FoundClues => FoundCluesList;
+    public static IReadOnlyList<Connection> Connections => ConnectionsList;
 
     public static void MarkVisited(string memoryId) => VisitedMemories.Add(memoryId);
 
     public static bool IsVisited(string memoryId) => VisitedMemories.Contains(memoryId);
 
+    #region Tablero
+
+    public static void AddFoundClue(ClueData clue)
+    {
+        if (clue == null || FoundCluesList.Contains(clue)) return;
+        FoundCluesList.Add(clue);
+    }
+
+    // Entre una pista y una declaracion hay a lo sumo un hilo: si ya habia uno, se reemplaza.
+    public static void SetConnection(ClueData clue, StatementData statement, ThreadColor color)
+    {
+        RemoveConnection(clue, statement);
+        ConnectionsList.Add(new Connection(clue, statement, color));
+    }
+
+    public static void RemoveConnection(ClueData clue, StatementData statement)
+    {
+        ConnectionsList.RemoveAll(c => c.Joins(clue, statement));
+    }
+
+    #endregion
+
     public static void Reset()
     {
         VisitedMemories.Clear();
+        FoundCluesList.Clear();
+        ConnectionsList.Clear();
         OfficeCinematicSeen = false;
+        EndOfDayPending = false;
     }
 }
