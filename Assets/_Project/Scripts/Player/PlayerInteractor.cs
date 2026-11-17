@@ -34,14 +34,38 @@ public class PlayerInteractor : MonoBehaviour
     // Solo se cachea el foco: para detectar "empecé/dejé de mirar" hay que recordar el frame anterior.
     private IFocusable _currentFocus;
     private InputAction _interactAction;
+    // Mientras el jugador esta bloqueado (cinematica, tablero abierto...) no se interactua:
+    // si no, apretar E con el tablero abierto activaria lo que quedo en el centro de la pantalla.
+    private bool _locked;
 
     private void Awake()
     {
         _interactAction = InputSystem.actions.FindAction("Player/Interact");
     }
 
+    private void OnEnable()
+    {
+        GameEvents.PlayerLockChanged += HandlePlayerLockChanged;
+    }
+
+    private void OnDisable()
+    {
+        GameEvents.PlayerLockChanged -= HandlePlayerLockChanged;
+    }
+
+    private void HandlePlayerLockChanged(bool locked)
+    {
+        _locked = locked;
+    }
+
     private void Update()
     {
+        if (_locked)
+        {
+            UpdateFocus(null);
+            return;
+        }
+
         IInteractable interactable = null;
         IFocusable focusable = null;
 
