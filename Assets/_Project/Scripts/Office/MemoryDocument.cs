@@ -18,6 +18,8 @@ public class MemoryDocument : MonoBehaviour, IInteractable
         if (GameProgress.IsVisited(memoryId)) gameObject.SetActive(false);
     }
 
+    public CrosshairIcon Icon => CrosshairIcon.Hand;
+
     public void Interact()
     {
         SceneAdministrator.LoadWithLoadingScreen(sceneToLoad);

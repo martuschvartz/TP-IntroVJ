@@ -1,4 +1,5 @@
 using _Project.Scripts.Strategy;
+using _Project.Scripts.Utility;
 using UnityEngine;
 
 // Va en el objeto FIJO, el que tiene el Box Collider trigger.
@@ -45,6 +46,8 @@ public class Door : MonoBehaviour, IInteractable
         Quaternion target = _isOpen ? _openRot : _closedRot;
         hinge.localRotation = Quaternion.Slerp(hinge.localRotation, target, Time.deltaTime * rotationSpeed);
     }
+
+    public CrosshairIcon Icon => CrosshairIcon.Hand;
 
     public void Interact()
     {

@@ -1,4 +1,5 @@
 using _Project.Scripts.Strategy;
+using _Project.Scripts.Utility;
 using UnityEngine;
 
 // El 4º documento del despacho: tu propio caso. Solo aparece cuando ya
@@ -16,6 +17,8 @@ public class FinalCaseDocument : MonoBehaviour, IInteractable
         decisionPanel.SetActive(false);
         gameObject.SetActive(GameProgress.AllVisited);
     }
+
+    public CrosshairIcon Icon => CrosshairIcon.Hand;
 
     public void Interact()
     {

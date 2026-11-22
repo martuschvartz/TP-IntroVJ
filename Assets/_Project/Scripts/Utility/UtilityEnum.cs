@@ -44,7 +44,18 @@ namespace _Project.Scripts.Utility
         #region Carga Async
         
         AsyncLoading = 11,
-        
+
         #endregion
+    }
+
+    /* Qué muestra la mira del HUD según lo que el jugador está mirando.
+     * Cada IInteractable dice el suyo (propiedad Icon), así PlayerInteractor
+     * no necesita saber si es una pista, una puerta o un documento.
+     */
+    public enum CrosshairIcon
+    {
+        Dot = 0,    // nada interactuable
+        Hand = 1,   // interactuable común (puerta, documento, tablero...)
+        Clue = 2,   // pista de un recuerdo -> libreta
     }
 }
