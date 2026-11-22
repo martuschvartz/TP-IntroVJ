@@ -1,4 +1,5 @@
 using _Project.Scripts.Strategy;
+using _Project.Scripts.Utility;
 using UnityEngine;
 
 public enum ClueType
@@ -62,6 +63,9 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
         _locked = locked;
         UpdateGlow();
     }
+
+    // Ya encontrada o bloqueada no hace nada al apretar E -> la mira vuelve al puntito.
+    public CrosshairIcon Icon => (Found || _locked) ? CrosshairIcon.Dot : CrosshairIcon.Clue;
 
     public void Interact()
     {

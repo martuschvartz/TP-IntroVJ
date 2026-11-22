@@ -1,4 +1,5 @@
 using _Project.Scripts.Strategy;
+using _Project.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -33,6 +34,9 @@ public class PlayerInteractor : MonoBehaviour
 
     // Solo se cachea el foco: para detectar "empecé/dejé de mirar" hay que recordar el frame anterior.
     private IFocusable _currentFocus;
+    // Igual que el foco: se recuerda el icono de la mira del frame anterior,
+    // para avisarle al HUD solo cuando cambia.
+    private CrosshairIcon _currentIcon = CrosshairIcon.Dot;
     private InputAction _interactAction;
     // Mientras el jugador esta bloqueado (cinematica, tablero abierto...) no se interactua:
     // si no, apretar E con el tablero abierto activaria lo que quedo en el centro de la pantalla.
@@ -63,6 +67,7 @@ public class PlayerInteractor : MonoBehaviour
         if (_locked)
         {
             UpdateFocus(null);
+            UpdateCrosshairIcon(CrosshairIcon.Dot);
             return;
         }
 
@@ -77,11 +82,21 @@ public class PlayerInteractor : MonoBehaviour
         }
 
         UpdateFocus(focusable);
+        // Cada interactuable dice su icono; si no hay ninguno, puntito.
+        UpdateCrosshairIcon(interactable?.Icon ?? CrosshairIcon.Dot);
 
         if (_interactAction.WasPressedThisFrame())
         {
             interactable?.Interact();
         }
+    }
+
+    private void UpdateCrosshairIcon(CrosshairIcon icon)
+    {
+        if (icon == _currentIcon) return;
+
+        _currentIcon = icon;
+        GameEvents.RaiseCrosshairIconChanged(icon);
     }
 
     private void UpdateFocus(IFocusable focusable)

@@ -1,4 +1,5 @@
 using System;
+using _Project.Scripts.Utility;
 
 // Punto de encuentro entre sistemas que NO se referencian entre si.
 // Cada sistema "anuncia" lo que paso aca, y quien este interesado se
@@ -36,6 +37,17 @@ public static class GameEvents
     public static void RaisePlayerLockChanged(bool locked)
     {
         PlayerLockChanged?.Invoke(locked);
+    }
+    #endregion
+
+    #region Cambia lo que el jugador tiene en la mira
+    // Lo lanza PlayerInteractor (solo cuando cambia, no todos los frames).
+    // Lo escucha CrosshairUI (puntito / manito / libreta).
+    public static event Action<CrosshairIcon> CrosshairIconChanged;
+
+    public static void RaiseCrosshairIconChanged(CrosshairIcon icon)
+    {
+        CrosshairIconChanged?.Invoke(icon);
     }
     #endregion
 }

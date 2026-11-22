@@ -1,4 +1,5 @@
 using _Project.Scripts.Strategy;
+using _Project.Scripts.Utility;
 using UnityEngine;
 
 // El corcho 3D del despacho. Interactuar con el abre el tablero en modo
@@ -7,6 +8,8 @@ using UnityEngine;
 public class BoardObject : MonoBehaviour, IInteractable
 {
     [SerializeField] private BoardUI board;
+
+    public CrosshairIcon Icon => CrosshairIcon.Hand;
 
     public void Interact()
     {
