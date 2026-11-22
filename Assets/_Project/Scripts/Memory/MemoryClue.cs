@@ -16,8 +16,8 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
 {
     [SerializeField] private ClueType type;
 
-    [Tooltip("Texto que aparece en la lista de pistas (Tab). Ej: 'Marca de cigarrillos'")]
-    [SerializeField, TextArea] private string listText;
+    [Tooltip("Los datos de la pista (texto y respuesta correcta). Se crea con Create > What Lies Behind > Pista.")]
+    [SerializeField] private ClueData data;
 
     [Tooltip("Se prende mientras el jugador mira el objeto. Puede quedar vacío.")]
     [SerializeField] private GameObject highlight;
@@ -46,7 +46,8 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
     private bool _locked;
 
     public ClueType Type => type;
-    public string ListText => listText;
+    public ClueData Data => data;
+    public string ListText => data != null ? data.Text : name;
     public bool Found { get; private set; }
 
     private void Start()

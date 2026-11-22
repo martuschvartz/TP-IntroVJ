@@ -10,11 +10,14 @@ public class MemoryManager : MonoBehaviour
 {
     [Tooltip("Id del recuerdo. Tiene que coincidir con el del MemoryDocument del despacho. Ej: Mateo")]
     [SerializeField] private string memoryId;
+    [Tooltip("El sospechoso de este recuerdo (sus declaraciones se muestran en la lista del Tab).")]
+    [SerializeField] private SuspectData suspect;
     [SerializeField] private MemoryClue[] clues;
     [SerializeField] private CommandQueue queue;
     [Tooltip("Segundos que se queda en el recuerdo después de encontrar todo, antes de salir.")]
     [SerializeField] private float exitDelay = 2f;
 
+    public SuspectData Suspect => suspect;
     public MemoryClue[] Clues => clues;
 
     #region Suscripcion a eventos
@@ -37,6 +40,9 @@ public class MemoryManager : MonoBehaviour
 
     private void HandleClueFound(MemoryClue clue)
     {
+        // Queda guardada para el tablero del despacho.
+        GameProgress.AddFoundClue(clue.Data);
+
         if (clue.Type == ClueType.Inconsistencia) SetTriggersLocked(false);
 
         if (AllFound()) StartCoroutine(ExitWhenReady());
@@ -58,7 +64,9 @@ public class MemoryManager : MonoBehaviour
     {
         GameEvents.RaisePlayerLockChanged(true);
         GameProgress.MarkVisited(memoryId);
-        SceneAdministrator.Load(SceneName.FinDelDia);
+        // El fin del dia es el tablero del despacho en modo edicion.
+        GameProgress.EndOfDayPending = true;
+        SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
     private bool AllFound()
