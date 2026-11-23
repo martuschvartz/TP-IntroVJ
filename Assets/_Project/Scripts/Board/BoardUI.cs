@@ -284,7 +284,8 @@ public class BoardUI : MonoBehaviour
         // Bien resuelto: se ve la noche desde los ojos del sospechoso.
         // Mal resuelto: no hay fragmento; termina el dia y se arranca el siguiente
         // en el despacho (el tablero queda como lo dejo el jugador).
-        SceneAdministrator.LoadWithLoadingScreen(solved ? suspect.FragmentScene : SceneName.Despacho);
+        if (solved) FragmentPlayer.Play(suspect.FragmentScene, suspect.AfterFragmentScene);
+        else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
     // Resuelto = el fragmento es la suma de las inconsistencias:
@@ -298,6 +299,8 @@ public class BoardUI : MonoBehaviour
         {
             ClueData clue = connection.Clue;
             if (clue == null || clue.SuspectId != suspect.Id) continue;
+            // Las ambiguas nunca son error, se aten como se aten.
+            if (clue.Ambiguous) continue;
             if (connection.Statement != clue.RelatedStatement || connection.Color != clue.ExpectedColor) return false;
         }
 
@@ -313,12 +316,13 @@ public class BoardUI : MonoBehaviour
         return anyLie;
     }
 
-    // La mentira esta expuesta si alguna pista suya (cualquiera) esta conectada con rojo.
+    // La mentira esta expuesta si alguna pista suya (no ambigua) esta conectada con rojo.
     // Como el paso 1 ya descarto hilos mal puestos, ese rojo es el color esperado.
     private static bool IsExposed(StatementData statement)
     {
         foreach (Connection connection in GameProgress.Connections)
         {
+            if (connection.Clue != null && connection.Clue.Ambiguous) continue;
             if (connection.Statement == statement && connection.Color == ThreadColor.Contradice) return true;
         }
         return false;

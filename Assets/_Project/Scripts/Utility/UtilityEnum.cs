@@ -46,6 +46,14 @@ namespace _Project.Scripts.Utility
         AsyncLoading = 11,
 
         #endregion
+
+        #region Fragmentos y reflexiones
+
+        // Mateo: el fragmento (01:10-01:30 en el living) y la reflexion de despues.
+        LivingParalelo2 = 12,
+        FinMatias = 13,
+
+        #endregion
     }
 
     /* Qué muestra la mira del HUD según lo que el jugador está mirando.

@@ -31,6 +31,9 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private float range = 100f;
     
     [SerializeField] private LayerMask interactionMask = ~0; // ~0 = todas las layers
+    [Tooltip("Si lo primero que toca el rayo no es interactuable (una mesa, un estante), igual toma una pista " +
+             "que este hasta esta distancia detras. Así las botellas al lado de la mesa se pueden agarrar. 0 = desactivado.")]
+    [SerializeField] private float lookThroughDistance = 40f;
     [Tooltip("Debug: al apretar E, escribe en la Console contra qué collider chocó el rayo.")]
     [SerializeField] private bool logHits = true;
 
@@ -76,11 +79,27 @@ public class PlayerInteractor : MonoBehaviour
         IInteractable interactable = null;
         IFocusable focusable = null;
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, interactionMask))
+        RaycastHit hit = default;
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, range, interactionMask);
+        if (hits.Length > 0)
         {
-            // GetComponentInParent: el collider puede estar en un hijo del objeto que tiene el script.
-            interactable = hit.collider.GetComponentInParent<IInteractable>();
-            focusable = hit.collider.GetComponentInParent<IFocusable>();
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            hit = hits[0];
+            float limit = hits[0].distance + lookThroughDistance;
+
+            // Lo primero que toca, o (si eso no es interactuable, ej: el borde de una mesa)
+            // la primera pista que este apenas detras.
+            foreach (RaycastHit h in hits)
+            {
+                if (h.distance > limit) break;
+                // GetComponentInParent: el collider puede estar en un hijo del objeto que tiene el script.
+                IInteractable i = h.collider.GetComponentInParent<IInteractable>();
+                if (i == null) continue;
+                hit = h;
+                interactable = i;
+                focusable = h.collider.GetComponentInParent<IFocusable>();
+                break;
+            }
         }
 
         UpdateFocus(focusable);

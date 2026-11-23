@@ -23,11 +23,12 @@ public class MemoryManager : MonoBehaviour
 
     public SuspectData Suspect => suspect;
     public MemoryClue[] Clues => clues;
-    public int TotalClues => clues.Length;
+    // Los huecos de la lista (pista borrada de la escena) no cuentan: si no, el Tab tira error y no aparece "Volver al despacho".
+    public int TotalClues => System.Array.FindAll(clues, c => c != null).Length;
     public bool AllCluesFound => AllFound();
 
     // Se puede salir antes con el minimo (o con todas, si el recuerdo tiene menos que el minimo).
-    public bool CanExitEarly => !_exiting && FoundCount >= Mathf.Min(minCluesToExit, clues.Length);
+    public bool CanExitEarly => !_exiting && FoundCount >= Mathf.Min(minCluesToExit, TotalClues);
 
     public int FoundCount
     {
@@ -36,7 +37,7 @@ public class MemoryManager : MonoBehaviour
             int found = 0;
             foreach (MemoryClue clue in clues)
             {
-                if (clue.Found) found++;
+                if (clue != null && clue.Found) found++;
             }
             return found;
         }
@@ -91,13 +92,13 @@ public class MemoryManager : MonoBehaviour
         else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
-    private bool AllFound() => FoundCount == clues.Length;
+    private bool AllFound() => FoundCount == TotalClues;
 
     private void SetTriggersLocked(bool locked)
     {
         foreach (MemoryClue clue in clues)
         {
-            if (clue.Type == ClueType.Trigger) clue.SetLocked(locked);
+            if (clue != null && clue.Type == ClueType.Trigger) clue.SetLocked(locked);
         }
     }
 }

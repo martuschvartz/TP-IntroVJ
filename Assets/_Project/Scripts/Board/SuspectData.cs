@@ -19,8 +19,11 @@ public class SuspectData : ScriptableObject
     [Tooltip("Si resolves bien su tablero, ves esta escena (la noche desde sus ojos).")]
     [SerializeField] private bool hasFragment = true;
     [SerializeField] private SceneName fragmentScene = SceneName.LivingParalelo;
+    [Tooltip("Adonde se va cuando termina el fragmento (ej: FinMatias, que despues vuelve al despacho).")]
+    [SerializeField] private SceneName afterFragmentScene = SceneName.Despacho;
 
     public string Id => id;
+    public SceneName AfterFragmentScene => afterFragmentScene;
     public string DisplayName => displayName;
     public StatementData[] Statements => statements;
     public bool HasFragment => hasFragment;

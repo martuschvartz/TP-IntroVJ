@@ -18,8 +18,12 @@ public class ClueData : ScriptableObject
     [SerializeField] private StatementData relatedStatement;
     [Tooltip("Con que hilo se conecta.")]
     [SerializeField] private ThreadColor expectedColor;
+    [Tooltip("Ambigua: se puede leer para los dos lados. Cualquier hilo que le pongan no cuenta como error "
+             + "(y no expone ninguna mentira). Si esta tildado, Declaracion y Color se ignoran.")]
+    [SerializeField] private bool ambiguous;
 
     public string SuspectId => suspectId;
+    public bool Ambiguous => ambiguous;
     public string Text => text;
     public StatementData RelatedStatement => relatedStatement;
     public ThreadColor ExpectedColor => expectedColor;

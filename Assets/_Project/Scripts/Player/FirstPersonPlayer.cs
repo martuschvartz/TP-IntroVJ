@@ -22,6 +22,11 @@ public class FirstPersonPlayer : MonoBehaviour
     [Tooltip("Lo que gira al mirar arriba/abajo. Con Cinemachine: la CinemachineCamera del jugador. Si queda vacío, usa la Camera hija.")]
     [SerializeField] private Transform lookTarget;
 
+    [Header("Debug")]
+    [Tooltip("Loguea contra que choca el jugador (paredes, escalones). Click en el log = te marca el objeto en la Hierarchy.")]
+    [SerializeField] private bool logCollisions = true;
+    private Collider _lastLoggedHit;
+
     private CharacterController _controller;
     private InputAction _moveAction;
     private InputAction _lookAction;
@@ -90,6 +95,20 @@ public class FirstPersonPlayer : MonoBehaviour
         float directionY = _moveDirection.y;
         _moveDirection = transform.TransformDirection(Vector3.forward) * vertical + transform.TransformDirection(Vector3.right) * horizontal;
         _moveDirection.y = directionY;
+    }
+
+    // Solo choques "de costado" (pared, borde de un escalon), no el piso. Cada collider se loguea
+    // una vez seguida. "Altura" = a que altura de los pies fue el golpe: si es baja, es un
+    // escalon/borde mas alto que el Step Offset del CharacterController.
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (!logCollisions || hit.collider == _lastLoggedHit) return;
+        if (Mathf.Abs(hit.normal.y) > 0.5f) return;
+
+        _lastLoggedHit = hit.collider;
+        float feet = _controller.bounds.min.y;
+        Debug.Log($"[Choque] '{hit.collider.name}' (padre: '{(hit.transform.parent != null ? hit.transform.parent.name : "-")}') " +
+                  $"altura desde los pies: {hit.point.y - feet:0.##} | step offset: {_controller.stepOffset:0.##}", hit.collider);
     }
 
     private void ApplyFinalMovement()
