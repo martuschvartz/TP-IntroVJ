@@ -16,9 +16,31 @@ public class MemoryManager : MonoBehaviour
     [SerializeField] private CommandQueue queue;
     [Tooltip("Segundos que se queda en el recuerdo después de encontrar todo, antes de salir.")]
     [SerializeField] private float exitDelay = 2f;
+    [Tooltip("Con esta cantidad de pistas encontradas se puede volver al despacho antes (botón en la lista del Tab).")]
+    [SerializeField, Min(1)] private int minCluesToExit = 3;
+
+    private bool _exiting;
 
     public SuspectData Suspect => suspect;
     public MemoryClue[] Clues => clues;
+    public int TotalClues => clues.Length;
+    public bool AllCluesFound => AllFound();
+
+    // Se puede salir antes con el minimo (o con todas, si el recuerdo tiene menos que el minimo).
+    public bool CanExitEarly => !_exiting && FoundCount >= Mathf.Min(minCluesToExit, clues.Length);
+
+    public int FoundCount
+    {
+        get
+        {
+            int found = 0;
+            foreach (MemoryClue clue in clues)
+            {
+                if (clue.Found) found++;
+            }
+            return found;
+        }
+    }
 
     #region Suscripcion a eventos
     private void OnEnable()
@@ -59,9 +81,14 @@ public class MemoryManager : MonoBehaviour
         Exit();
     }
 
-    // Unica salida del recuerdo. El dia que haya timer, tambien llama a esto.
+    // Unica salida del recuerdo: la usan la salida automatica (todo encontrado) y el
+    // boton de volver antes de la lista del Tab. El dia que haya timer, tambien llama a esto.
     public void Exit()
     {
+        // Por si se aprieta el boton justo mientras corre la salida automatica.
+        if (_exiting) return;
+        _exiting = true;
+
         GameEvents.RaisePlayerLockChanged(true);
         GameProgress.MarkVisited(memoryId);
         // El fin del dia es el tablero del despacho en modo edicion.
@@ -69,14 +96,7 @@ public class MemoryManager : MonoBehaviour
         SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
-    private bool AllFound()
-    {
-        foreach (MemoryClue clue in clues)
-        {
-            if (!clue.Found) return false;
-        }
-        return true;
-    }
+    private bool AllFound() => FoundCount == clues.Length;
 
     private void SetTriggersLocked(bool locked)
     {
