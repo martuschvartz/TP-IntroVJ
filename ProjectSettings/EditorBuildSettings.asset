@@ -38,5 +38,26 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Memories/Mateo/LivingParalelo.unity
     guid: be5f113ab58914ef29123f2951134dfe
+  - enabled: 1
+    path: Assets/_Project/Scenes/Memories/Mateo/LivingParalelo2.unity
+    guid: 714480b92afaad64c84d67aedb97eb59
+  - enabled: 1
+    path: Assets/_Project/Scenes/Memories/Camila/carParalel.unity
+    guid: 109b600d8964a3c4eb2a9ae3aaf3a73d
+  - enabled: 1
+    path: Assets/_Project/Scenes/Memories/Romina/shedParalel.unity
+    guid: 542ec14e0482eec4f9ebdbacc5a8eca3
+  - enabled: 1
+    path: Assets/_Project/Scenes/Endings/FinMatias.unity
+    guid: 2f39c3660b304522a1719b802e38aef2
+  - enabled: 1
+    path: Assets/_Project/Scenes/Endings/FinRamiro.unity
+    guid: bb58d5bc46dbf36459e86dd0d639cbdd
+  - enabled: 1
+    path: Assets/_Project/Scenes/Endings/FinRomina.unity
+    guid: afd2bd3b51031b14b80bfe2df7f92cd4
+  - enabled: 1
+    path: Assets/_Project/Scenes/Memories/Camila/Car_PrimeraEntrega.unity
+    guid: 706a99df810a4537a9ed00fee6610ce0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

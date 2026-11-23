@@ -2,6 +2,7 @@ using System.Collections;
 using _Project.Scripts.Managers;
 using _Project.Scripts.Utility;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 // Manager de un recuerdo (hay uno por escena de recuerdo).
 // Lleva la cuenta de las pistas encontradas, decide cuando se puede activar
@@ -16,6 +17,9 @@ public class MemoryManager : MonoBehaviour
     [SerializeField] private CommandQueue queue;
     [Tooltip("Segundos que se queda en el recuerdo después de encontrar todo, antes de salir.")]
     [SerializeField] private float exitDelay = 2f;
+    [Tooltip("Escena de reflexion de 'fin del dia' de ESTE recuerdo (ej: FinMatias). Tiene que estar en Build Profiles. "
+             + "Despues de esa escena se vuelve al despacho con el tablero. Vacio = directo al tablero.")]
+    [SerializeField] private string endOfDayScene;
 
     public SuspectData Suspect => suspect;
     public MemoryClue[] Clues => clues;
@@ -66,7 +70,11 @@ public class MemoryManager : MonoBehaviour
         GameProgress.MarkVisited(memoryId);
         // El fin del dia es el tablero del despacho en modo edicion.
         GameProgress.EndOfDayPending = true;
-        SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
+
+        // Si el recuerdo tiene su escena de reflexion, se pasa primero por ahi
+        // (EndOfDaySequence vuelve despues al despacho).
+        if (!string.IsNullOrWhiteSpace(endOfDayScene)) SceneManager.LoadSceneAsync(endOfDayScene);
+        else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
     private bool AllFound()
