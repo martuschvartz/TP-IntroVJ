@@ -37,7 +37,6 @@ public class ClueListUI : MonoBehaviour
     private bool _ownsLock;
     // Para ignorar el evento que dispara la propia lista al bloquear / desbloquear.
     private bool _raisingLock;
-    private bool _completed;
 
     #region Suscripcion a eventos
     private void OnEnable()
@@ -86,7 +85,7 @@ public class ClueListUI : MonoBehaviour
         if (!_cluesAction.WasPressedThisFrame()) return;
 
         if (panel.activeSelf) Close();
-        else if (!_lockedByOthers && !_completed) Open();
+        else if (!_lockedByOthers) Open();
     }
 
     private void Open()
@@ -137,12 +136,13 @@ public class ClueListUI : MonoBehaviour
         _counterRow.text = "<b>LO QUE ENCONTRÉ (" + memoryManager.FoundCount + "/" + memoryManager.TotalClues + ")</b>";
     }
 
-    // El boton aparece con el minimo de pistas; si ya estan todas, el recuerdo sale solo.
+    // El boton aparece con el minimo de pistas (y sigue con todas: el recuerdo no sale solo).
+    // El aviso solo mientras falten pistas.
     private void RefreshExit()
     {
-        bool canExit = !_completed && memoryManager.CanExitEarly && !memoryManager.AllCluesFound;
+        bool canExit = memoryManager.CanExitEarly;
         if (exitButton != null) exitButton.gameObject.SetActive(canExit);
-        if (missingCluesWarning != null) missingCluesWarning.SetActive(canExit);
+        if (missingCluesWarning != null) missingCluesWarning.SetActive(canExit && !memoryManager.AllCluesFound);
     }
 
     private void ExitEarly()
@@ -168,10 +168,9 @@ public class ClueListUI : MonoBehaviour
 
     private void HandleMemoryCompleted(string memoryId)
     {
-        // Al completar el recuerdo se muestra la lista con todo lo encontrado (sin cursor:
-        // el recuerdo sale solo despues de unos segundos).
-        _completed = true;
+        // Con todo encontrado se abre la lista (con el boton para volver). Si en ese momento
+        // hay una cinematica (ej. el trigger), no se abre: el jugador la abre con Tab despues.
         RefreshExit();
-        panel.SetActive(true);
+        if (!panel.activeSelf && !_lockedByOthers) Open();
     }
 }

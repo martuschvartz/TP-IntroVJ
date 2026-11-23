@@ -1,11 +1,10 @@
-using System.Collections;
 using _Project.Scripts.Managers;
 using _Project.Scripts.Utility;
 using UnityEngine;
 
 // Manager de un recuerdo (hay uno por escena de recuerdo).
 // Lleva la cuenta de las pistas encontradas, decide cuando se puede activar
-// el trigger y cuando se sale del recuerdo.
+// el trigger y cuando se puede salir del recuerdo (siempre con el boton de la lista del Tab).
 public class MemoryManager : MonoBehaviour
 {
     [Tooltip("Id del recuerdo. Tiene que coincidir con el del MemoryDocument del despacho. Ej: Mateo")]
@@ -13,9 +12,6 @@ public class MemoryManager : MonoBehaviour
     [Tooltip("El sospechoso de este recuerdo (sus declaraciones se muestran en la lista del Tab).")]
     [SerializeField] private SuspectData suspect;
     [SerializeField] private MemoryClue[] clues;
-    [SerializeField] private CommandQueue queue;
-    [Tooltip("Segundos que se queda en el recuerdo después de encontrar todo, antes de salir.")]
-    [SerializeField] private float exitDelay = 2f;
     [Tooltip("Con esta cantidad de pistas encontradas se puede volver al despacho antes (botón en la lista del Tab).")]
     [SerializeField, Min(1)] private int minCluesToExit = 3;
 
@@ -67,25 +63,16 @@ public class MemoryManager : MonoBehaviour
 
         if (clue.Type == ClueType.Inconsistencia) SetTriggersLocked(false);
 
-        if (AllFound()) StartCoroutine(ExitWhenReady());
+        // Con todo encontrado no se sale solo: se avisa (la lista se abre) y el jugador
+        // vuelve al despacho con el boton cuando quiera.
+        if (AllFound()) GameEvents.RaiseMemoryCompleted(memoryId);
     }
 
-    private IEnumerator ExitWhenReady()
-    {
-        GameEvents.RaiseMemoryCompleted(memoryId);
-
-        // Si el ultimo fue el trigger, primero termina su evento (la cola).
-        while (queue.IsBusy) yield return null;
-
-        yield return new WaitForSeconds(exitDelay);
-        Exit();
-    }
-
-    // Unica salida del recuerdo: la usan la salida automatica (todo encontrado) y el
-    // boton de volver antes de la lista del Tab. El dia que haya timer, tambien llama a esto.
+    // Unica salida del recuerdo: la usa el boton "Volver al despacho" de la lista del Tab.
+    // El dia que haya timer, tambien llama a esto.
     public void Exit()
     {
-        // Por si se aprieta el boton justo mientras corre la salida automatica.
+        // Por si se aprieta el boton dos veces antes del cambio de escena.
         if (_exiting) return;
         _exiting = true;
 
