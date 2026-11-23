@@ -287,30 +287,41 @@ public class BoardUI : MonoBehaviour
         SceneAdministrator.LoadWithLoadingScreen(solved ? suspect.FragmentScene : SceneName.Despacho);
     }
 
-    // Resuelto = cada pista del sospechoso que tiene respuesta esta conectada a su
-    // declaracion con el hilo correcto, y no hay hilos de mas en esas pistas.
+    // Resuelto = el fragmento es la suma de las inconsistencias:
+    //  1) ningun hilo mal puesto en las pistas del sospechoso (a otra declaracion o con otro color), y
+    //  2) cada declaracion que es mentira (IsLie) tiene al menos una pista conectada con hilo rojo.
+    // Respaldar una verdad con azul esta bien, pero no desbloquea nada. Las pistas sin hilo
+    // no cuentan: se puede salir del recuerdo sin encontrar todo.
     private static bool IsSolved(SuspectData suspect)
     {
-        bool anyAnswer = false;
-
-        foreach (ClueData clue in GameProgress.FoundClues)
+        foreach (Connection connection in GameProgress.Connections)
         {
-            if (clue.SuspectId != suspect.Id) continue;
-
-            foreach (Connection connection in GameProgress.Connections)
-            {
-                if (connection.Clue != clue) continue;
-                if (connection.Statement != clue.RelatedStatement || connection.Color != clue.ExpectedColor) return false;
-            }
-
-            if (clue.RelatedStatement == null) continue;
-            anyAnswer = true;
-
-            Connection answer = GameProgress.FindConnection(clue, clue.RelatedStatement);
-            if (answer == null || answer.Color != clue.ExpectedColor) return false;
+            ClueData clue = connection.Clue;
+            if (clue == null || clue.SuspectId != suspect.Id) continue;
+            if (connection.Statement != clue.RelatedStatement || connection.Color != clue.ExpectedColor) return false;
         }
 
-        return anyAnswer;
+        bool anyLie = false;
+        foreach (StatementData statement in suspect.Statements)
+        {
+            if (!statement.IsLie) continue;
+            anyLie = true;
+            if (!IsExposed(statement)) return false;
+        }
+
+        // Un sospechoso sin mentiras no tiene nada que desbloquear.
+        return anyLie;
+    }
+
+    // La mentira esta expuesta si alguna pista suya (cualquiera) esta conectada con rojo.
+    // Como el paso 1 ya descarto hilos mal puestos, ese rojo es el color esperado.
+    private static bool IsExposed(StatementData statement)
+    {
+        foreach (Connection connection in GameProgress.Connections)
+        {
+            if (connection.Statement == statement && connection.Color == ThreadColor.Contradice) return true;
+        }
+        return false;
     }
 
     private SuspectData FindSuspect(string id)
