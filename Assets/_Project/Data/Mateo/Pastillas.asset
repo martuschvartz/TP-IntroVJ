@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c71ece2a4f7647048bb72918d78ad6c, type: 3}
+  m_Name: Pastillas
+  m_EditorClassIdentifier: Assembly-CSharp::ClueData
+  suspectId: Mateo
+  text: "Ni nunca toma nada, \xBFpor qu\xE9 hay pastillas tiradas por el piso?"
+  relatedStatement: {fileID: 11400000, guid: a43bcfd0279d40a8b6f41c81936d1e96, type: 2}
+  expectedColor: 0
+  ambiguous: 0

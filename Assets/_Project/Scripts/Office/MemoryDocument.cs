@@ -7,7 +7,9 @@ using UnityEngine.InputSystem;
 
 // Documento de un sospechoso en el despacho. Tocarlo = leer su testimonio
 // (pantalla negra) y despues entrar a su recuerdo.
-// Si ese recuerdo ya fue visitado, el documento no aparece (no se puede volver a entrar).
+// Si ese recuerdo ya fue visitado, el documento no aparece (no se puede volver a entrar),
+// salvo que sea un caso que se cierra desde el tablero ("Cerrar sospechoso"): ese queda
+// hasta que se cierra.
 [RequireComponent(typeof(Collider))]
 public class MemoryDocument : MonoBehaviour, IInteractable
 {
@@ -15,6 +17,9 @@ public class MemoryDocument : MonoBehaviour, IInteractable
     [SerializeField] private string memoryId;
     [Tooltip("Escena del recuerdo. Se entra pasando por la pantalla de carga.")]
     [SerializeField] private SceneName sceneToLoad;
+    [Tooltip("Si esta prendido, el documento no desaparece al visitar el recuerdo: queda hasta que se " +
+             "cierra el sospechoso desde el tablero.")]
+    [SerializeField] private bool staysUntilClosed;
 
     [Header("Testimonio")]
     [Tooltip("Titulo de la pantalla negra. Ej: Testimonio de Matías")]
@@ -28,7 +33,8 @@ public class MemoryDocument : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        if (GameProgress.IsVisited(memoryId)) gameObject.SetActive(false);
+        bool done = staysUntilClosed ? GameProgress.IsClosed(memoryId) : GameProgress.IsVisited(memoryId);
+        if (done) gameObject.SetActive(false);
     }
 
     public CrosshairIcon Icon => CrosshairIcon.Hand;

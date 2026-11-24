@@ -19,6 +19,8 @@ using UnityEngine.InputSystem;
  * sus padres) implementa:
  *  - IFocusable    -> se prende su highlight mientras lo mirás.
  *  - IInteractable -> al apretar Interact (E) se llama a su Interact().
+ *                    Si es una pista de un recuerdo y todavia se puede agarrar,
+ *                    brilla con un contorno que late (InteractableGlow).
  *
  * PlayerInteractor no sabe si lo que mira es una pista, un documento o una
  * puerta: solo habla con las interfaces (patrón Strategy).
@@ -31,6 +33,17 @@ public class PlayerInteractor : MonoBehaviour
     [SerializeField] private float range = 100f;
     
     [SerializeField] private LayerMask interactionMask = ~0; // ~0 = todas las layers
+    [Tooltip("Si lo primero que toca el rayo no es interactuable (una mesa, un estante), igual toma una pista " +
+             "que este hasta esta distancia detras. Así las botellas al lado de la mesa se pueden agarrar. 0 = desactivado.")]
+    [SerializeField] private float lookThroughDistance = 40f;
+    [Header("Brillo de lo que se puede apretar")]
+    [ColorUsage(false, true)]
+    [SerializeField] private Color glowColor = new Color(1.6f, 1.15f, 0.45f);
+    [Tooltip("Ancho del contorno, en pixeles de pantalla.")]
+    [SerializeField, Range(0f, 12f)] private float glowOutlineWidth = 4f;
+    [Tooltip("Que tan rapido late el brillo. 0 = fijo.")]
+    [SerializeField, Range(0f, 10f)] private float glowPulseSpeed = 4f;
+
     [Tooltip("Debug: al apretar E, escribe en la Console contra qué collider chocó el rayo.")]
     [SerializeField] private bool logHits = true;
 
@@ -43,10 +56,12 @@ public class PlayerInteractor : MonoBehaviour
     // Mientras el jugador esta bloqueado (cinematica, tablero abierto...) no se interactua:
     // si no, apretar E con el tablero abierto activaria lo que quedo en el centro de la pantalla.
     private bool _locked;
+    private InteractableGlow _glow;
 
     private void Awake()
     {
         _interactAction = InputSystem.actions.FindAction("Player/Interact");
+        _glow = new InteractableGlow(glowColor, glowOutlineWidth, glowPulseSpeed);
     }
 
     private void OnEnable()
@@ -57,6 +72,7 @@ public class PlayerInteractor : MonoBehaviour
     private void OnDisable()
     {
         GameEvents.PlayerLockChanged -= HandlePlayerLockChanged;
+        _glow?.SetTarget(null, null);
     }
 
     private void HandlePlayerLockChanged(bool locked)
@@ -70,22 +86,44 @@ public class PlayerInteractor : MonoBehaviour
         {
             UpdateFocus(null);
             UpdateCrosshairIcon(CrosshairIcon.Dot);
+            _glow.SetTarget(null, null);
             return;
         }
 
         IInteractable interactable = null;
         IFocusable focusable = null;
 
-        if (Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, range, interactionMask))
+        RaycastHit hit = default;
+        RaycastHit[] hits = Physics.RaycastAll(transform.position, transform.forward, range, interactionMask);
+        if (hits.Length > 0)
         {
-            // GetComponentInParent: el collider puede estar en un hijo del objeto que tiene el script.
-            interactable = hit.collider.GetComponentInParent<IInteractable>();
-            focusable = hit.collider.GetComponentInParent<IFocusable>();
+            System.Array.Sort(hits, (a, b) => a.distance.CompareTo(b.distance));
+            hit = hits[0];
+            float limit = hits[0].distance + lookThroughDistance;
+
+            // Lo primero que toca, o (si eso no es interactuable, ej: el borde de una mesa)
+            // la primera pista que este apenas detras.
+            foreach (RaycastHit h in hits)
+            {
+                if (h.distance > limit) break;
+                // GetComponentInParent: el collider puede estar en un hijo del objeto que tiene el script.
+                IInteractable i = h.collider.GetComponentInParent<IInteractable>();
+                if (i == null) continue;
+                hit = h;
+                interactable = i;
+                focusable = h.collider.GetComponentInParent<IFocusable>();
+                break;
+            }
         }
 
         UpdateFocus(focusable);
         // Cada interactuable dice su icono; si no hay ninguno, puntito.
-        UpdateCrosshairIcon(interactable?.Icon ?? CrosshairIcon.Dot);
+        CrosshairIcon icon = interactable?.Icon ?? CrosshairIcon.Dot;
+        UpdateCrosshairIcon(icon);
+        // Solo brillan las pistas de los recuerdos, y mientras se pueden agarrar
+        // (una ya encontrada o bloqueada vuelve al puntito). Puertas, documentos, etc. no.
+        MemoryClue glowing = interactable is MemoryClue clue && icon != CrosshairIcon.Dot ? clue : null;
+        _glow.SetTarget(glowing, glowing != null ? glowing.GlowRenderers : null);
 
         if (_interactAction.WasPressedThisFrame())
         {

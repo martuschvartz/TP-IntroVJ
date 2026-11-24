@@ -19,10 +19,19 @@ public class SuspectData : ScriptableObject
     [Tooltip("Si resolves bien su tablero, ves esta escena (la noche desde sus ojos).")]
     [SerializeField] private bool hasFragment = true;
     [SerializeField] private SceneName fragmentScene = SceneName.LivingParalelo;
+    [Tooltip("Adonde se va cuando termina (u omite) el fragmento. Normalmente el despacho.")]
+    [SerializeField] private SceneName afterFragmentScene = SceneName.Despacho;
+    [Tooltip("Guion que se pasa como subtitulos (Resources/Guiones/<nombre>.txt). Vacio = el que se llama como la escena.")]
+    [SerializeField] private string fragmentScript;
+    [Tooltip("Cuantos hilos rojos (contradicciones) sobre sus declaraciones hacen falta al cerrarlo para ver el fragmento.")]
+    [SerializeField, Min(0)] private int contradictionsToUnlock = 2;
 
     public string Id => id;
+    public SceneName AfterFragmentScene => afterFragmentScene;
     public string DisplayName => displayName;
     public StatementData[] Statements => statements;
     public bool HasFragment => hasFragment;
     public SceneName FragmentScene => fragmentScene;
+    public string FragmentScript => fragmentScript;
+    public int ContradictionsToUnlock => contradictionsToUnlock;
 }

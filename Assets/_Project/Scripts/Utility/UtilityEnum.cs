@@ -46,6 +46,32 @@ namespace _Project.Scripts.Utility
         AsyncLoading = 11,
 
         #endregion
+
+        #region Fragmentos y reflexiones
+
+        // Mateo: el fragmento (01:10-01:30 en el living) y la reflexion de despues.
+        LivingParalelo2 = 12,
+        FinMatias = 13,
+
+        // Mateo: el living armado con los personajes, donde se ve el fragmento
+        // al cerrar su caso desde el tablero. El archivo se llama "Living-template".
+        LivingTemplate = 14,
+
+        #endregion
+    }
+
+    public static class SceneNameExtensions
+    {
+        // Nombre del archivo de la escena. Casi siempre es igual al del enum;
+        // los que no pueden serlo (ej: tienen un guion) se mapean aca.
+        public static string FileName(this SceneName scene)
+        {
+            switch (scene)
+            {
+                case SceneName.LivingTemplate: return "Living-template";
+                default: return scene.ToString();
+            }
+        }
     }
 
     /* Qué muestra la mira del HUD según lo que el jugador está mirando.

@@ -9,6 +9,8 @@ public static class GameProgress
     public const int TotalMemories = 3;
 
     private static readonly HashSet<string> VisitedMemories = new HashSet<string>();
+    // Sospechosos cerrados desde el tablero ("Cerrar sospechoso"): su documento ya no aparece.
+    private static readonly HashSet<string> ClosedSuspects = new HashSet<string>();
 
     // Tablero: pistas encontradas y los hilos que tiro el jugador.
     // Se guardan como assets (ClueData / StatementData) porque los MemoryClue
@@ -42,7 +44,13 @@ public static class GameProgress
 
     public static bool IsVisited(string memoryId) => VisitedMemories.Contains(memoryId);
 
+    public static void CloseSuspect(string suspectId) => ClosedSuspects.Add(suspectId);
+
+    public static bool IsClosed(string suspectId) => ClosedSuspects.Contains(suspectId);
+
     #region Tablero
+
+    public static bool IsClueFound(ClueData clue) => clue != null && FoundCluesList.Contains(clue);
 
     public static void AddFoundClue(ClueData clue)
     {
@@ -82,6 +90,7 @@ public static class GameProgress
     public static void Reset()
     {
         VisitedMemories.Clear();
+        ClosedSuspects.Clear();
         FoundCluesList.Clear();
         ConnectionsList.Clear();
         CardPositions.Clear();

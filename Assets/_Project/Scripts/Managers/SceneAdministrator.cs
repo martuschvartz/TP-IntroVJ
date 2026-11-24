@@ -11,7 +11,7 @@ namespace _Project.Scripts.Managers
         private static void Load(string scene) => SceneManager.LoadSceneAsync(scene);
 
         // Carga directa, sin pantalla de carga. Para usar desde código.
-        public static void Load(SceneName scene) => Load(scene.ToString());
+        public static void Load(SceneName scene) => Load(scene.FileName());
 
         public static void LoadWithLoadingScreen(SceneName scene)
         {

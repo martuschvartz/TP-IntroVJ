@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Reloj_0130
   m_EditorClassIdentifier: Assembly-CSharp::ClueData
   suspectId: Mateo
-  text: 'Reloj de pared: marca la 01:30'
+  text: "Reloj de pared: marca la 01:30."
   relatedStatement: {fileID: 11400000, guid: d742abfe2b1564f249a330f6eeaf44e4, type: 2}
   expectedColor: 0
+  ambiguous: 1

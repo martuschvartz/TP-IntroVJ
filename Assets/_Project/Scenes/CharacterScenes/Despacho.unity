@@ -1109,13 +1109,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MemoryDocument
   memoryId: Mateo
   sceneToLoad: 7
-  testimonyTitle: "Testimonio Mati - Living de la caba\xF1a "
-  testimony: "Estuve en el living casi toda la noche. Fum\xE9 bastante, m\xE1s de
-    lo que suelo. Jugu\xE9 al ajedrez con Romina, una partida larga; gan\xF3 ella,
-    como siempre. \xC9ramos solo cuatro en la casa. Despu\xE9s ella se fue y me qued\xE9
-    leyendo un rato en el sill\xF3n. Cuando me empez\xF3 a ganar el sue\xF1o, fui
-    al ba\xF1o, me cepill\xE9 los dientes y me acost\xE9. No escuch\xE9 nada raro
-    en toda la noche."
+  staysUntilClosed: 1
+  testimonyTitle: "Declaración de Mateo ante la policía"
+  testimony: "Comisaría del pueblo. 18/01/2081, 03:40 hs.\n\nDeclarante: Mateo, 26 años. Presente en la cabaña la noche del 17/01/2081.\n\n«Hacía poco que habíamos cortado con Camila. Me quedé solo en el living tomando, con la música fuerte. Alcohol, nada más: yo nunca tomo cosas raras.\n\nCamila había salido con el auto a comprar puchos y bebida para el asado, y Romina fue a buscar leña al cobertizo. Nuestro amigo se pasó de rosca y lo llevamos a la cama. Luca estaba borracho y salió a caminar por el sendero.\n\nMe desmayé en el sillón. A la 1 me desperté y estaba todo revuelto, faltaban cosas: rompieron la ventana del living para entrar. Cuando volvieron las chicas salimos a buscar a Luca.»"
   minReadSeconds: 2
 --- !u!1001 &355743847
 PrefabInstance:

@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MemoryClue
   type: 2
-  listText: TRIGGER
+  data: {fileID: 0}
   highlight: {fileID: 0}
   glow: {fileID: 0}
   queue: {fileID: 0}

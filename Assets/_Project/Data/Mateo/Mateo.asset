@@ -15,4 +15,13 @@ MonoBehaviour:
   id: Mateo
   displayName: Mateo
   statements:
+  - {fileID: 11400000, guid: 2a50a22455a64604b080a87b2785b1f4, type: 2}
+  - {fileID: 11400000, guid: 8869a83b51aa493dad9c5487df5c409b, type: 2}
+  - {fileID: 11400000, guid: a43bcfd0279d40a8b6f41c81936d1e96, type: 2}
   - {fileID: 11400000, guid: d742abfe2b1564f249a330f6eeaf44e4, type: 2}
+  - {fileID: 11400000, guid: fe224dac3eaf3b5469e9b240933c4158, type: 2}
+  hasFragment: 1
+  fragmentScene: 14
+  afterFragmentScene: 6
+  fragmentScript: LivingParalelo2
+  contradictionsToUnlock: 2
