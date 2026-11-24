@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using _Project.Scripts.Strategy;
 using _Project.Scripts.Utility;
 using UnityEngine;
@@ -20,8 +21,13 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
     [Tooltip("Los datos de la pista (texto y respuesta correcta). Se crea con Create > What Lies Behind > Pista.")]
     [SerializeField] private ClueData data;
 
-    [Tooltip("Se prende mientras el jugador mira el objeto. Puede quedar vacío.")]
+    [Tooltip("Resaltado viejo (ej: las copias negras 'outline'). Ya no se prende: ahora brilla con InteractableGlow. " +
+             "Queda siempre apagado y no se usa para el brillo.")]
     [SerializeField] private GameObject highlight;
+
+    [Tooltip("Lo que brilla al mirar la pista. Vacio = se busca solo: las mallas del objeto, " +
+             "o si no tiene (ej: una pista que es solo un collider sobre las botellas), las mallas que quedan dentro de sus colliders.")]
+    [SerializeField] private Renderer[] glowRenderers;
 
     [Header("Solo para Trigger")]
     [Tooltip("Brillo que queda prendido mientras el trigger se puede activar.")]
@@ -45,11 +51,22 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
     [SerializeField] private GameObject hideWhileAway;
 
     private bool _locked;
+    private Renderer[] _resolvedGlowRenderers;
 
     public ClueType Type => type;
     public ClueData Data => data;
     public string ListText => data != null ? data.Text : name;
     public bool Found { get; private set; }
+
+    // Las mallas que brillan cuando se puede agarrar (las usa PlayerInteractor).
+    public IReadOnlyList<Renderer> GlowRenderers
+    {
+        get
+        {
+            if (_resolvedGlowRenderers == null) _resolvedGlowRenderers = ResolveGlowRenderers();
+            return _resolvedGlowRenderers;
+        }
+    }
 
     private void Start()
     {
@@ -101,9 +118,9 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
         }
     }
 
+    // El brillo al mirarla lo pone PlayerInteractor (InteractableGlow).
     public void OnFocus()
     {
-        if (!Found && !_locked && highlight != null) highlight.SetActive(true);
     }
 
     public void OnLoseFocus()
@@ -140,6 +157,49 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
         if (revealSound != null) queue.Enqueue(new PlayAudioCommand(audioSource, revealSound, false));
         queue.Enqueue(new VisitParallelSceneCommand(parallelSceneName, player, parallelRoomSeconds, hideWhileAway));
     }
+
+    private Renderer[] ResolveGlowRenderers()
+    {
+        List<Renderer> result = new List<Renderer>();
+        if (glowRenderers != null)
+        {
+            foreach (Renderer r in glowRenderers)
+            {
+                if (r != null) result.Add(r);
+            }
+            if (result.Count > 0) return result.ToArray();
+        }
+
+        // 1) Las mallas del propio objeto (menos el highlight y el brillo del trigger).
+        foreach (Renderer r in GetComponentsInChildren<Renderer>(true))
+        {
+            if (IsMesh(r) && !IsEffect(r.transform)) result.Add(r);
+        }
+        if (result.Count > 0) return result.ToArray();
+
+        // 2) No tiene mallas propias: las que entran enteras dentro de alguno de sus colliders.
+        Collider[] colliders = GetComponentsInChildren<Collider>(true);
+        if (colliders.Length == 0) return result.ToArray();
+        foreach (Renderer r in FindObjectsByType<Renderer>(FindObjectsSortMode.None))
+        {
+            if (!IsMesh(r) || r.gameObject.scene != gameObject.scene) continue;
+            if (IsEffect(r.transform) || r.GetComponentInParent<MemoryClue>() != null) continue;
+            Bounds rb = r.bounds;
+            foreach (Collider c in colliders)
+            {
+                Bounds cb = c.bounds;
+                cb.Expand(cb.size * 0.1f);
+                if (cb.Contains(rb.min) && cb.Contains(rb.max)) { result.Add(r); break; }
+            }
+        }
+        if (result.Count == 0) Debug.LogWarning("La pista '" + name + "' no tiene mallas para brillar: asignalas en Glow Renderers.", this);
+        return result.ToArray();
+    }
+
+    private static bool IsMesh(Renderer r) => r is MeshRenderer || r is SkinnedMeshRenderer;
+
+    private bool IsEffect(Transform t) =>
+        (highlight != null && t.IsChildOf(highlight.transform)) || (glow != null && t.IsChildOf(glow.transform));
 
     private void UpdateGlow()
     {
