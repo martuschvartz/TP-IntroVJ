@@ -20,7 +20,7 @@ namespace _Project.Scripts.Managers
         }
 
         IEnumerator LoadScreenAsync() {
-            string targetScene = SceneAdministrator.NextScene.FileName();
+            string targetScene = SceneAdministrator.NextSceneFile;
             AsyncOperation loadingOperation = SceneManager.LoadSceneAsync(targetScene);
             loadingOperation.allowSceneActivation = false;
             float progress;

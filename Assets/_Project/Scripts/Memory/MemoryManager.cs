@@ -1,7 +1,6 @@
 using _Project.Scripts.Managers;
 using _Project.Scripts.Utility;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 // Manager de un recuerdo (hay uno por escena de recuerdo).
 // Lleva la cuenta de las pistas encontradas, decide cuando se puede activar
@@ -109,7 +108,7 @@ public class MemoryManager : MonoBehaviour
 
         // Si el recuerdo tiene su escena de reflexion, se pasa primero por ahi
         // (EndOfDaySequence vuelve despues al despacho).
-        if (!string.IsNullOrWhiteSpace(endOfDayScene)) SceneManager.LoadSceneAsync(endOfDayScene);
+        if (!string.IsNullOrWhiteSpace(endOfDayScene)) SceneAdministrator.LoadWithLoadingScreen(endOfDayScene);
         else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
