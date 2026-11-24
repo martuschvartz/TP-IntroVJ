@@ -10,6 +10,8 @@ public class Door : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform hinge;       // el objeto que realmente gira
     [SerializeField] private float openAngle = -90f;
+    [Tooltip("Eje (local de la bisagra) sobre el que gira. Puertas comunes: Y (0,1,0). Portón del baúl: X (1,0,0) o Z (0,0,1).")]
+    [SerializeField] private Vector3 rotationAxis = Vector3.up;
     [SerializeField] private float rotationSpeed = 20f;
 
     [Header("Sonido")]                                         
@@ -38,7 +40,7 @@ public class Door : MonoBehaviour, IInteractable
     private void Start()
     {
         _closedRot = hinge.localRotation;
-        _openRot = _closedRot * Quaternion.Euler(0f, openAngle, 0f);
+        _openRot = _closedRot * Quaternion.AngleAxis(openAngle, rotationAxis);
     }
 
     private void Update()
