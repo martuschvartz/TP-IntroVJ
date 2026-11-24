@@ -55,10 +55,31 @@ public class MemoryManager : MonoBehaviour
     }
     #endregion
 
+    // Si ya se habia entrado a este recuerdo (el caso sigue abierto), las pistas que se
+    // encontraron la otra vez quedan encontradas. Va en Awake para que la lista del Tab
+    // ya las vea en su Start.
+    private void Awake()
+    {
+        foreach (MemoryClue clue in clues)
+        {
+            if (clue != null && GameProgress.IsClueFound(clue.Data)) clue.RestoreFound();
+        }
+    }
+
     private void Start()
     {
-        // El trigger arranca bloqueado: primero hay que detectar la mentira.
-        SetTriggersLocked(true);
+        // El trigger arranca bloqueado: primero hay que detectar la mentira
+        // (salvo que ya se haya detectado en una visita anterior).
+        SetTriggersLocked(!InconsistencyFound());
+    }
+
+    private bool InconsistencyFound()
+    {
+        foreach (MemoryClue clue in clues)
+        {
+            if (clue != null && clue.Found && clue.Type == ClueType.Inconsistencia) return true;
+        }
+        return false;
     }
 
     private void HandleClueFound(MemoryClue clue)

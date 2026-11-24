@@ -81,6 +81,26 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
         GameEvents.RaiseClueFound(this);
     }
 
+    // Al volver a entrar a un recuerdo: la pista ya se habia encontrado en una visita anterior.
+    // Queda encontrada sin volver a avisar ni a reproducir la revelacion (ni el cuarto paralelo
+    // ni el audio): solo queda la escena como termino (lo que desaparecio, la figura que aparecio).
+    public void RestoreFound()
+    {
+        if (Found) return;
+        Found = true;
+        UpdateGlow();
+
+        if (type != ClueType.Trigger) return;
+        foreach (GameObject go in destroyOnReveal)
+        {
+            if (go != null) Destroy(go);
+        }
+        if (string.IsNullOrEmpty(parallelSceneName) && revealPrefab != null && revealPoint != null)
+        {
+            Instantiate(revealPrefab, revealPoint.position, revealPoint.rotation);
+        }
+    }
+
     public void OnFocus()
     {
         if (!Found && !_locked && highlight != null) highlight.SetActive(true);

@@ -50,6 +50,8 @@ public static class GameProgress
 
     #region Tablero
 
+    public static bool IsClueFound(ClueData clue) => clue != null && FoundCluesList.Contains(clue);
+
     public static void AddFoundClue(ClueData clue)
     {
         if (clue == null || FoundCluesList.Contains(clue)) return;

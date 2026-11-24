@@ -76,6 +76,11 @@ public class ClueListUI : MonoBehaviour
 
         // Las pistas se van agregando debajo cuando se encuentran (HandleClueFound).
         _counterRow = AddRow("");
+        // Las que ya se habian encontrado en una visita anterior a este recuerdo.
+        foreach (MemoryClue clue in memoryManager.Clues)
+        {
+            if (clue != null && clue.Found) AddRow("• " + clue.ListText);
+        }
         RefreshCounter();
         RefreshExit();
     }
