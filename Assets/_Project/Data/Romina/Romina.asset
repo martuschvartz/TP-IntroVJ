@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25d0684bb54c147479fa08b0ed42eb92, type: 3}
+  m_Name: Romina
+  m_EditorClassIdentifier: Assembly-CSharp::SuspectData
+  id: Romina
+  displayName: Romina
+  statements:
+  - {fileID: 11400000, guid: 81a0252f6045b7ba223d8c0d8b1e3723, type: 2}
+  - {fileID: 11400000, guid: a0735d935138ff7567d03f94e1233dce, type: 2}
+  - {fileID: 11400000, guid: 07b9af74d50fca4f6f1f4b6e8c4bcd2a, type: 2}
+  hasFragment: 0
+  fragmentScene: 8
+  afterFragmentScene: 6
+  fragmentScript: 
