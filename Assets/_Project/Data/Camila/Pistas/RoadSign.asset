@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c71ece2a4f7647048bb72918d78ad6c, type: 3}
+  m_Name: RoadSign
+  m_EditorClassIdentifier: Assembly-CSharp::ClueData
+  suspectId: Camila
+  text: 'Cartel de la ruta: Lake Cabins, 8 km'
+  relatedStatement: {fileID: 11400000, guid: b328e35712ba242b8bdd513a9b9b0384, type: 2}
+  expectedColor: 0
