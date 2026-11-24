@@ -42,6 +42,9 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Memories/Mateo/LivingParalelo2.unity
     guid: 714480b92afaad64c84d67aedb97eb59
   - enabled: 1
+    path: Assets/_Project/Scenes/Memories/Mateo/Living-template.unity
+    guid: e87aae5361fa89049a168458a68a1a3b
+  - enabled: 1
     path: Assets/_Project/Scenes/Memories/Camila/carParalel.unity
     guid: 109b600d8964a3c4eb2a9ae3aaf3a73d
   - enabled: 1

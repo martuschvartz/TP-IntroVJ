@@ -21,5 +21,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d742abfe2b1564f249a330f6eeaf44e4, type: 2}
   - {fileID: 11400000, guid: fe224dac3eaf3b5469e9b240933c4158, type: 2}
   hasFragment: 1
-  fragmentScene: 12
-  afterFragmentScene: 13
+  fragmentScene: 14
+  afterFragmentScene: 6
+  fragmentScript: LivingParalelo2
+  contradictionsToUnlock: 2

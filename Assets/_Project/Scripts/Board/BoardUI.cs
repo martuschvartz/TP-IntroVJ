@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _Project.Scripts.Managers;
 using _Project.Scripts.Utility;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,9 @@ using UnityEngine.UI;
 // "Abrir" el tablero = prender una CinemachineCamera que mira al corcho (Cinemachine hace
 // la transicion), liberar el cursor y mostrar los botones. Tiene dos modos:
 // - Edicion (fin del dia): se abre solo al volver de un recuerdo. Se mueven
-//   tarjetas, se tiran hilos y se cierra con "Finalizar investigacion por hoy".
+//   tarjetas, se tiran hilos y se cierra con "Finalizar investigacion por hoy"
+//   (el caso sigue abierto) o con "Cerrar sospechoso" (se cierra el caso del
+//   recuerdo que se acaba de visitar; con suficientes contradicciones se ve su fragmento).
 // - Solo mirar: se abre desde el corcho 3D (E). No se puede tocar nada.
 // Todo lo que se ve sale de GameProgress, asi el tablero sobrevive al cambio de escena.
 public class BoardUI : MonoBehaviour
@@ -36,6 +39,9 @@ public class BoardUI : MonoBehaviour
     [SerializeField] private Button redButton;
     [SerializeField] private Button blueButton;
     [SerializeField] private Button finishButton;
+    [Tooltip("Cierra el caso del recuerdo recien visitado. Si se deja vacio, se crea solo copiando el de Finalizar.")]
+    [SerializeField] private Button closeSuspectButton;
+    [SerializeField] private string closeSuspectLabel = "Cerrar sospechoso";
     [Tooltip("Solo en modo mirar.")]
     [SerializeField] private Button closeButton;
 
@@ -53,9 +59,22 @@ public class BoardUI : MonoBehaviour
     [Header("Ubicacion inicial de las tarjetas")]
     [SerializeField] private float rowSpacing = 180f;
 
+    [Header("Tamaño en el corcho")]
+    [Tooltip("Escala de tarjetas e hilos con el tablero cerrado (mirando desde el despacho). " +
+             "0.33 = el tablero entero entra en un tercio del ancho del corcho. Abierto se ven a tamaño normal (1).")]
+    [Range(0.1f, 1f)]
+    [SerializeField] private float closedScale = 0.33f;
+    [Tooltip("Hacia donde se achican, en coordenadas normalizadas del corcho (0,0 = abajo a la izquierda). " +
+             "(0, 0.5) = pegadas al borde izquierdo, centradas en altura.")]
+    [SerializeField] private Vector2 closedFocus = new Vector2(0f, 0.5f);
+    [Tooltip("Que tan rapido cambian de tamaño al abrir/cerrar el tablero.")]
+    [SerializeField] private float scaleSpeed = 5f;
+
     private readonly Dictionary<ScriptableObject, BoardCard> _cards = new Dictionary<ScriptableObject, BoardCard>();
     private readonly List<BoardThread> _threads = new List<BoardThread>();
     private BoardCard _selected;
+    private Vector3 _cardsLayerPosition;
+    private Vector3 _threadsLayerPosition;
     private ThreadColor _color = ThreadColor.Contradice;
 
     public bool Editable { get; private set; }
@@ -65,9 +84,13 @@ public class BoardUI : MonoBehaviour
     {
         boardCamera.SetActive(false);
         controls.SetActive(false);
+        _cardsLayerPosition = cardsLayer.localPosition;
+        _threadsLayerPosition = threadsLayer.localPosition;
         redButton.onClick.AddListener(() => SelectColor(ThreadColor.Contradice));
         blueButton.onClick.AddListener(() => SelectColor(ThreadColor.Respalda));
         finishButton.onClick.AddListener(FinishDay);
+        if (closeSuspectButton == null) closeSuspectButton = CreateCloseSuspectButton();
+        closeSuspectButton.onClick.AddListener(CloseSuspect);
         closeButton.onClick.AddListener(Close);
     }
 
@@ -78,6 +101,38 @@ public class BoardUI : MonoBehaviour
 
         // Volvimos de un recuerdo: es el fin del dia.
         if (GameProgress.EndOfDayPending) Open(true);
+
+        // Arranca directo en el tamaño que corresponde, sin animar.
+        SetLayersScale(TargetScale);
+    }
+
+    private float TargetScale => IsOpen ? 1f : closedScale;
+
+    private void Update()
+    {
+        // Las tarjetas se agrandan al abrir el tablero y se achican al cerrarlo.
+        float current = cardsLayer.localScale.x;
+        float target = TargetScale;
+        if (Mathf.Approximately(current, target)) return;
+        SetLayersScale(Mathf.MoveTowards(current, target, scaleSpeed * Time.deltaTime));
+    }
+
+    // Se escalan las dos capas juntas (hacia closedFocus) para que los hilos sigan
+    // alineados con las tarjetas y las posiciones guardadas no cambien.
+    private void SetLayersScale(float scale)
+    {
+        ScaleLayer(cardsLayer, _cardsLayerPosition, scale);
+        ScaleLayer(threadsLayer, _threadsLayerPosition, scale);
+    }
+
+    // Escalar desde un punto que no es el pivot = escalar y correr la capa para que
+    // ese punto quede quieto.
+    private void ScaleLayer(RectTransform layer, Vector3 basePosition, float scale)
+    {
+        Rect area = layer.rect;
+        Vector3 focus = new Vector3(area.xMin + closedFocus.x * area.width, area.yMin + closedFocus.y * area.height, 0f);
+        layer.localScale = new Vector3(scale, scale, 1f);
+        layer.localPosition = basePosition + layer.localRotation * (focus * (1f - scale));
     }
 
     #region Abrir / cerrar
@@ -92,6 +147,8 @@ public class BoardUI : MonoBehaviour
         controls.SetActive(true);
         editControls.SetActive(editable);
         closeButton.gameObject.SetActive(!editable);
+        SuspectData current = FindSuspect(GameProgress.LastVisitedMemory);
+        closeSuspectButton.gameObject.SetActive(editable && current != null && !GameProgress.IsClosed(current.Id));
         SetHidden(true);
 
         SelectColor(ThreadColor.Contradice);
@@ -268,64 +325,62 @@ public class BoardUI : MonoBehaviour
 
     #region Fin del dia
 
+    // "Finalizar investigacion por hoy": termina el dia y se arranca el siguiente en el
+    // despacho. El caso sigue abierto (su documento sigue ahi para volver a entrar).
     private void FinishDay()
     {
-        GameProgress.EndOfDayPending = false;
+        LeaveBoard();
+        SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
+    }
 
-        // Los botones se esconden ya (la carga tarda unos frames), pero el jugador
-        // sigue bloqueado hasta que cambie la escena.
-        Select(null);
-        Editable = false;
-        controls.SetActive(false);
-
+    // "Cerrar sospechoso": se cierra el caso del recuerdo recien visitado (su documento
+    // ya no aparece). Con al menos ContradictionsToUnlock hilos rojos sobre sus
+    // declaraciones se ve el fragmento (la noche desde sus ojos); si no, al despacho.
+    private void CloseSuspect()
+    {
         SuspectData suspect = FindSuspect(GameProgress.LastVisitedMemory);
-        bool solved = suspect != null && suspect.HasFragment && IsSolved(suspect);
+        if (suspect == null) return;
 
-        // Bien resuelto: se ve la noche desde los ojos del sospechoso.
-        // Mal resuelto: no hay fragmento; termina el dia y se arranca el siguiente
-        // en el despacho (el tablero queda como lo dejo el jugador).
-        if (solved) FragmentPlayer.Play(suspect.FragmentScene, suspect.AfterFragmentScene);
+        LeaveBoard();
+        GameProgress.CloseSuspect(suspect.Id);
+
+        bool unlocked = suspect.HasFragment && CountContradictions(suspect) >= suspect.ContradictionsToUnlock;
+        if (unlocked) FragmentPlayer.Play(suspect.FragmentScene, suspect.AfterFragmentScene, suspect.FragmentScript);
         else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 
-    // Resuelto = el fragmento es la suma de las inconsistencias:
-    //  1) ningun hilo mal puesto en las pistas del sospechoso (a otra declaracion o con otro color), y
-    //  2) cada declaracion que es mentira (IsLie) tiene al menos una pista conectada con hilo rojo.
-    // Respaldar una verdad con azul esta bien, pero no desbloquea nada. Las pistas sin hilo
-    // no cuentan: se puede salir del recuerdo sin encontrar todo.
-    private static bool IsSolved(SuspectData suspect)
+    // Los botones se esconden ya (la carga tarda unos frames), pero el jugador
+    // sigue bloqueado hasta que cambie la escena.
+    private void LeaveBoard()
     {
-        foreach (Connection connection in GameProgress.Connections)
-        {
-            ClueData clue = connection.Clue;
-            if (clue == null || clue.SuspectId != suspect.Id) continue;
-            // Las ambiguas nunca son error, se aten como se aten.
-            if (clue.Ambiguous) continue;
-            if (connection.Statement != clue.RelatedStatement || connection.Color != clue.ExpectedColor) return false;
-        }
-
-        bool anyLie = false;
-        foreach (StatementData statement in suspect.Statements)
-        {
-            if (!statement.IsLie) continue;
-            anyLie = true;
-            if (!IsExposed(statement)) return false;
-        }
-
-        // Un sospechoso sin mentiras no tiene nada que desbloquear.
-        return anyLie;
+        GameProgress.EndOfDayPending = false;
+        Select(null);
+        Editable = false;
+        controls.SetActive(false);
     }
 
-    // La mentira esta expuesta si alguna pista suya (no ambigua) esta conectada con rojo.
-    // Como el paso 1 ya descarto hilos mal puestos, ese rojo es el color esperado.
-    private static bool IsExposed(StatementData statement)
+    // Hilos rojos (Contradice) que llegan a alguna declaracion del sospechoso.
+    private static int CountContradictions(SuspectData suspect)
     {
+        int count = 0;
         foreach (Connection connection in GameProgress.Connections)
         {
-            if (connection.Clue != null && connection.Clue.Ambiguous) continue;
-            if (connection.Statement == statement && connection.Color == ThreadColor.Contradice) return true;
+            if (connection.Color != ThreadColor.Contradice) continue;
+            if (System.Array.IndexOf(suspect.Statements, connection.Statement) >= 0) count++;
         }
-        return false;
+        return count;
+    }
+
+    // Copia el boton de Finalizar (mismo estilo, y el layout del panel lo acomoda al lado).
+    private Button CreateCloseSuspectButton()
+    {
+        Button button = Instantiate(finishButton, finishButton.transform.parent);
+        button.name = "CloseSuspectButton";
+        button.onClick.RemoveAllListeners();
+        button.transform.SetSiblingIndex(finishButton.transform.GetSiblingIndex() + 1);
+        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
+        if (label != null) label.text = closeSuspectLabel;
+        return button;
     }
 
     private SuspectData FindSuspect(string id)
