@@ -12,7 +12,7 @@ using UnityEngine.UI;
 // - Edicion (fin del dia): se abre solo al volver de un recuerdo. Se mueven
 //   tarjetas, se tiran hilos y se cierra con "Finalizar investigacion por hoy"
 //   (el caso sigue abierto) o con "Cerrar sospechoso" (se cierra el caso del
-//   recuerdo que se acaba de visitar; con suficientes contradicciones se ve su fragmento).
+//   recuerdo que se acaba de visitar; si su tablero esta bien resuelto se ve su fragmento).
 // - Solo mirar: se abre desde el corcho 3D (E). No se puede tocar nada.
 // Todo lo que se ve sale de GameProgress, asi el tablero sobrevive al cambio de escena.
 public class BoardUI : MonoBehaviour
@@ -334,8 +334,8 @@ public class BoardUI : MonoBehaviour
     }
 
     // "Cerrar sospechoso": se cierra el caso del recuerdo recien visitado (su documento
-    // ya no aparece). Con al menos ContradictionsToUnlock hilos rojos sobre sus
-    // declaraciones se ve el fragmento (la noche desde sus ojos); si no, al despacho.
+    // ya no aparece). Si su tablero esta bien resuelto (IsSolved) se ve el fragmento
+    // (la noche desde sus ojos); si no, al despacho.
     private void CloseSuspect()
     {
         SuspectData suspect = FindSuspect(GameProgress.LastVisitedMemory);
@@ -344,7 +344,7 @@ public class BoardUI : MonoBehaviour
         LeaveBoard();
         GameProgress.CloseSuspect(suspect.Id);
 
-        bool unlocked = suspect.HasFragment && CountContradictions(suspect) >= suspect.ContradictionsToUnlock;
+        bool unlocked = suspect.HasFragment && IsSolved(suspect);
         if (unlocked) FragmentPlayer.Play(suspect.FragmentScene, suspect.AfterFragmentScene, suspect.FragmentScript);
         else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
@@ -359,16 +359,43 @@ public class BoardUI : MonoBehaviour
         controls.SetActive(false);
     }
 
-    // Hilos rojos (Contradice) que llegan a alguna declaracion del sospechoso.
-    private static int CountContradictions(SuspectData suspect)
+    // Resuelto = el fragmento es la suma de las inconsistencias:
+    //  1) ningun hilo mal puesto en las pistas del sospechoso (a otra declaracion o con otro color), y
+    //  2) cada declaracion que es mentira (IsLie) tiene al menos una pista conectada con hilo rojo.
+    // Respaldar una verdad con azul esta bien, pero no desbloquea nada. Las pistas sin hilo
+    // no cuentan: se puede salir del recuerdo sin encontrar todo.
+    // Las pistas ambiguas no cuentan como error con ningun hilo, pero tampoco exponen mentiras.
+    private static bool IsSolved(SuspectData suspect)
     {
-        int count = 0;
         foreach (Connection connection in GameProgress.Connections)
         {
-            if (connection.Color != ThreadColor.Contradice) continue;
-            if (System.Array.IndexOf(suspect.Statements, connection.Statement) >= 0) count++;
+            ClueData clue = connection.Clue;
+            if (clue == null || clue.SuspectId != suspect.Id || clue.Ambiguous) continue;
+            if (connection.Statement != clue.RelatedStatement || connection.Color != clue.ExpectedColor) return false;
         }
-        return count;
+
+        bool anyLie = false;
+        foreach (StatementData statement in suspect.Statements)
+        {
+            if (!statement.IsLie) continue;
+            anyLie = true;
+            if (!IsExposed(statement)) return false;
+        }
+
+        // Un sospechoso sin mentiras no tiene nada que desbloquear.
+        return anyLie;
+    }
+
+    // La mentira esta expuesta si alguna pista suya (no ambigua) esta conectada con rojo.
+    // Como IsSolved ya descarto hilos mal puestos, ese rojo es el color esperado.
+    private static bool IsExposed(StatementData statement)
+    {
+        foreach (Connection connection in GameProgress.Connections)
+        {
+            if (connection.Statement != statement || connection.Color != ThreadColor.Contradice) continue;
+            if (connection.Clue != null && !connection.Clue.Ambiguous) return true;
+        }
+        return false;
     }
 
     // Copia el boton de Finalizar (mismo estilo, y el layout del panel lo acomoda al lado).

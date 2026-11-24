@@ -23,8 +23,6 @@ public class SuspectData : ScriptableObject
     [SerializeField] private SceneName afterFragmentScene = SceneName.Despacho;
     [Tooltip("Guion que se pasa como subtitulos (Resources/Guiones/<nombre>.txt). Vacio = el que se llama como la escena.")]
     [SerializeField] private string fragmentScript;
-    [Tooltip("Cuantos hilos rojos (contradicciones) sobre sus declaraciones hacen falta al cerrarlo para ver el fragmento.")]
-    [SerializeField, Min(0)] private int contradictionsToUnlock = 2;
 
     public string Id => id;
     public SceneName AfterFragmentScene => afterFragmentScene;
@@ -33,5 +31,4 @@ public class SuspectData : ScriptableObject
     public bool HasFragment => hasFragment;
     public SceneName FragmentScene => fragmentScene;
     public string FragmentScript => fragmentScript;
-    public int ContradictionsToUnlock => contradictionsToUnlock;
 }
