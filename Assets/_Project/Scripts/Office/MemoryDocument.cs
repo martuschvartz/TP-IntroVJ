@@ -1,12 +1,9 @@
-using System.Collections;
 using _Project.Scripts.Managers;
 using _Project.Scripts.Strategy;
 using _Project.Scripts.Utility;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-// Documento de un sospechoso en el despacho. Tocarlo = leer su testimonio
-// (pantalla negra) y despues entrar a su recuerdo.
+// Documento de un sospechoso en el despacho. Tocarlo = entrar a su recuerdo
 // Si ese recuerdo ya fue visitado, el documento no aparece (no se puede volver a entrar),
 // salvo que sea un caso que se cierra desde el tablero ("Cerrar sospechoso"): ese queda
 // hasta que se cierra.
@@ -21,14 +18,6 @@ public class MemoryDocument : MonoBehaviour, IInteractable
              "cierra el sospechoso desde el tablero.")]
     [SerializeField] private bool staysUntilClosed;
 
-    [Header("Testimonio")]
-    [Tooltip("Titulo de la pantalla negra. Ej: Testimonio de Matías")]
-    [SerializeField] private string testimonyTitle;
-    [Tooltip("Resumen de lo que dijo la persona. Se muestra antes de entrar al recuerdo.")]
-    [TextArea(4, 10)] [SerializeField] private string testimony;
-    [Tooltip("Segundos minimos antes de poder pasar con E (para que no se saltee sin querer).")]
-    [SerializeField] private float minReadSeconds = 2f;
-
     private bool _opening;
 
     private void Start()
@@ -41,26 +30,9 @@ public class MemoryDocument : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (_opening) return; // ya se esta mostrando el testimonio
+        if (_opening) return; // ya se esta entrando al recuerdo
         _opening = true;
-        StartCoroutine(ShowTestimonyAndEnter());
-    }
-
-    private IEnumerator ShowTestimonyAndEnter()
-    {
         GameEvents.RaisePlayerLockChanged(true);
-
-        if (!string.IsNullOrWhiteSpace(testimony))
-        {
-            TestimonyScreen.Show(testimonyTitle, testimony, out var hint);
-
-            yield return new WaitForSeconds(minReadSeconds);
-            hint.text = "Presioná E para entrar al recuerdo";
-
-            InputAction interact = InputSystem.actions.FindAction("Player/Interact");
-            while (!interact.WasPressedThisFrame()) yield return null;
-        }
-
         SceneAdministrator.LoadWithLoadingScreen(sceneToLoad);
     }
 }
