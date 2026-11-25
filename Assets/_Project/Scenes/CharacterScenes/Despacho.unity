@@ -1261,6 +1261,7 @@ MonoBehaviour:
   hideWhileOpen:
   - {fileID: 2104687450}
   - {fileID: 1360928747}
+  playerStandPoint: {fileID: 0}
   redButton: {fileID: 836031660}
   blueButton: {fileID: 1896998442}
   closeSuspectButton: {fileID: 1980313155}
@@ -2576,19 +2577,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MemoryDocument
   memoryId: Camila
   sceneToLoad: 10
-  staysUntilClosed: 1
-  testimonyTitle: "Declaraci\xF3n de Mateo ante la polic\xEDa"
-  testimony: "Comisar\xEDa del pueblo. 18/01/2081, 03:40 hs.\n\nDeclarante: Mateo,
-    26 a\xF1os. Presente en la caba\xF1a la noche del 17/01/2081.\n\n\xABHac\xEDa
-    poco que hab\xEDamos cortado con Camila. Me qued\xE9 solo en el living tomando,
-    con la m\xFAsica fuerte. Alcohol, nada m\xE1s: yo nunca tomo cosas raras.\n\nCamila
-    hab\xEDa salido con el auto a comprar puchos y bebida para el asado, y Romina
-    fue a buscar le\xF1a al cobertizo. Nuestro amigo se pas\xF3 de rosca y lo llevamos
-    a la cama. Luca estaba borracho y sali\xF3 a caminar por el sendero.\n\nMe desmay\xE9
-    en el sill\xF3n. A la 1 me despert\xE9 y estaba todo revuelto, faltaban cosas:
-    rompieron la ventana del living para entrar. Cuando volvieron las chicas salimos
-    a buscar a Luca.\xBB"
-  minReadSeconds: 2
 --- !u!114 &323804259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7518,27 +7506,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &977054447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977054442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4f6f60395a74bc6b6647fc8f8d02302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EndingDecisionPanel
-  narrative: {fileID: 1986713907}
-  confessButton: {fileID: 1040382195}
-  noConfessButton: {fileID: 865621646}
-  title: MI CASO
-  fadeDuration: 1.2
-  backdropColor: {r: 0.02, g: 0.02, b: 0.03, a: 0.92}
-  textColor: {r: 0.92, g: 0.89, b: 0.83, a: 1}
-  confessColor: {r: 0.55, g: 0.09, b: 0.09, a: 1}
-  noConfessColor: {r: 0.16, g: 0.17, b: 0.2, a: 1}
 --- !u!114 &977054443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7625,6 +7592,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &977054447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977054442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f6f60395a74bc6b6647fc8f8d02302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndingDecisionPanel
+  narrative: {fileID: 1986713907}
+  confessButton: {fileID: 1040382195}
+  noConfessButton: {fileID: 865621646}
+  title: MI CASO
+  fadeDuration: 1.2
+  backdropColor: {r: 0.02, g: 0.02, b: 0.03, a: 0.92}
+  textColor: {r: 0.92, g: 0.89, b: 0.83, a: 1}
+  confessColor: {r: 0.55, g: 0.09, b: 0.09, a: 1}
+  noConfessColor: {r: 0.16, g: 0.17, b: 0.2, a: 1}
 --- !u!1 &1007747459
 GameObject:
   m_ObjectHideFlags: 0
@@ -7792,13 +7780,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MemoryDocument
   memoryId: Romina
   sceneToLoad: 9
-  staysUntilClosed: 0
-  testimonyTitle: 'Testimonio Romina  - Cobertizo '
-  testimony: "A la noche empez\xF3 a refrescar y fui al cobertizo a buscar madera
-    para el fuego. Estaba todo ordenado, cada cosa en su lugar, como siempre. Cargu\xE9
-    unos troncos y volv\xED a la casa. En el camino no vi nada raro afuera: ni gente
-    ni luces. Estaba todo tranquilo."
-  minReadSeconds: 2
 --- !u!65 &1012219124
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12852,7 +12833,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: c0f157cbc7fff404f95ccd2a68a5ab26, type: 3}
+  m_Resource: {fileID: 8300000, guid: 6ef26c532e6bc467d931c175c835cfc4, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.371
   m_Pitch: 1
@@ -13510,13 +13491,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MemoryDocument
   memoryId: Mateo
   sceneToLoad: 7
-  staysUntilClosed: 0
-  testimonyTitle: 'Testimonio Ramiro - Auto, estacionado '
-  testimony: "El d\xEDa anterior hab\xEDamos ido al pueblo a comprar vino. Cuando
-    volvimos dejamos el auto lejos de la casa, entre los \xE1rboles, porque el camino
-    de entrada es angosto y no quer\xEDamos rayarlo. Ese d\xEDa no lo sacamos y ah\xED
-    qued\xF3."
-  minReadSeconds: 2
 --- !u!65 &1767334233
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17037,15 +17011,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.0162725
+      value: 4.3539953
       objectReference: {fileID: 0}
     - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.29842
+      value: -2.717959
       objectReference: {fileID: 0}
     - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 62.722424
+      value: 69.09179
       objectReference: {fileID: 0}
     - target: {fileID: 6426441383356672903, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: m_LocalRotation.w
