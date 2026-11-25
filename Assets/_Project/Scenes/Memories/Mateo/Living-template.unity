@@ -210,7 +210,7 @@ PrefabInstance:
     - target: {fileID: 5866666021909216657, guid: be65e28f661844d488dacb8c02788ae9, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c17a48180198d9541aaa38924e2107c3, type: 2}
+      objectReference: {fileID: 9100000, guid: 53fe98c046074c5caa3a5129fa502b78, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2180,6 +2180,7 @@ MonoBehaviour:
   type: 1
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -2320,7 +2321,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 13
   m_Type: 1
-  m_Color: {r: 0.1137255, g: 0.25191006, b: 0.5254902, a: 1}
+  m_Color: {r: 0.5254902, g: 0.1137255, b: 0.20174266, a: 1}
   m_Intensity: 10
   m_Range: 10
   m_SpotAngle: 30
@@ -4397,6 +4398,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -5027,6 +5029,7 @@ MonoBehaviour:
   type: 2
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 368163416}
   revealPrefab: {fileID: 0}
@@ -5547,6 +5550,7 @@ MonoBehaviour:
   type: 1
   data: {fileID: 11400000, guid: 0cb3aaea0ac784b579728e64c10dc38a, type: 2}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
