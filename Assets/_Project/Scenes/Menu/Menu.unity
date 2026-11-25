@@ -1669,7 +1669,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Behind a Memory
+  m_Text: What Lies Behind
 --- !u!222 &2057606225
 CanvasRenderer:
   m_ObjectHideFlags: 0
