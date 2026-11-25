@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using _Project.Scripts.Managers;
 using _Project.Scripts.Utility;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 // El tablero de investigacion. Las tarjetas y los hilos viven en un canvas World Space
 // apoyado sobre el corcho 3D del despacho, asi se ven siempre (aunque no lo estes usando).
 // "Abrir" el tablero = prender una CinemachineCamera que mira al corcho (Cinemachine hace
-// la transicion), liberar el cursor y mostrar los botones. Tiene dos modos:
-// - Edicion (fin del dia): se abre solo al volver de un recuerdo. Se mueven
-//   tarjetas, se tiran hilos y se cierra con "Finalizar investigacion por hoy"
-//   (el caso sigue abierto) o con "Cerrar sospechoso" (se cierra el caso del
-//   recuerdo que se acaba de visitar; si su tablero esta bien resuelto se ve su fragmento).
-// - Solo mirar: se abre desde el corcho 3D (E). No se puede tocar nada.
+// la transicion), liberar el cursor y mostrar los botones.
+// - El corcho esta dividido en zonas, una por sospechoso (BoardZone). Al abrir, la camara
+//   se acerca a una zona; "Ver todo" se aleja para ver el corcho entero.
+// - Siempre se puede editar (mover tarjetas, tirar y sacar hilos) mientras el caso
+//   este abierto: el tablero es un borrador. La X sale sin cerrar nada.
+// - "Cerrar sospechoso" cierra el caso de la zona que se esta mirando: sus tarjetas e hilos
+//   quedan fijos y, si esta bien resuelto, se ve su fragmento.
+// - Se abre solo al volver de un recuerdo, acercado a la zona de ese sospechoso.
 // Todo lo que se ve sale de GameProgress, asi el tablero sobrevive al cambio de escena.
 public class BoardUI : MonoBehaviour
 {
@@ -34,19 +35,16 @@ public class BoardUI : MonoBehaviour
     [SerializeField] private Renderer[] hideWhileOpen;
 
     [Header("Botones")]
-    [Tooltip("Lo que solo se ve en modo edicion (botones de hilo y Finalizar).")]
-    [SerializeField] private GameObject editControls;
     [SerializeField] private Button redButton;
     [SerializeField] private Button blueButton;
-    [SerializeField] private Button finishButton;
-    [Tooltip("Cierra el caso del recuerdo recien visitado. Si se deja vacio, se crea solo copiando el de Finalizar.")]
+    [Tooltip("Cierra el caso de la zona que se esta mirando. Solo aparece acercado a una zona con el caso abierto.")]
     [SerializeField] private Button closeSuspectButton;
-    [SerializeField] private string closeSuspectLabel = "Cerrar sospechoso";
-    [Tooltip("Solo en modo mirar.")]
+    [Tooltip("La X: sale del tablero sin cerrar nada.")]
     [SerializeField] private Button closeButton;
 
     [Header("Datos")]
-    [Tooltip("Todos los sospechosos. Se muestran las declaraciones de los que ya se visitaron.")]
+    [Tooltip("Todos los sospechosos. Se muestran las declaraciones de los que ya se visitaron. " +
+             "Los que tienen zona se suman solos aunque no esten en esta lista.")]
     [SerializeField] private SuspectData[] suspects;
 
     [Header("Colores")]
@@ -55,100 +53,90 @@ public class BoardUI : MonoBehaviour
     [SerializeField] private Color selectedCardColor = new Color(0.6f, 0.85f, 1f);
     [SerializeField] private Color redThreadColor = new Color(0.8f, 0.1f, 0.1f);
     [SerializeField] private Color blueThreadColor = new Color(0.15f, 0.35f, 0.85f);
+    [Tooltip("Cuanto se oscurecen las tarjetas de un caso cerrado (0 = nada).")]
+    [Range(0f, 1f)]
+    [SerializeField] private float closedCardDarken = 0.3f;
 
     [Header("Ubicacion inicial de las tarjetas")]
+    [Tooltip("Solo para tarjetas de un sospechoso sin zona.")]
     [SerializeField] private float rowSpacing = 180f;
+    [Tooltip("Espacio entre tarjetas dentro de una zona, en proporcion al tamaño de la tarjeta (1.1 = 10% de aire).")]
+    [SerializeField] private float cardSpacing = 1.1f;
 
-    [Header("Tamaño en el corcho")]
-    [Tooltip("Escala de tarjetas e hilos con el tablero cerrado (mirando desde el despacho). " +
-             "0.33 = el tablero entero entra en un tercio del ancho del corcho. Abierto se ven a tamaño normal (1).")]
-    [Range(0.1f, 1f)]
-    [SerializeField] private float closedScale = 0.33f;
-    [Tooltip("Hacia donde se achican, en coordenadas normalizadas del corcho (0,0 = abajo a la izquierda). " +
-             "(0, 0.5) = pegadas al borde izquierdo, centradas en altura.")]
-    [SerializeField] private Vector2 closedFocus = new Vector2(0f, 0.5f);
-    [Tooltip("Que tan rapido cambian de tamaño al abrir/cerrar el tablero.")]
-    [SerializeField] private float scaleSpeed = 5f;
+    [Header("Zonas (una por sospechoso)")]
+    [Tooltip("Las zonas del corcho. Vacio = se buscan solas entre los hijos del canvas.")]
+    [SerializeField] private BoardZone[] zones;
+    [Tooltip("Boton para alejarse y ver el corcho entero. Solo aparece acercado a una zona.")]
+    [SerializeField] private Button overviewButton;
 
     private readonly Dictionary<ScriptableObject, BoardCard> _cards = new Dictionary<ScriptableObject, BoardCard>();
     private readonly List<BoardThread> _threads = new List<BoardThread>();
     private BoardCard _selected;
-    private Vector3 _cardsLayerPosition;
-    private Vector3 _threadsLayerPosition;
+    private BoardZone _focused;
     private ThreadColor _color = ThreadColor.Contradice;
 
-    public bool Editable { get; private set; }
     public bool IsOpen { get; private set; }
 
     private void Awake()
     {
         boardCamera.SetActive(false);
         controls.SetActive(false);
-        _cardsLayerPosition = cardsLayer.localPosition;
-        _threadsLayerPosition = threadsLayer.localPosition;
+        if (zones == null || zones.Length == 0) zones = GetComponentsInChildren<BoardZone>(true);
+        foreach (BoardZone zone in zones)
+        {
+            zone.Init(this);
+            // Por si quedo prendida en la escena: con prioridad alta le robaria la vista al jugador.
+            if (zone.ZoneCamera != null) zone.ZoneCamera.SetActive(false);
+        }
+        // Los dos se arman en la UI (no se crean por codigo). Si falta alguno se avisa y el resto anda igual.
+        if (overviewButton != null)
+        {
+            overviewButton.onClick.AddListener(() => FocusZone(null));
+            overviewButton.gameObject.SetActive(false);
+        }
+        else Debug.LogWarning("[BoardUI] Falta asignar Overview Button (Ver todo).", this);
         redButton.onClick.AddListener(() => SelectColor(ThreadColor.Contradice));
         blueButton.onClick.AddListener(() => SelectColor(ThreadColor.Respalda));
-        finishButton.onClick.AddListener(FinishDay);
-        if (closeSuspectButton == null) closeSuspectButton = CreateCloseSuspectButton();
-        closeSuspectButton.onClick.AddListener(CloseSuspect);
+        if (closeSuspectButton != null) closeSuspectButton.onClick.AddListener(CloseSuspect);
+        else Debug.LogWarning("[BoardUI] Falta asignar Close Suspect Button (Cerrar sospechoso).", this);
         closeButton.onClick.AddListener(Close);
     }
 
     private void Start()
     {
+        // Que los tamaños de la UI (zonas, layouts) ya esten calculados antes de ubicar tarjetas.
+        Canvas.ForceUpdateCanvases();
+
         // El corcho muestra siempre lo que se fue armando.
         Build();
 
-        // Volvimos de un recuerdo: es el fin del dia.
-        if (GameProgress.EndOfDayPending) Open(true);
-
-        // Arranca directo en el tamaño que corresponde, sin animar.
-        SetLayersScale(TargetScale);
-    }
-
-    private float TargetScale => IsOpen ? 1f : closedScale;
-
-    private void Update()
-    {
-        // Las tarjetas se agrandan al abrir el tablero y se achican al cerrarlo.
-        float current = cardsLayer.localScale.x;
-        float target = TargetScale;
-        if (Mathf.Approximately(current, target)) return;
-        SetLayersScale(Mathf.MoveTowards(current, target, scaleSpeed * Time.deltaTime));
-    }
-
-    // Se escalan las dos capas juntas (hacia closedFocus) para que los hilos sigan
-    // alineados con las tarjetas y las posiciones guardadas no cambien.
-    private void SetLayersScale(float scale)
-    {
-        ScaleLayer(cardsLayer, _cardsLayerPosition, scale);
-        ScaleLayer(threadsLayer, _threadsLayerPosition, scale);
-    }
-
-    // Escalar desde un punto que no es el pivot = escalar y correr la capa para que
-    // ese punto quede quieto.
-    private void ScaleLayer(RectTransform layer, Vector3 basePosition, float scale)
-    {
-        Rect area = layer.rect;
-        Vector3 focus = new Vector3(area.xMin + closedFocus.x * area.width, area.yMin + closedFocus.y * area.height, 0f);
-        layer.localScale = new Vector3(scale, scale, 1f);
-        layer.localPosition = basePosition + layer.localRotation * (focus * (1f - scale));
+        // Volvimos de un recuerdo: se abre acercado a la zona de ese sospechoso para conectar
+        // lo nuevo (se puede salir con la X y hacerlo despues).
+        if (GameProgress.EndOfDayPending)
+        {
+            GameProgress.EndOfDayPending = false;
+            Open();
+            FocusZone(FindZone(GameProgress.LastVisitedMemory));
+        }
     }
 
     #region Abrir / cerrar
 
-    public void Open(bool editable)
+    // Desde el corcho 3D: se acerca a la zona donde estaba mirando el jugador.
+    public void OpenAt(Vector3 worldPoint)
+    {
+        Open();
+        FocusZone(FindZoneAt(worldPoint));
+    }
+
+    public void Open()
     {
         if (IsOpen) return;
 
         IsOpen = true;
-        Editable = editable;
         boardCamera.SetActive(true);
         controls.SetActive(true);
-        editControls.SetActive(editable);
-        closeButton.gameObject.SetActive(!editable);
-        SuspectData current = FindSuspect(GameProgress.LastVisitedMemory);
-        closeSuspectButton.gameObject.SetActive(editable && current != null && !GameProgress.IsClosed(current.Id));
+        RefreshZoneButtons();
         SetHidden(true);
 
         SelectColor(ThreadColor.Contradice);
@@ -162,8 +150,8 @@ public class BoardUI : MonoBehaviour
     {
         // Las tarjetas se quedan en el corcho; solo se deja de "usar" el tablero.
         Select(null);
+        FocusZone(null);
         IsOpen = false;
-        Editable = false;
         boardCamera.SetActive(false);
         controls.SetActive(false);
         SetHidden(false);
@@ -189,25 +177,84 @@ public class BoardUI : MonoBehaviour
     {
         Clear();
 
-        // Declaraciones a la izquierda, pistas a la derecha (si el jugador no las movio antes).
-        int row = 0;
-        foreach (SuspectData suspect in suspects)
+        // Cada sospechoso en su zona: declaraciones en la primera columna, pistas a la derecha.
+        // Si el jugador ya movio una tarjeta, se respeta donde la dejo.
+        // Lo que no tiene zona va como antes: declaraciones a la izquierda y pistas a la derecha del corcho.
+        int looseStatementRow = 0;
+        foreach (SuspectData suspect in AllSuspects())
         {
             if (!ShowsSuspect(suspect)) continue;
+            BoardZone zone = FindZone(suspect.Id);
+            int index = 0;
             foreach (StatementData statement in suspect.Statements)
             {
-                string text = "<b>" + suspect.DisplayName + "</b>\n\"" + statement.Text + "\"";
-                CreateCard(statement, text, statementCardColor, -1, row++);
+                // En su zona no hace falta el nombre (la zona ya dice de quien es); sin zona, si.
+                string quote = "\"" + statement.Text + "\"";
+                string text = zone != null ? quote : "<b>" + suspect.DisplayName + "</b>\n" + quote;
+                Vector2 position = zone != null
+                    ? ZoneSlot(zone, 0, index++)
+                    : LooseSlot(-1, looseStatementRow++);
+                CreateCard(statement, text, statementCardColor, position);
             }
         }
 
-        row = 0;
+        int looseClueRow = 0;
+        Dictionary<BoardZone, int> cluesPerZone = new Dictionary<BoardZone, int>();
         foreach (ClueData clue in GameProgress.FoundClues)
         {
-            CreateCard(clue, clue.Text, clueCardColor, 1, row++);
+            BoardZone zone = FindZone(clue.SuspectId);
+            Vector2 position;
+            if (zone != null)
+            {
+                cluesPerZone.TryGetValue(zone, out int index);
+                cluesPerZone[zone] = index + 1;
+                position = ZoneClueSlot(zone, index);
+            }
+            else position = LooseSlot(1, looseClueRow++);
+            CreateCard(clue, clue.Text, clueCardColor, position);
         }
 
         RefreshThreads();
+    }
+
+    // Tamaño de una tarjeta (con aire) en coordenadas del corcho.
+    private Vector2 CardStep => ((RectTransform)cardPrefab.transform).rect.size * cardSpacing;
+
+    // Lugar en la grilla de una zona: columna 0 = declaraciones, 1 en adelante = pistas.
+    // Se llena de arriba hacia abajo, en el espacio de la capa de tarjetas.
+    private Vector2 ZoneSlot(BoardZone zone, int column, int row)
+    {
+        Rect area = ZoneRectInCardsLayer(zone);
+        Vector2 step = CardStep;
+        Vector2 local = new Vector2(
+            area.xMin + step.x * (column + 0.5f),
+            area.yMax - step.y * (row + 0.5f));
+        // anchoredPosition se mide desde el centro de la capa (las tarjetas tienen el ancla al medio).
+        return local - cardsLayer.rect.center;
+    }
+
+    // Las pistas llenan columnas a la derecha de las declaraciones; cuando una se llena, sigue la proxima.
+    private Vector2 ZoneClueSlot(BoardZone zone, int index)
+    {
+        int rowsPerColumn = Mathf.Max(1, Mathf.FloorToInt(ZoneRectInCardsLayer(zone).height / CardStep.y));
+        return ZoneSlot(zone, 1 + index / rowsPerColumn, index % rowsPerColumn);
+    }
+
+    private Vector2 LooseSlot(int column, int row)
+    {
+        Rect area = cardsLayer.rect;
+        return new Vector2(column * area.width * 0.25f, area.height * 0.3f - row * rowSpacing);
+    }
+
+    // El rectangulo de la zona, pasado a coordenadas de la capa de tarjetas
+    // (la zona puede estar en otro lugar de la jerarquia del canvas).
+    private Rect ZoneRectInCardsLayer(BoardZone zone)
+    {
+        Vector3[] corners = new Vector3[4];
+        zone.Rect.GetWorldCorners(corners);
+        Vector2 min = cardsLayer.InverseTransformPoint(corners[0]);
+        Vector2 max = cardsLayer.InverseTransformPoint(corners[2]);
+        return Rect.MinMaxRect(Mathf.Min(min.x, max.x), Mathf.Min(min.y, max.y), Mathf.Max(min.x, max.x), Mathf.Max(min.y, max.y));
     }
 
     private bool ShowsSuspect(SuspectData suspect)
@@ -220,17 +267,16 @@ public class BoardUI : MonoBehaviour
         return false;
     }
 
-    private void CreateCard(ScriptableObject data, string text, Color color, int column, int row)
+    private void CreateCard(ScriptableObject data, string text, Color color, Vector2 defaultPosition)
     {
+        // Caso cerrado: la tarjeta se ve mas apagada (y no se puede tocar, ver CanEdit).
+        if (IsClosedSuspect(SuspectIdOf(data))) color = Color.Lerp(color, Color.black, closedCardDarken);
+
         BoardCard card = Instantiate(cardPrefab, cardsLayer);
         card.Init(this, data, text, color, selectedCardColor);
         card.Rect.anchorMin = card.Rect.anchorMax = new Vector2(0.5f, 0.5f);
 
-        if (!GameProgress.TryGetCardPosition(data, out Vector2 position))
-        {
-            Rect area = cardsLayer.rect;
-            position = new Vector2(column * area.width * 0.25f, area.height * 0.3f - row * rowSpacing);
-        }
+        if (!GameProgress.TryGetCardPosition(data, out Vector2 position)) position = defaultPosition;
         card.Rect.anchoredPosition = position;
 
         _cards[data] = card;
@@ -265,6 +311,36 @@ public class BoardUI : MonoBehaviour
     #endregion
 
     #region Hilos
+
+    // Se puede tocar una tarjeta (moverla, conectarla, sacarle hilos) si el tablero esta abierto,
+    // acercado a SU zona (la zona activa) y el caso de su sospechoso no se cerro.
+    // En "Ver todo" no se toca nada: es solo para mirar. Un hilo se puede tocar si sus dos puntas se pueden.
+    public bool CanEdit(BoardCard card)
+    {
+        return card != null && IsOpen && _focused != null
+               && FindZone(card.SuspectId) == _focused
+               && !IsClosedSuspect(card.SuspectId);
+    }
+
+    // Donde se puede arrastrar una tarjeta, en coordenadas de la capa de tarjetas:
+    // la zona de su sospechoso, o el corcho entero si no tiene zona.
+    public Rect DragArea(BoardCard card)
+    {
+        BoardZone zone = card != null ? FindZone(card.SuspectId) : null;
+        return zone != null ? ZoneRectInCardsLayer(zone) : cardsLayer.rect;
+    }
+
+    private static bool IsClosedSuspect(string suspectId)
+    {
+        return !string.IsNullOrEmpty(suspectId) && GameProgress.IsClosed(suspectId);
+    }
+
+    private static string SuspectIdOf(ScriptableObject data)
+    {
+        if (data is ClueData clue) return clue.SuspectId;
+        if (data is StatementData statement) return statement.SuspectId;
+        return null;
+    }
 
     private void SelectColor(ThreadColor color)
     {
@@ -323,22 +399,14 @@ public class BoardUI : MonoBehaviour
 
     #endregion
 
-    #region Fin del dia
+    #region Cerrar sospechoso
 
-    // "Finalizar investigacion por hoy": termina el dia y se arranca el siguiente en el
-    // despacho. El caso sigue abierto (su documento sigue ahi para volver a entrar).
-    private void FinishDay()
-    {
-        LeaveBoard();
-        SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
-    }
-
-    // "Cerrar sospechoso": se cierra el caso del recuerdo recien visitado (su documento
-    // ya no aparece). Si su tablero esta bien resuelto (IsSolved) se ve el fragmento
-    // (la noche desde sus ojos); si no, al despacho.
+    // "Cerrar sospechoso": se cierra el caso de la zona que se esta mirando (su documento
+    // ya no aparece y sus tarjetas quedan fijas). Si su tablero esta bien resuelto (IsSolved)
+    // se ve el fragmento (la noche desde sus ojos); si no, se vuelve al despacho.
     private void CloseSuspect()
     {
-        SuspectData suspect = FindSuspect(GameProgress.LastVisitedMemory);
+        SuspectData suspect = ClosableSuspect();
         if (suspect == null) return;
 
         LeaveBoard();
@@ -355,7 +423,7 @@ public class BoardUI : MonoBehaviour
     {
         GameProgress.EndOfDayPending = false;
         Select(null);
-        Editable = false;
+        IsOpen = false; // que no se pueda tocar nada mientras carga
         controls.SetActive(false);
     }
 
@@ -398,25 +466,85 @@ public class BoardUI : MonoBehaviour
         return false;
     }
 
-    // Copia el boton de Finalizar (mismo estilo, y el layout del panel lo acomoda al lado).
-    private Button CreateCloseSuspectButton()
+    #endregion
+
+    #region Zonas
+
+    // Acerca la camara a una zona (null = alejarse y ver el corcho entero con BoardCam).
+    // Cada zona tiene su camara armada a mano: al prender una, Cinemachine hace la
+    // transicion desde la que estaba (misma prioridad = gana la ultima prendida).
+    public void FocusZone(BoardZone zone)
     {
-        Button button = Instantiate(finishButton, finishButton.transform.parent);
-        button.name = "CloseSuspectButton";
-        button.onClick.RemoveAllListeners();
-        button.transform.SetSiblingIndex(finishButton.transform.GetSiblingIndex() + 1);
-        TMP_Text label = button.GetComponentInChildren<TMP_Text>(true);
-        if (label != null) label.text = closeSuspectLabel;
-        return button;
+        if (zone == _focused) return;
+        if (zone != null && !IsOpen) return;
+
+        // Una tarjeta elegida de la zona anterior no puede quedar esperando su segundo click.
+        Select(null);
+
+        if (_focused != null && _focused.ZoneCamera != null) _focused.ZoneCamera.SetActive(false);
+        _focused = zone;
+        if (_focused != null && _focused.ZoneCamera != null) _focused.ZoneCamera.SetActive(true);
+        RefreshZoneButtons();
     }
 
-    private SuspectData FindSuspect(string id)
+    // Acercado a una zona: botones de hilo, "Ver todo" y (si se puede) "Cerrar sospechoso".
+    // En "Ver todo" solo se mira, asi que no hay botones de hilo.
+    private void RefreshZoneButtons()
     {
-        foreach (SuspectData suspect in suspects)
+        bool inZone = IsOpen && _focused != null;
+        redButton.gameObject.SetActive(inZone);
+        blueButton.gameObject.SetActive(inZone);
+        if (overviewButton != null) overviewButton.gameObject.SetActive(IsOpen && _focused != null);
+        if (closeSuspectButton != null) closeSuspectButton.gameObject.SetActive(IsOpen && ClosableSuspect() != null);
+    }
+
+    // El sospechoso de la zona que se esta mirando, si ya se visito y su caso sigue abierto.
+    private SuspectData ClosableSuspect()
+    {
+        if (_focused == null || _focused.Suspect == null) return null;
+        SuspectData suspect = _focused.Suspect;
+        return ShowsSuspect(suspect) && !GameProgress.IsClosed(suspect.Id) ? suspect : null;
+    }
+
+    private BoardZone FindZone(string suspectId)
+    {
+        if (string.IsNullOrEmpty(suspectId)) return null;
+        foreach (BoardZone zone in zones)
         {
-            if (suspect.Id == id) return suspect;
+            if (zone != null && zone.Suspect != null && zone.Suspect.Id == suspectId) return zone;
         }
         return null;
+    }
+
+    private BoardZone FindZoneAt(Vector3 worldPoint)
+    {
+        foreach (BoardZone zone in zones)
+        {
+            if (zone != null && zone.Contains(worldPoint)) return zone;
+        }
+        return null;
+    }
+
+    #endregion
+
+    #region Datos
+
+    // Los de la lista Suspects mas los que tienen zona (sin repetir), asi no se olvida ninguno.
+    private List<SuspectData> AllSuspects()
+    {
+        List<SuspectData> all = new List<SuspectData>();
+        if (suspects != null)
+        {
+            foreach (SuspectData suspect in suspects)
+            {
+                if (suspect != null && !all.Contains(suspect)) all.Add(suspect);
+            }
+        }
+        foreach (BoardZone zone in zones)
+        {
+            if (zone != null && zone.Suspect != null && !all.Contains(zone.Suspect)) all.Add(zone.Suspect);
+        }
+        return all;
     }
 
     #endregion
