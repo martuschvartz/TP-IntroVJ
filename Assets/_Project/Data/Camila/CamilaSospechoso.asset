@@ -18,6 +18,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1e8d8825468004a9da7d057a9850a1b1, type: 2}
   - {fileID: 11400000, guid: b328e35712ba242b8bdd513a9b9b0384, type: 2}
   hasFragment: 1
-  fragmentScene: 16
+  fragmentScene: 15
   afterFragmentScene: 6
   fragmentScript: CarParallel
