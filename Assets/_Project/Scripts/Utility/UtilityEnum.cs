@@ -57,6 +57,10 @@ namespace _Project.Scripts.Utility
         // al cerrar su caso desde el tablero. El archivo se llama "Living-template".
         LivingTemplate = 14,
 
+        // Romina: el cobertizo armado con los personajes, donde se ve el fragmento
+        // al cerrar su caso con la contradiccion pisadas <-> sendero. El archivo se llama "shedParalel2".
+        ShedParalel2 = 15,
+
         #endregion
     }
 
@@ -69,6 +73,7 @@ namespace _Project.Scripts.Utility
             switch (scene)
             {
                 case SceneName.LivingTemplate: return "Living-template";
+                case SceneName.ShedParalel2: return "shedParalel2";
                 default: return scene.ToString();
             }
         }

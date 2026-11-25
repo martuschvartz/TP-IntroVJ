@@ -18,7 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 81a0252f6045b7ba223d8c0d8b1e3723, type: 2}
   - {fileID: 11400000, guid: a0735d935138ff7567d03f94e1233dce, type: 2}
   - {fileID: 11400000, guid: 07b9af74d50fca4f6f1f4b6e8c4bcd2a, type: 2}
-  hasFragment: 0
-  fragmentScene: 8
+  hasFragment: 1
+  fragmentScene: 15
   afterFragmentScene: 6
-  fragmentScript: 
+  fragmentScript: shedParalel
