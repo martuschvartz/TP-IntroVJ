@@ -1744,6 +1744,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 11400000, guid: f418b1bb79fa4d4ca19d73835fba4e3c, type: 2}
   highlight: {fileID: 1121893204}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -3246,6 +3247,7 @@ MonoBehaviour:
   type: 1
   data: {fileID: 11400000, guid: 0cb3aaea0ac784b579728e64c10dc38a, type: 2}
   highlight: {fileID: 1554671318}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -3515,6 +3517,18 @@ PrefabInstance:
     - target: {fileID: 8784055583235536869, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: range
       value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_Height
+      value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_Center.y
+      value: 67.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_StepOffset
+      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3978,7 +3992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &582690754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3994,6 +4008,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 11400000, guid: 572f88c4075749f1afd9b7bb01c7a650, type: 2}
   highlight: {fileID: 2059423060}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -4088,7 +4103,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &638621354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4104,6 +4119,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 11400000, guid: c9bc471c7d3a43848575b1e3b479313d, type: 2}
   highlight: {fileID: 235444022}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -5098,6 +5114,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 26f1b36be16f30d409f9ab1a7d20a8a5, type: 2}
+    - target: {fileID: 8003772031924347679, guid: c873e765218b357479718f2fe5578f87, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5664,6 +5684,7 @@ MonoBehaviour:
   type: 1
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -7003,6 +7024,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -7486,6 +7508,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 11400000, guid: a80358f24b3d4c9ea5e1b1460470e6da, type: 2}
   highlight: {fileID: 1998316920}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -10578,6 +10601,7 @@ MonoBehaviour:
   type: 1
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -10979,6 +11003,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -11190,6 +11215,7 @@ MonoBehaviour:
   type: 0
   data: {fileID: 11400000, guid: 49dc874f75ca41dbb5c16517bcdb3996, type: 2}
   highlight: {fileID: 18067785}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 0}
   revealPrefab: {fileID: 0}
@@ -11336,8 +11362,6 @@ MonoBehaviour:
   - {fileID: 507988647}
   - {fileID: 306318340}
   - {fileID: 1750446368}
-  - {fileID: 582690754}
-  - {fileID: 638621354}
   - {fileID: 1259655713}
   minCluesToExit: 3
   endOfDayScene: 
@@ -13212,6 +13236,7 @@ MonoBehaviour:
   type: 2
   data: {fileID: 0}
   highlight: {fileID: 0}
+  glowRenderers: []
   glow: {fileID: 0}
   queue: {fileID: 368163416}
   revealPrefab: {fileID: 0}

@@ -60,7 +60,7 @@ namespace _Project.Scripts.Utility
 
         // Romina: el cobertizo armado con los personajes, donde se ve el fragmento
         // al cerrar su caso con la contradiccion pisadas <-> sendero. El archivo se llama "shedParalel2".
-        ShedParalel2 = 15,
+        ShedParalel2 = 16,
 
         #endregion
     }

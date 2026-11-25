@@ -108,7 +108,15 @@ public class FirstPersonPlayer : MonoBehaviour
         _lastLoggedHit = hit.collider;
         float feet = _controller.bounds.min.y;
         Debug.Log($"[Choque] '{hit.collider.name}' (padre: '{(hit.transform.parent != null ? hit.transform.parent.name : "-")}') " +
-                  $"altura desde los pies: {hit.point.y - feet:0.##} | step offset: {_controller.stepOffset:0.##}", hit.collider);
+                  $"altura desde los pies: {hit.point.y - feet:0.##} | step offset: {_controller.stepOffset:0.##} | " +
+                  $"punto: {hit.point} | jugador: {transform.position} | ruta: {PathOf(hit.transform)}", hit.collider);
+    }
+
+    private static string PathOf(Transform t)
+    {
+        string path = t.name;
+        for (Transform p = t.parent; p != null; p = p.parent) path = p.name + "/" + path;
+        return path;
     }
 
     private void ApplyFinalMovement()

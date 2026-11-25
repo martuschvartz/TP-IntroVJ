@@ -49,7 +49,7 @@ public class BoardThread : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!_board.Editable || eventData.button != PointerEventData.InputButton.Right) return;
+        if (!_board.CanEdit(_clueCard) || !_board.CanEdit(_statementCard) || eventData.button != PointerEventData.InputButton.Right) return;
         _board.RemoveThread(_clueCard.Clue, _statementCard.Statement);
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pisadas
   m_EditorClassIdentifier: Assembly-CSharp::ClueData
   suspectId: Romina
-  text: Pisadas en el lago?? Si solo fue por el sendero...
+  text: "Pisadas en el barro, junto al lago. El sendero no pasa por acá."
   relatedStatement: {fileID: 11400000, guid: a0735d935138ff7567d03f94e1233dce, type: 2}
   expectedColor: 0
   ambiguous: 0
