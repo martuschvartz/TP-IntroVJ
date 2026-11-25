@@ -71,5 +71,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Endings/Carcel.unity
     guid: fd4f4628a930bdf449d3e0877079e914
+  - enabled: 1
+    path: Assets/_Project/Scenes/Endings/No carcel.unity
+    guid: 57252e4fe1417cf4c83ddfc072a2c422
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

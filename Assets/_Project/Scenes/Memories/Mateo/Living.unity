@@ -3438,6 +3438,18 @@ PrefabInstance:
       propertyPath: near clip plane
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_Height
+      value: 135
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_Center.y
+      value: 67.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
+      propertyPath: m_StepOffset
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 4982023695125220111, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 0
@@ -3517,18 +3529,6 @@ PrefabInstance:
     - target: {fileID: 8784055583235536869, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
       propertyPath: range
       value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
-      propertyPath: m_Height
-      value: 135
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
-      propertyPath: m_Center.y
-      value: 67.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4329157331398033742, guid: 182e1a5c8d31b40e1bd6accc93e6f35b, type: 3}
-      propertyPath: m_StepOffset
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11363,7 +11363,7 @@ MonoBehaviour:
   - {fileID: 306318340}
   - {fileID: 1750446368}
   - {fileID: 1259655713}
-  minCluesToExit: 3
+  minCluesToExit: 1
   endOfDayScene: 
 --- !u!4 &1760781649
 Transform:

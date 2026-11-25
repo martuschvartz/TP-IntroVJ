@@ -14134,7 +14134,7 @@ MonoBehaviour:
   - {fileID: 1382430378}
   - {fileID: 526616330}
   - {fileID: 1241361766}
-  minCluesToExit: 2
+  minCluesToExit: 1
   endOfDayScene: 
 --- !u!4 &1760781649
 Transform:

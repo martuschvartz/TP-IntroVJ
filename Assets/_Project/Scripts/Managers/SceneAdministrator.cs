@@ -32,7 +32,7 @@ namespace _Project.Scripts.Managers
         public void LoadMenu() => Load(SceneName.Menu.ToString());
         public void LoadInfo() => Load(SceneName.Info.ToString());
         public void LoadFinalConfesar() => Load(SceneName.Carcel.FileName());
-        public void LoadFinalNoHacerNada() => Load(SceneName.FinalNoHacerNada.ToString());
+        public void LoadFinalNoHacerNada() => Load(SceneName.NoCarcel.FileName());
         public void QuitGame() => Application.Quit();
     }
 }

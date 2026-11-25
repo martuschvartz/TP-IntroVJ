@@ -18,6 +18,8 @@ namespace _Project.Scripts.Utility
         FinalNoHacerNada = 4,
         // Final de confesar: la reja de la carcel cae sobre el jugador.
         Carcel = 17,
+        // Final de no confesar: la reja sube y los liberan. El archivo se llama "No carcel".
+        NoCarcel = 18,
 
         #endregion
 
@@ -77,6 +79,7 @@ namespace _Project.Scripts.Utility
             {
                 case SceneName.LivingTemplate: return "Living-template";
                 case SceneName.ShedParalel2: return "shedParalel2";
+                case SceneName.NoCarcel: return "No carcel";
                 default: return scene.ToString();
             }
         }

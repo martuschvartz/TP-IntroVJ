@@ -7510,6 +7510,7 @@ GameObject:
   - component: {fileID: 977054445}
   - component: {fileID: 977054444}
   - component: {fileID: 977054443}
+  - component: {fileID: 977054447}
   m_Layer: 5
   m_Name: EndingCanvas
   m_TagString: Untagged
@@ -7517,6 +7518,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &977054447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977054442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4f6f60395a74bc6b6647fc8f8d02302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EndingDecisionPanel
+  narrative: {fileID: 1986713907}
+  confessButton: {fileID: 1040382195}
+  noConfessButton: {fileID: 865621646}
+  title: MI CASO
+  fadeDuration: 1.2
+  backdropColor: {r: 0.02, g: 0.02, b: 0.03, a: 0.92}
+  textColor: {r: 0.92, g: 0.89, b: 0.83, a: 1}
+  confessColor: {r: 0.55, g: 0.09, b: 0.09, a: 1}
+  noConfessColor: {r: 0.16, g: 0.17, b: 0.2, a: 1}
 --- !u!114 &977054443
 MonoBehaviour:
   m_ObjectHideFlags: 0
