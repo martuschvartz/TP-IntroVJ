@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CobertizoDesordenado
   m_EditorClassIdentifier: Assembly-CSharp::ClueData
   suspectId: Romina
-  text: 'Cobertizo desordenado pero porque aclara??? '
+  text: "Herramientas tiradas por el piso. Alguien revolvió el cobertizo."
   relatedStatement: {fileID: 11400000, guid: 07b9af74d50fca4f6f1f4b6e8c4bcd2a, type: 2}
-  expectedColor: 0
+  expectedColor: 1
   ambiguous: 0

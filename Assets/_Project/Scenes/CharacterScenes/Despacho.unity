@@ -5742,7 +5742,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 153f4238be440414eb089a3b3ee188d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardZone
-  suspect: {fileID: 0}
+  suspect: {fileID: 11400000, guid: bd68d6df16bdba45906864d6624a7b55, type: 2}
   zoneCamera: {fileID: 2021875774}
 --- !u!1 &716199251
 GameObject:
