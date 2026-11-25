@@ -16,3 +16,4 @@ MonoBehaviour:
   text: 'Cartel de la ruta: Lake Cabins, 8 km'
   relatedStatement: {fileID: 11400000, guid: b328e35712ba242b8bdd513a9b9b0384, type: 2}
   expectedColor: 0
+  ambiguous: 0

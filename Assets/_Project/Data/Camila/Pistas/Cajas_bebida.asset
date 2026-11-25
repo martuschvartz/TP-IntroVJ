@@ -16,3 +16,4 @@ MonoBehaviour:
   text: Cajas con botellas y cigarrillos
   relatedStatement: {fileID: 11400000, guid: 1e8d8825468004a9da7d057a9850a1b1, type: 2}
   expectedColor: 1
+  ambiguous: 0

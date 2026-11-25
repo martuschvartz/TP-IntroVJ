@@ -37,7 +37,7 @@ namespace _Project.Scripts.Utility
         
         // Camila
         Car = 10,
-        CarParallel = 15,
+        CarParallel = 16,
         
         #endregion
 
