@@ -12,6 +12,7 @@ using UnityEngine.UI;
 // Este script se crea solo al cargar la escena (no hay que ponerlo a mano), pasa el
 // guion (Resources/Guiones/<nombre>.txt) como subtitulos y despues sigue a la escena
 // de "despues" (normalmente el despacho).
+// Antes de cargarlo, la pantalla parpadea a negro dos veces (BlinkTransition).
 // Abajo a la derecha hay un boton "Omitir" (tambien con Enter) para saltear el fragmento.
 public class FragmentPlayer : MonoBehaviour
 {
@@ -38,7 +39,10 @@ public class FragmentPlayer : MonoBehaviour
         _pendingAfter = after;
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
-        SceneAdministrator.LoadWithLoadingScreen(fragment);
+
+        // Antes de entrar, un "parpadeo" de desconcierto: la pantalla se va a negro
+        // y vuelve dos veces, y recien ahi carga el fragmento.
+        BlinkTransition.Run(() => SceneAdministrator.LoadWithLoadingScreen(fragment));
     }
 
     // Antes del fragmento se carga AsyncLoading: se espera a que llegue la escena pedida.
