@@ -16,6 +16,8 @@ namespace _Project.Scripts.Utility
         FinDelDia = 2,
         FinalConfesar = 3,
         FinalNoHacerNada = 4,
+        // Final de confesar: la reja de la carcel cae sobre el jugador.
+        Carcel = 17,
 
         #endregion
 

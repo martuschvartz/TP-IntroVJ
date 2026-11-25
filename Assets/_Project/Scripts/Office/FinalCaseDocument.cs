@@ -5,7 +5,7 @@ using UnityEngine;
 // El 4º documento del despacho: tu propio caso. Solo aparece cuando ya
 // visitaste los 3 recuerdos. Al tocarlo abre el panel de decision.
 // Los botones del panel ("Confesar" / "No hacer nada") llaman directo a
-// SceneAdministrator.LoadFinalConfesar / LoadFinalNoHacerNada desde el Inspector.
+// SceneAdministrator.LoadFinalConfesar (escena Carcel) / LoadFinalNoHacerNada desde el Inspector.
 [RequireComponent(typeof(Collider))]
 public class FinalCaseDocument : MonoBehaviour, IInteractable
 {

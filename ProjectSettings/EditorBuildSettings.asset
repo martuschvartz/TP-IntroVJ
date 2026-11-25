@@ -68,5 +68,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Project/Scenes/Memories/Camila/CarParallel.unity
     guid: cc5156ad318fa4fadb14cd383416bcae
+  - enabled: 1
+    path: Assets/_Project/Scenes/Endings/Carcel.unity
+    guid: fd4f4628a930bdf449d3e0877079e914
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
