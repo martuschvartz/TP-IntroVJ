@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Project.Scripts.Utility;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,7 +14,7 @@ using UnityEngine.SceneManagement;
 // tiene la CommandQueue, se cortaria esta misma corrutina.
 public class VisitParallelSceneCommand : ICommand
 {
-    private readonly string _sceneName;
+    private readonly SceneName _scene;
     private readonly Transform _player;
     private readonly float _seconds;
     private readonly GameObject _hideWhileAway;
@@ -23,9 +24,9 @@ public class VisitParallelSceneCommand : ICommand
     private readonly List<Collider> _hiddenColliders = new List<Collider>();
     private readonly List<Light> _hiddenLights = new List<Light>();
 
-    public VisitParallelSceneCommand(string sceneName, Transform player, float seconds, GameObject hideWhileAway)
+    public VisitParallelSceneCommand(SceneName scene, Transform player, float seconds, GameObject hideWhileAway)
     {
-        _sceneName = sceneName;
+        _scene = scene;
         _player = player;
         _seconds = seconds;
         _hideWhileAway = hideWhileAway;
@@ -38,8 +39,9 @@ public class VisitParallelSceneCommand : ICommand
         Scene memoryScene = SceneManager.GetActiveScene();
 
         // 1. Cargar el cuarto paralelo encima del recuerdo y esperar a que termine.
-        yield return SceneManager.LoadSceneAsync(_sceneName, LoadSceneMode.Additive);
-        Scene parallelScene = SceneManager.GetSceneByName(_sceneName);
+        string sceneFile = _scene.FileName();
+        yield return SceneManager.LoadSceneAsync(sceneFile, LoadSceneMode.Additive);
+        Scene parallelScene = SceneManager.GetSceneByName(sceneFile);
 
         // La escena activa es la que pone la iluminacion (skybox, luz ambiente).
         SceneManager.SetActiveScene(parallelScene);
@@ -56,7 +58,7 @@ public class VisitParallelSceneCommand : ICommand
 
         // 3. Quedarse un rato. Si la escena tiene guion (Resources/Guiones/<escena>.txt),
         // se muestra como subtitulos y no se vuelve hasta que termine de pasar.
-        ParallelSubtitles subtitles = ParallelSubtitles.TryStart(_sceneName);
+        ParallelSubtitles subtitles = ParallelSubtitles.TryStart(sceneFile);
         float elapsed = 0f;
         while (elapsed < _seconds || (subtitles != null && subtitles.IsPlaying))
         {

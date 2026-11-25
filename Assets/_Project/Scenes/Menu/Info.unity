@@ -438,10 +438,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1615189689}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -4, y: 0}
-  m_SizeDelta: {x: 1672, y: 941}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &762033548
 MonoBehaviour:
@@ -624,33 +624,33 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 3
     m_MaxSize: 40
-    m_Alignment: 1
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Te llam\xE1s Alex. Sos polic\xEDa, pero no de los que salen a la calle:
+  m_Text: "Te llam\xE1s Juan. Sos polic\xEDa, pero no de los que salen a la calle:
     sos especialista en documentos de memoria. Naciste con el gen. Cuando cualquier
     otra persona agarra la transcripci\xF3n de un recuerdo, lee palabras en una hoja.
     Cuando la agarr\xE1s vos, entr\xE1s.\n\nHace siete a\xF1os que so\xF1\xE1s lo
     mismo. Negro. Un grito. Un disparo. Te despert\xE1s empapado, con el coraz\xF3n
-    en la garganta, y nunca sab\xE9s de d\xF3nde viene. Probaste pastillas, probaste
-    dejar de pensar en eso. La pesadilla vuelve igual, como si algo adentro tuyo
-    se negara a soltarla.\n\nHoy ten\xEDa que ser un d\xEDa cualquiera: un caso vecinal,
-    un perro y un robot cortac\xE9sped. Hasta que alguien en la oficina dijo un nombre:
-    Luca.\n\nHace siete a\xF1os, en una caba\xF1a junto a la laguna, Luca apareci\xF3
-    muerto de un disparo. La polic\xEDa lo cerr\xF3 r\xE1pido: un robo que sali\xF3
-    mal. Esa noche vos estabas ah\xED, con Mati, Ramiro y Romina. Tu propio documento
-    de memoria dice que dormiste de corrido hasta la ma\xF1ana. Es la coartada m\xE1s
-    limpia de todas.\n\nPero la sequ\xEDa baj\xF3 la laguna y apareci\xF3 la escopeta.
-    Era de la caba\xF1a. Ning\xFAn ladr\xF3n usa el arma que cuelga de la pared.
-    El caso se reabre, un juez autoriz\xF3 revisar los recuerdos de los tres, y por
-    falta de especialistas el expediente termin\xF3 sobre tu escritorio.\n\nTres
-    documentos. Tres coartadas. Tres versiones de una noche que vos no record\xE1s.\n\nAcordate
-    de las reglas: lo que ves es lo que ellos creen, no lo que pas\xF3. Las mentiras
-    dejan marcas. Y cada inmersi\xF3n tiene el tiempo contado.\n\nAgarr\xE1 la primera
-    hoja. Y trat\xE1 de no pensar en el grito."
+    en la garganta, y nunca sab\xE9s de d\xF3nde viene.\n\nHace siete a\xF1os, en
+    una caba\xF1a junto al lago, Luca apareci\xF3 muerto de un disparo. La polic\xEDa
+    lo cerr\xF3 r\xE1pido: un robo que sali\xF3 mal. Esa noche vos estabas ah\xED,
+    con Mateo, Camila y Romina. Tu propio documento de memoria dice que dormiste
+    de corrido hasta la ma\xF1ana. Es la coartada m\xE1s limpia de todas.\n\nPero
+    la sequ\xEDa baj\xF3 el lago y apareci\xF3 la escopeta. Era de la caba\xF1a.
+    Ning\xFAn ladr\xF3n usa el arma que cuelga de la pared. El caso se reabre y,
+    por falta de especialistas, los recuerdos de tus tres amigos terminan sobre tu
+    escritorio.\n\nTres recuerdos. Tres coartadas. Una noche que vos no record\xE1s.\n\nC\xD3MO
+    SE INVESTIGA\n- En el despacho, toc\xE1 el documento de un sospechoso para entrar
+    a su recuerdo.\n- Investig\xE1 sobre lo que pas\xF3, muchas veces las cosas no
+    son como uno dice\n- De vuelta en el despacho, us\xE1 el tablero para conectar
+    cada pista con una declaraci\xF3n: hilo rojo si la contradice y azul si la respalda.\n-
+    Si expusiste todas las mentiras sin errores, vas a ver un fragmento de lo que
+    pas\xF3 de verdad esa noche. Con un solo hilo mal puesto, el d\xEDa se pierde.\n\nAgarr\xE1
+    la primera hoja. Y trat\xE1 de no pensar en el grito."
 --- !u!222 &1509391593
 CanvasRenderer:
   m_ObjectHideFlags: 0

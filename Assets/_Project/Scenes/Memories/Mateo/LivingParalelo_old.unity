@@ -570,7 +570,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}

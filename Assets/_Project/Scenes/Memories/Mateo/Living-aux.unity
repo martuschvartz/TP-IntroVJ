@@ -1885,7 +1885,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -3998,7 +3999,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -4260,7 +4262,8 @@ MonoBehaviour:
   clues:
   - {fileID: 8163136536010430945}
   minCluesToExit: 3
-  endOfDayScene: 
+  hasEndOfDayScene: 0
+  endOfDayScene: 0
 --- !u!4 &1760781649
 Transform:
   m_ObjectHideFlags: 0
@@ -4803,7 +4806,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: LivingParalelo
+  hasParallelScene: 1
+  parallelScene: 8
   player: {fileID: 522491024}
   parallelRoomSeconds: 5
   hideWhileAway: {fileID: 2109035663}
@@ -5183,7 +5187,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -5586,7 +5591,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}

@@ -43,8 +43,10 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
     [SerializeField] private AudioClip revealSound;
 
     [Header("Cuarto paralelo (solo Trigger, opcional)")]
-    [Tooltip("Nombre de la escena del cuarto paralelo (tiene que estar en Build Profiles). Si queda vacío, no hay cuarto paralelo.")]
-    [SerializeField] private string parallelSceneName;
+    [Tooltip("Si está apagado, no hay cuarto paralelo.")]
+    [SerializeField] private bool hasParallelScene;
+    [Tooltip("Escena del cuarto paralelo (tiene que estar en Build Profiles).")]
+    [SerializeField] private SceneName parallelScene;
     [SerializeField] private Transform player;
     [SerializeField] private float parallelRoomSeconds = 30f;
     [Tooltip("Se apaga mientras estás en el cuarto paralelo (por ejemplo, el padre con todo el cuarto original). Puede quedar vacío.")]
@@ -112,7 +114,7 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
         {
             if (go != null) Destroy(go);
         }
-        if (string.IsNullOrEmpty(parallelSceneName) && revealPrefab != null && revealPoint != null)
+        if (!hasParallelScene && revealPrefab != null && revealPoint != null)
         {
             Instantiate(revealPrefab, revealPoint.position, revealPoint.rotation);
         }
@@ -137,7 +139,7 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
             Destroy(go);
         }
 
-        if (!string.IsNullOrEmpty(parallelSceneName))
+        if (hasParallelScene)
         {
             RevealInParallelRoom();
             return;
@@ -155,7 +157,7 @@ public class MemoryClue : MonoBehaviour, IInteractable, IFocusable
     {
         // Sin esperar a que termine: el audio suena mientras estas en el cuarto paralelo.
         if (revealSound != null) queue.Enqueue(new PlayAudioCommand(audioSource, revealSound, false));
-        queue.Enqueue(new VisitParallelSceneCommand(parallelSceneName, player, parallelRoomSeconds, hideWhileAway));
+        queue.Enqueue(new VisitParallelSceneCommand(parallelScene, player, parallelRoomSeconds, hideWhileAway));
     }
 
     private Renderer[] ResolveGlowRenderers()

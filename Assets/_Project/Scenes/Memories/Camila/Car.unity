@@ -5736,7 +5736,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -7476,7 +7477,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -12567,7 +12569,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -14135,7 +14138,8 @@ MonoBehaviour:
   - {fileID: 526616330}
   - {fileID: 1241361766}
   minCluesToExit: 1
-  endOfDayScene: 
+  hasEndOfDayScene: 0
+  endOfDayScene: 0
 --- !u!4 &1760781649
 Transform:
   m_ObjectHideFlags: 0

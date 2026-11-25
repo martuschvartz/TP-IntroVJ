@@ -14,9 +14,11 @@ public class MemoryManager : MonoBehaviour
     [SerializeField] private MemoryClue[] clues;
     [Tooltip("Con esta cantidad de pistas encontradas se puede volver al despacho antes (botón en la lista del Tab).")]
     [SerializeField, Min(1)] private int minCluesToExit = 3;
+    [Tooltip("Si está apagado, al salir se vuelve directo al despacho con el tablero.")]
+    [SerializeField] private bool hasEndOfDayScene;
     [Tooltip("Escena de reflexion de 'fin del dia' de ESTE recuerdo (ej: FinMatias). Tiene que estar en Build Profiles. "
-             + "Despues de esa escena se vuelve al despacho con el tablero. Vacio = directo al tablero.")]
-    [SerializeField] private string endOfDayScene;
+             + "Despues de esa escena se vuelve al despacho con el tablero.")]
+    [SerializeField] private SceneName endOfDayScene;
 
     private bool _exiting;
 
@@ -108,7 +110,7 @@ public class MemoryManager : MonoBehaviour
 
         // Si el recuerdo tiene su escena de reflexion, se pasa primero por ahi
         // (EndOfDaySequence vuelve despues al despacho).
-        if (!string.IsNullOrWhiteSpace(endOfDayScene)) SceneAdministrator.LoadWithLoadingScreen(endOfDayScene);
+        if (hasEndOfDayScene) SceneAdministrator.LoadWithLoadingScreen(endOfDayScene);
         else SceneAdministrator.LoadWithLoadingScreen(SceneName.Despacho);
     }
 

@@ -304750,7 +304750,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   minCluesToExit: 1
-  endOfDayScene: 
+  hasEndOfDayScene: 0
+  endOfDayScene: 0
 --- !u!4 &1760781649
 Transform:
   m_ObjectHideFlags: 0

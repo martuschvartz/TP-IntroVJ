@@ -6,33 +6,28 @@ namespace _Project.Scripts.Managers
 {
     public class SceneAdministrator : MonoBehaviour
     {
-        // Archivo de la escena que va a cargar la pantalla de carga (AsyncLoading).
-        public static string NextSceneFile { get; private set; } = SceneName.Despacho.FileName();
+        public static SceneName NextScene { get; private set; } = SceneName.Despacho;
 
-        private static void Load(string scene) => SceneManager.LoadSceneAsync(scene);
+        // Carga directa, sin pantalla de carga.
+        public static void Load(SceneName scene) => SceneManager.LoadSceneAsync(scene.FileName());
 
-        // Carga directa, sin pantalla de carga. Para usar desde código.
-        public static void Load(SceneName scene) => Load(scene.FileName());
-
-        public static void LoadWithLoadingScreen(SceneName scene) => LoadWithLoadingScreen(scene.FileName());
-
-        // Igual, pero con el nombre del archivo de la escena (para escenas que no estan en SceneName,
-        // como el endOfDayScene del MemoryManager). Tiene que estar en Build Profiles.
-        public static void LoadWithLoadingScreen(string sceneFile)
+        public static void LoadWithLoadingScreen(SceneName scene)
         {
-            NextSceneFile = sceneFile;
-            Load(SceneName.AsyncLoading.ToString());
+            NextScene = scene;
+            Load(SceneName.AsyncLoading);
         }
-        
+
         public void LoadNewGame()
         {
-            GameProgress.Reset();                          
-            LoadWithLoadingScreen(SceneName.Despacho);     
+            GameProgress.Reset();
+            // Arranca por la pesadilla (escena casi vacia, sin pantalla de carga);
+            // al terminar, ella pasa al despacho.
+            Load(SceneName.Pesadilla);
         }
-        public void LoadMenu() => Load(SceneName.Menu.ToString());
-        public void LoadInfo() => Load(SceneName.Info.ToString());
-        public void LoadFinalConfesar() => Load(SceneName.Carcel.FileName());
-        public void LoadFinalNoHacerNada() => Load(SceneName.NoCarcel.FileName());
+        public void LoadMenu() => Load(SceneName.Menu);
+        public void LoadInfo() => Load(SceneName.Info);
+        public void LoadFinalConfesar() => Load(SceneName.Carcel);
+        public void LoadFinalNoHacerNada() => Load(SceneName.NoCarcel);
         public void QuitGame() => Application.Quit();
     }
 }

@@ -1998,7 +1998,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -4083,7 +4084,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
@@ -4717,7 +4719,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: LivingParalelo
+  hasParallelScene: 1
+  parallelScene: 8
   player: {fileID: 522491024}
   parallelRoomSeconds: 5
   hideWhileAway: {fileID: 2109035663}
@@ -5236,7 +5239,8 @@ MonoBehaviour:
   destroyOnReveal: []
   audioSource: {fileID: 0}
   revealSound: {fileID: 0}
-  parallelSceneName: 
+  hasParallelScene: 0
+  parallelScene: 0
   player: {fileID: 0}
   parallelRoomSeconds: 30
   hideWhileAway: {fileID: 0}
