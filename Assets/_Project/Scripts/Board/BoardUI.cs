@@ -33,6 +33,10 @@ public class BoardUI : MonoBehaviour
     [SerializeField] private GameObject controls;
     [Tooltip("Lo que se esconde con el tablero abierto para que no tape el corcho (el cuerpo del jugador).")]
     [SerializeField] private Renderer[] hideWhileOpen;
+    [Tooltip("Donde queda parado el jugador (posicion y hacia donde mira) cuando el tablero se abre " +
+             "solo al volver de un recuerdo: asi al salir con la X esta frente al corcho y no en el " +
+             "punto de inicio del despacho. Vacio = donde esta la camara del tablero, a la altura del jugador.")]
+    [SerializeField] private Transform playerStandPoint;
 
     [Header("Botones")]
     [SerializeField] private Button redButton;
@@ -115,6 +119,7 @@ public class BoardUI : MonoBehaviour
         if (GameProgress.EndOfDayPending)
         {
             GameProgress.EndOfDayPending = false;
+            MovePlayerToBoard();
             Open();
             FocusZone(FindZone(GameProgress.LastVisitedMemory));
         }
@@ -159,6 +164,27 @@ public class BoardUI : MonoBehaviour
         GameEvents.RaisePlayerLockChanged(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    // Para el jugador frente al corcho (en playerStandPoint).
+    private void MovePlayerToBoard()
+    {
+        FirstPersonPlayer player = FindAnyObjectByType<FirstPersonPlayer>();
+        if (player == null) return;
+
+        // Sin punto asignado: donde esta la camara del tablero (que mira al corcho),
+        // pero a la altura a la que ya esta parado el jugador.
+        Transform point = playerStandPoint != null ? playerStandPoint : boardCamera.transform;
+        Vector3 position = point.position;
+        if (playerStandPoint == null) position.y = player.transform.position.y;
+
+        // El CharacterController pisa la posicion si esta prendido: se apaga para moverlo.
+        CharacterController controller = player.GetComponent<CharacterController>();
+        controller.enabled = false;
+        // Solo el giro horizontal: el jugador queda derecho aunque el punto este inclinado.
+        Quaternion yaw = Quaternion.Euler(0f, point.eulerAngles.y, 0f);
+        player.transform.SetPositionAndRotation(position, yaw);
+        controller.enabled = true;
     }
 
     private void SetHidden(bool hidden)
