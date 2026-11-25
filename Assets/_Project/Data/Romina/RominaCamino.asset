@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RominaCamino
   m_EditorClassIdentifier: Assembly-CSharp::StatementData
   suspectId: Romina
-  text: "1"
-  isLie: 
+  text: "Fui y volv\xED por el sendero"
+  isLie: 1

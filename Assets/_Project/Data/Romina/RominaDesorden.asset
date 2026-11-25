@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RominaDesorden
   m_EditorClassIdentifier: Assembly-CSharp::StatementData
   suspectId: Romina
-  text: "0"
-  isLie: 
+  text: "Cuando llegu\xE9 el cobertizo estaba desordenado"
+  isLie: 0

@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RominaLena
   m_EditorClassIdentifier: Assembly-CSharp::StatementData
   suspectId: Romina
-  text: "0"
-  isLie: 
+  text: "Fui a buscar le\xF1a"
+  isLie: 0
